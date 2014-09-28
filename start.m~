@@ -22,38 +22,8 @@ title('Inverted image');
 %% Assignement 2.1
 img = imread('imgs/foliage raw.tiff');
 img = double(img) / 4096.0;
+final_img = demosaicBayer(img);
 
-[m, n] = size(img);
-red_mask = zeros(m, n);
-red_mask(2:2:end, 2:2:end) = 1;
-
-green_mask = zeros(m, n);
-green_mask(2:2:end, 1:2:end) = 1;
-green_mask(1:2:end, 2:2:end) = 1;
-
-blue_mask = zeros(m, n);
-blue_mask(1:2:end, 1:2:end) = 1;
-
-% get color contribution
-red_contribution = img.*red_mask;
-green_contribution = img.*green_mask;
-blue_contribution = img.*blue_mask;
-
-I3x3 = ones(3);
-interpolated_red_contribution = conv2(red_contribution,I3x3,'same');
-interpolated_green_contribution = conv2(green_contribution,I3x3,'same');
-interpolated_blue_contribution = conv2(blue_contribution,I3x3,'same');
-
-
-norm_red = interpolated_red_contribution ./ conv2(red_mask, I3x3, 'same');
-norm_green = interpolated_green_contribution ./ conv2(green_mask, I3x3, 'same');
-norm_blue = interpolated_blue_contribution ./ conv2(blue_mask, I3x3, 'same');
-
-color_pile = [(norm_red), (norm_green), (norm_blue)];
-
-norm_red.*
-
-final_img = reshape(color_pile,m,n,3);
 imshow(final_img);
 
 
@@ -62,8 +32,46 @@ imshow(final_img);
 % Proceed similarly...
 
 %% Assignement 2.2
+% we are interested in red green and blue green differences
+% thus
+% transform into y u v colors space
+img = imread('imgs/black and white raw.tif');
+img = double(img) / 256.0;
 
+[final_img, red_c, green_c, blue_c] = demosaicBayer(img);
+yuv_final = rgb2yuv(final_img);
 
+% median filtered imgs
+med_U = medfilt2(yuv_final(:,:,2));
+med_V = medfilt2(yuv_final(:,:,3));
+
+rgb2yuv_transform = [0.299 0.587 0.114; 
+                     -0.14713 -0.28886 0.436; 
+                      0.615 -0.51499 -0.10001];
+                  
+                  
+
+                  
+%red part
+red_known = rgb2yuv_transform(2:end, 2:end);
+red_v = rgb2yuv_transform(2:end, 1);
+
+U_red = red_v(1)*red_c;
+V_red = red_v(2)*red_c;
+
+del_U = med_U-U_red;
+del_V = med_V-V_red;
+A = reshape([del_U(:),del_V(:)], 1000, 500)';
+rr = red_known\[del_U(:),del_V(:)]';
+% mask it for red channel
+
+serialized_red_mask = red_mask(:)';
+abc = [rr(1,:).*serialized_red_mask; rr(2,:).*serialized_red_mask];
+ttt = reshape(abc', 500, 500, 2);
+
+% generalize this for other channels
+% sum up
+% reshape
 %% Assignement 2.3
 
 
