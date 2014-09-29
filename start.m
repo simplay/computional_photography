@@ -42,8 +42,8 @@ img = double(img) / 255.0;
 yuv_final = rgb2yuv(final_img);
 
 % median filtered imgs
-med_U = medfilt2(yuv_final(:,:,2));
-med_V = medfilt2(yuv_final(:,:,3));
+medU = medfilt2(yuv_final(:,:,2));
+medV = medfilt2(yuv_final(:,:,3));
 
 rgb2yuv_transform = [0.299 0.587 0.114; 
                      -0.14713 -0.28886 0.436; 
@@ -51,96 +51,50 @@ rgb2yuv_transform = [0.299 0.587 0.114;
                   
                   
 
-                  
+    [m, n, c] = size(yuv_final);
+    blue_mask = zeros(m, n);
+    blue_mask(2:2:end, 2:2:end) = 1;
+
+    green_mask = zeros(m, n);
+    green_mask(2:2:end, 1:2:end) = 1;
+    green_mask(1:2:end, 2:2:end) = 1;
+
+    red_mask = zeros(m, n);
+    red_mask(1:2:end, 1:2:end) = 1;
+    
 %red part
 red_known = rgb2yuv_transform(2:end, 2:end);
 red_v = rgb2yuv_transform(2:end, 1);
-red = red_c;%final_img(:,:,1);
-U_red = red_v(1)*red;
-V_red = red_v(2)*red;
 
-del_U = med_U-U_red;
-del_V = med_V-V_red;
-A = reshape([del_U(:),del_V(:)], 1000, 500)';
-rr = red_known\[del_U(:),del_V(:)]';
-% mask it for red channel
+green_known = rgb2yuv_transform(2:end, 1:2:end);
+green_v = rgb2yuv_transform(2:end, 2);
 
-serialized_red_mask = red_mask(:)';
+blue_known = rgb2yuv_transform(2:end, 1:end-1);
+blue_v = rgb2yuv_transform(2:end, 3);
 
-abc = [red(:)'.*serialized_red_mask; rr(1,:).*serialized_red_mask; rr(2,:).*serialized_red_mask];
-ttt = reshape(abc', 500, 500, 3);
+[a1,b1] = foobarize(final_img(:,:,1), red_known, medU, medV, red_v, red_mask);
+[a2,b2] = foobarize(final_img(:,:,2), green_known, medU, medV, green_v, green_mask);
+[a3,b3] = foobarize(final_img(:,:,3), blue_known, medU, medV, blue_v, blue_mask);
 
 
-%blue
-red = blue_c;%final_img(:,:,3);
-red_known = rgb2yuv_transform(2:end, 1:end-1);
-red_v = rgb2yuv_transform(2:end, 3);
+serializedMask = red_mask(:)';
+maskedMedCol1 = [final_img(:,:,1)'.*serializedMask; a1; b1];
+red = reshape(maskedMedCol1', m, n, 3);
 
-U_red = red_v(1)*red;
-V_red = red_v(2)*red;
+serializedMask = green_mask(:)';
+maskedMedCol1 = [a2; final_img(:,:,2).*serializedMask; b2];
+green = reshape(maskedMedCol1', m, n, 3);
 
-del_U = med_U-U_red;
-del_V = med_V-V_red;
-A = reshape([del_U(:),del_V(:)], 1000, 500)';
-rr = red_known\[del_U(:),del_V(:)]';
-% mask it for red channel
-    blue_mask = zeros(500, 500);
-    blue_mask(2:2:end, 2:2:end) = 1;
-serialized_red_mask = blue_mask(:)';
+serializedMask = blue_mask(:)';
+maskedMedCol1 = [a3; b3, final_img(:,:,3).*serializedMask; ];
+blue = reshape(maskedMedCol1', m, n, 3);
+
+final_cor = red + green + blue;
+
+imshow(final_cor)
 
 
 
-abc = [red(:)'.*serialized_red_mask; rr(1,:).*serialized_red_mask; rr(2,:).*serialized_red_mask];
-ttt = ttt + reshape(abc', 500, 500, 3);
-
-
-
-% green
-red = green_c;%final_img(:,:,2);
-red_known = rgb2yuv_transform(2:end, 1:2:end);
-red_v = rgb2yuv_transform(2:end, 2);
-
-U_red = red_v(1)*red;
-V_red = red_v(2)*red;
-
-del_U = med_U-U_red;
-del_V = med_V-V_red;
-A = reshape([del_U(:),del_V(:)], 1000, 500)';
-rr = red_known\[del_U(:),del_V(:)]';
-% mask it for red channel
-    green_mask = zeros(500, 500);
-    green_mask(2:2:end, 1:2:end) = 1;
-    green_mask(1:2:end, 2:2:end) = 1;
-serialized_red_mask = green_mask(:)';
-
-
-
-abc = [red(:)'.*serialized_red_mask; rr(1,:).*serialized_red_mask; rr(2,:).*serialized_red_mask];
-ttt = ttt + reshape(abc', 500, 500, 3);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-imshow(ttt)
 % generalize this for other channels
 % sum up
 % reshape
