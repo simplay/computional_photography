@@ -39,6 +39,12 @@ imshow(img)
 title('demosaiced img bayer filtered');
    
 %% Assignement 2.3
+figure(5)
+img = imread('imgs/castle.jpg');
+img = im2double(img);
+img = grayWorld(img);
+imshow(img);
+title('color balancing: gray world assumption');
 
 
 %% Assignement 2.4
