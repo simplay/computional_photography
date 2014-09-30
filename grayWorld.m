@@ -12,9 +12,9 @@ function [ out ] = grayWorld( img )
     scaleG = grayValue./avgG;
     scaleB = grayValue./avgB;
     
-    scaleR = scaleR./scaleG;
-    scaleG = scaleG./scaleG; % equal to 1
-    scaleB = scaleB./scaleG;
+    % scaleR = scaleR./scaleG;
+    % scaleG = scaleG./scaleG; % equal to 1
+    % scaleB = scaleB./scaleG;
     
     scaledR = img(:,:,1).*scaleR;
     scaledG = img(:,:,2).*scaleG;

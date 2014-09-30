@@ -9,9 +9,9 @@ function [ out ] = manualWhiteBalance( img, coords )
     scaleG = grayValue./refPix(1,1,2);
     scaleB = grayValue./refPix(1,1,3);
     
-    scaleR = scaleR./scaleG;
-    scaleG = scaleG./scaleG; % equal to 1
-    scaleB = scaleB./scaleG;
+    % scaleR = scaleR./scaleG;
+    % scaleG = scaleG./scaleG; % equal to 1
+    % scaleB = scaleB./scaleG;
     
     scaledR = img(:,:,1).*scaleR;
     scaledG = img(:,:,2).*scaleG;
