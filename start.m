@@ -32,7 +32,7 @@ title('demosaiced img linear filtered');
 img = imread('imgs/black and white raw.tif');
 img = double(img) / 255.0;
 
-img = bayerFilter(img);
+img = medianFilteredDemosaic(img);
 
 figure(4)
 imshow(img)
