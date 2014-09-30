@@ -70,3 +70,10 @@ imshow(img);
 title('gamma correction');
 
 %% Bonus
+t = figure(9);
+img = imread('imgs/interior.jpg');
+img = im2double(img);
+imshow(img)
+img = manColBalGui(img, t);
+imshow(img);
+title('user sel');
