@@ -77,3 +77,5 @@ imshow(img)
 img = manColBalGui(img, t);
 imshow(img);
 title('user sel');
+
+simpleGammaCorrectionGui
