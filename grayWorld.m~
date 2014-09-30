@@ -1,8 +1,0 @@
-function [ out ] = grayWorld( img )
-%GRAYWORLD assumes that the average color in any image is grey. 
-%          It transforms the input image to match this assumption
-%   Detailed explanation goes here
-    avgR = mean
-    
-end
-

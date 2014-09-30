@@ -51,9 +51,14 @@ img = imread('imgs/interior.jpg');
 img = im2double(img);
 img = manualWhiteBalance(img, [155, 200]);
 imshow(img);
-title('color balancing: gray world assumption');
+title('color balancing: manual white balancing');
 
 %% Assignement 2.4
-
+figure(7)
+img = imread('imgs/castle.jpg');
+img = im2double(img);
+img = linearContrast(img, 0.2, 0.8);
+imshow(img);
+title('linear color contrast scaling');
 
 %% Bonus
