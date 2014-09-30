@@ -46,6 +46,12 @@ img = grayWorld(img);
 imshow(img);
 title('color balancing: gray world assumption');
 
+figure(6)
+img = imread('imgs/interior.jpg');
+img = im2double(img);
+img = manualWhiteBalance(img, [155, 200]);
+imshow(img);
+title('color balancing: gray world assumption');
 
 %% Assignement 2.4
 
