@@ -6,8 +6,8 @@ function [ out ] = bayerFilter( img )
     [red_mask, green_mask, blue_mask] = getMasks(m,n);
     
     % median filtered imgs
-    medU = medfilt2(yuv_img(:,:,2),[3,3]);
-    medV = medfilt2(yuv_img(:,:,3),[3,3]);
+    medU = medfilt2(yuv_img(:,:,2),[5,5]);
+    medV = medfilt2(yuv_img(:,:,3),[5,5]);
 
     ruvImg = mat2Img(rgb_img(:,:,1).*red_mask, medU, medV);
     guvImg = mat2Img(rgb_img(:,:,2).*green_mask, medU, medV);
