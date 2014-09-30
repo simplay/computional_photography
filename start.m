@@ -61,4 +61,12 @@ img = linearContrast(img, 0.2, 0.8);
 imshow(img);
 title('linear color contrast scaling');
 
+figure(8)
+img = imread('imgs/airport.jpg');
+img = im2double(img);
+img = mat2Img(img, img, img);
+img = gammaTransformation(img, 4.0);
+imshow(img);
+title('gamma correction');
+
 %% Bonus
