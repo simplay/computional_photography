@@ -1,7 +1,11 @@
 function [ out ] = linearContrast( img, toMin, toMax )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-    % assuming the pixels of img are in [0,1]^3.
+%UNTITLED changes contrast by linearly scaling image brightness
+%   transforms applies for each y in Y: f(y) = (y-min)/delta(min,max) 
+%   assuming the pixels of img are in [0,1]^3.
+%   @param img is a (m x n x 3) double valued color img in rgb colorspace
+%   @param toMin min tolerated Y value real+ valued.
+%   @param toMax max tolerated Y value real+ valued.
+%   @return out linear contrast adjusted input img.
     
     % transform img into yuv color space
     yuvImg = rgb2yuv(img);

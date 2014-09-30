@@ -1,6 +1,8 @@
 function [ red_mask, green_mask, blue_mask ] = getMasks( m, n )
 %GETMASKS Bayer color filters as n x m matrices.
-    % @param m, n are natural numbers > 0.
+    % @param m, n are natural numbers > 0. specifying the mask dimensions
+    % @return array of red, green, and blue masks.
+    
     blue_mask = zeros(m, n);
     blue_mask(2:2:end, 2:2:end) = 1;
 

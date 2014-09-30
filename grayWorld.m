@@ -1,7 +1,10 @@
 function [ out ] = grayWorld( img )
-%GRAYWORLD assumes that the average color in any image is grey. 
-%          It transforms the input image to match this assumption
-%   @param img is a (m x n x 3) color img
+%GRAYWORLD color balancing relying on the gray world assumption.
+%   assumes that the average color in any image is grey. 
+%   It transforms the input image to match this assumption
+%   @param img is a (m x n x 3) double valued color img in rgb colorspace
+%   @param out color balanced input img based in gray world assumption.
+
     avgR = mean(mean(img(:,:,1)));
     avgG = mean(mean(img(:,:,2)));
     avgB = mean(mean(img(:,:,3)));
