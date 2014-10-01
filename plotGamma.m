@@ -5,15 +5,12 @@ function labels = plotGamma( Lin, Lout, gamma, otherlabel )
     plot(Lin(:),Lout(:), '.', 'color', graphColor);
     xlabel('Input Intensitiy');
     ylabel('Output Intensitiy');
-    title('foobar');
+    title('Plots of transformation curves for different gamma values');
     set(gcf,'Color',graphColor);
-    str = strcat('gamma=', num2str(gamma), '-');
-    labels = [otherlabel, str];
-    values = strsplit(labels, '-');
-    for k=1:size(values,2),
-        pew{k} = values(k);
-    end
+    
+
+    labels = [otherlabel; gamma];
     % only show last plot legend
-    legend(str);
+    legend(num2str(labels));
 end
 

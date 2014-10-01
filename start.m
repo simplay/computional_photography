@@ -88,7 +88,7 @@ figure(1337)
 img = imread('imgs/airport.jpg');
 img = im2double(img);
 img = mat2Img(img, img, img);
-plotSeries(img, 4, 4);
+plotSeries(img, 0, 8);
 
 %% Bonus
 
