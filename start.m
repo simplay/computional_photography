@@ -69,6 +69,13 @@ img = gammaTransformation(img, 4.0);
 imshow(img);
 title('gamma correction');
 
+% Show various gamma plots for a given input img
+figure(1337)
+img = imread('imgs/airport.jpg');
+img = im2double(img);
+img = mat2Img(img, img, img);
+plotSeries(img, 0, 8);
+
 %% Bonus
 
 sRGBAdobe = [2.3642, -0.8964, -0.4680;
