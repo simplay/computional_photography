@@ -47,9 +47,14 @@ title('demosaiced img bayer filtered');
 figure(5)
 img = imread('imgs/interior.jpg');
 img = im2double(img);
-img = grayWorld(img, 1);
-imshow(img);
-title('color balancing: gray world assumption');
+img2 = grayWorld(img, 1);
+imshow(img2);
+title('color balancing: gray world assumption green norm');
+
+figure(135)
+img2 = grayWorld(img, 0);
+imshow(img2);
+title('color balancing: gray world assumption without green norm');
 
 % manual color balancing task
 figure(6)
