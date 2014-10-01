@@ -11,7 +11,7 @@ figure('position',[0 0 700 500], 'name', 'SimpleGUI', 'NumberTitle', 'off');
 h = subplot('position',[0.1 0.3 0.8 0.6]);
 
 % Just some descriptive text.
-uicontrol('Style', 'text', 'String', 'Parameter Value',...
+uicontrol('Style', 'text', 'String', 'gamma Value',...
 'Position', [150 50 90 30]);
 
 % A slider for varying the parameter.
@@ -38,16 +38,9 @@ uicontrol('Style', 'text', 'String', num2str(Param),...
 img = imread('imgs/airport.jpg');
 img = im2double(img);
 img = mat2Img(img, img, img);
-imgOut = gammaTransformation(img, Param);
+[imgOut,Yin, Yout] = gammaTransformation(img, Param);
 
-A = rgb2yuv(img);
-A = A(:,:,1);
-B = rgb2yuv(imgOut);
-B = B(:,:,1);
-
-
-
-plot(A(:),B(:), '.');
+plot(Yin(:),Yout(:), '.');
 
 % plot gamma corrected img
 figure(20)
