@@ -34,17 +34,23 @@ Param = get(Slider,'Value');
 uicontrol('Style', 'text', 'String', num2str(Param),...
 'Position', [460 55 60 20]);
 
-% later also plot response curves
-x=linspace(0,10,1000);
-k = Param;
-y = sin(k*x);
-plot(x,y);
-
-% plot gamma corrected img
-figure(20)
+%
 img = imread('imgs/airport.jpg');
 img = im2double(img);
 img = mat2Img(img, img, img);
-img = gammaTransformation(img, Param);
-imshow(img);
+imgOut = gammaTransformation(img, Param);
+
+A = rgb2yuv(img);
+A = A(:,:,1);
+B = rgb2yuv(imgOut);
+B = B(:,:,1);
+
+
+
+plot(A(:),B(:), '.');
+
+% plot gamma corrected img
+figure(20)
+
+imshow(imgOut);
 title('gamma correction');
