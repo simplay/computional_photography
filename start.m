@@ -70,6 +70,24 @@ imshow(img);
 title('gamma correction');
 
 %% Bonus
+
+sRGBAdobe = [2.3642, -0.8964, -0.4680;
+            -0.5151, 1.4262, 0.0887;
+             0.0052, -0.0144, 1.0090];
+
+% ultracorrected img using adobe sRGB
+img = imread('imgs/foliage raw.tiff');
+img = double(img) / 4096.0;
+img = demosaicBayer(img);
+img = gammaTransformation(transformImg3(grayWorld(img),sRGBAdobe), 1/1.2);
+
+figure(33)
+imshow(img);
+title('gamma and white balanced correcte demosaiced img using Adobe sRGB colors');
+
+
+% gui stuff
+
 t = figure(9);
 img = imread('imgs/interior.jpg');
 img = im2double(img);
@@ -79,3 +97,6 @@ imshow(img);
 title('user sel');
 
 simpleGammaCorrectionGui
+
+
+
