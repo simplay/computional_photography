@@ -100,7 +100,7 @@ sRGBAdobe = [2.3642, -0.8964, -0.4680;
 img = imread('imgs/foliage raw.tiff');
 img = double(img) / 4096.0;
 img = demosaicBayer(img);
-img = gammaTransformation(transformImg3(grayWorld(img),sRGBAdobe), 1/1.2);
+img = gammaTransformation(transformImg3(grayWorld(img,1),sRGBAdobe), 1/1.2);
 
 figure(33)
 imshow(img);

@@ -40,7 +40,7 @@ img = im2double(img);
 img = mat2Img(img, img, img);
 [imgOut,Yin, Yout] = gammaTransformation(img, Param);
 
-plotGamma(Yin, Yout);
+plotGamma(Yin, Yout, Param, []);
 
 % plot gamma corrected img
 figure(20)
