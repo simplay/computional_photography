@@ -1,9 +1,9 @@
-function [ out ] = bfilt( img, sigma_s, sigma_r, w )
+function [ out ] = bfilt( img, sigma_s, sigma_r)
 %BFILT Summary of this function goes here
 %   Detailed explanation goes here
     h = waitbar(0, 'Applying Bilateral Filter...');
     set(h, 'Name', 'Bilateral Filter Progress Bar');
-
+    w = ceil(1.5*sigma_s);
     [m, n, p] = size(img);
     out = zeros(m,n);
     for i = 1:m,
@@ -16,7 +16,7 @@ function [ out ] = bfilt( img, sigma_s, sigma_r, w )
             DeltaNValues = (DeltaNValues.^2) /(-2*sigma_r*sigma_r);
             
             deltaNIdx = getScaledIdxDistanceMat2(rowIndices, columnIndices, ...
-                                                [i,j], -2*sigma_s*sigma_s);
+                                                [i,j], -2*sigma_s^2);
             
             EV = exp(DeltaNValues+deltaNIdx);
             out(i,j) = (EV(:)'*neighboordhoodValues(:))/sum(EV(:));
