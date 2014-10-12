@@ -26,10 +26,5 @@ awesomeImg = double(awesomeImg)/255;
 baseImg = imread('imgs/rock.png');
 baseImg = double(baseImg)/255;
 
-awesomeImg = imread('imgs/wiese.jpg');
-awesomeImg = double(awesomeImg)/255;
-baseImg = imread('imgs/nils.jpg');
-baseImg = double(baseImg)/255;
-
 out = toneAdjustmentColorImg(baseImg, awesomeImg, 4.0);
 imshow(out)
