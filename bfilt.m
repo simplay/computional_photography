@@ -4,12 +4,14 @@ function [ out ] = bfilt( img, sigma_s, sigma_r)
     h = waitbar(0, 'Applying Bilateral Filter...');
     set(h, 'Name', 'Bilateral Filter Progress Bar');
     w = ceil(1.5*sigma_s);
+    windowLength = 2*w + 1;
     [m, n, p] = size(img);
     out = zeros(m,n);
+    %%%
     for i = 1:m,
         for j = 1:n,
             
-            [rowIndices, columnIndices] = getRanges(i, j, m, n, w);
+            [rowIndices, columnIndices] = getRanges(i, j, m, n, windowLength);
             
             neighboordhoodValues = img(rowIndices, columnIndices);
             DeltaNValues = (neighboordhoodValues-img(i,j));
