@@ -1,5 +1,5 @@
-function [ out ] = hdrToneMapping( output_range )
-    hdrImg = hdrread('imgs/dani_belgium_oC65.hdr');
+function [ out ] = hdrToneMapping(hdrImg, output_range )
+
     eps = 0.0001;
     R = hdrImg(:,:,1);
     G = hdrImg(:,:,2);

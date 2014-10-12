@@ -1,8 +1,7 @@
-function [ out ] = hdrToneMappingGaussian( output_range )
+function [ out ] = hdrToneMappingGaussian(hdrImg, output_range )
 %HDRTONEMAPPINGGAUSSIAN Summary of this function goes here
 %   Detailed explanation goes here
 
-hdrImg = hdrread('imgs/dani_belgium_oC65.hdr');
     eps = 0.0001;
     R = hdrImg(:,:,1);
     G = hdrImg(:,:,2);
