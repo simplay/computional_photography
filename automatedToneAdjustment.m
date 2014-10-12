@@ -25,6 +25,6 @@ function [ out ] = automatedToneAdjustment( input, model, scaleF )
     % scaled detail layer of input.
     
     detail_input = input-large_scale_input;
-    out = detail_input + J*scaleF;
+    out = detail_input*scaleF + J;
 end
 
