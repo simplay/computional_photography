@@ -26,5 +26,11 @@ awesomeImg = double(awesomeImg)/255;
 baseImg = imread('imgs/rock.png');
 baseImg = double(baseImg)/255;
 
-out = toneAdjustmentColorImg(baseImg, awesomeImg, 4.0);
-imshow(out)
+advOut = toneAdjustmentColorImg(baseImg, awesomeImg, 1.0);
+simpleOut = simpleautoToneAdjustment(baseImg, awesomeImg);
+
+figure(1000)
+imshow(advOut)
+
+figure(1001)
+imshow(simpleOut)
