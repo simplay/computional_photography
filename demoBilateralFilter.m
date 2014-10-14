@@ -23,6 +23,15 @@ function demoBilateralFilter( img, sigma_s_seq, sigma_r_seq )
             
             % assign idx of subfigure handler
             g = subplot(len_sig_s,len_sig_r, idx); 
+            
+            % resize subplot image size
+            imgScaleF = 2.5;
+            xsize = get(g, 'XLim');
+            ysize = get(g, 'YLim');
+            set(g, 'XLim', imgScaleF*xsize, 'YLim', imgScaleF*ysize); 
+            
+            % plot subimage into subfigure: 
+            % has to be after resizing the figure dims.
             subimage(img);
 
             % parse label text (used sigma values) for current subfigure. 
