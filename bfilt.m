@@ -8,6 +8,7 @@ function [ out ] = bfilt( img, sigma_s, sigma_r)
     [m, n, p] = size(img);
     out = zeros(m,n);
     %%%
+    tic;
     for i = 1:m,
         for j = 1:n,
             
@@ -23,8 +24,9 @@ function [ out ] = bfilt( img, sigma_s, sigma_r)
             EV = exp(DeltaNValues+deltaNIdx);
             out(i,j) = (EV(:)'*neighboordhoodValues(:))/sum(EV(:));
         end
-        waitbar(i/m);
+        waitbar(i/m)
     end
     close(h);
+    toc
 end
 
