@@ -19,10 +19,12 @@ demoBilateralFilter(yuvImg(:,:,1), sigma_s, sigma_r);
 % tone mapping task
 hdrImg = hdrread('imgs/dani_belgium_oC65.hdr');
 
-figure(2)
+% tone mapping gaussian
+figure(2345)
 imshow(hdrToneMappingGaussian(hdrImg,30))
 
-figure(3)
+% tone mapping bilat. filter
+figure(1337)
 imshow(hdrToneMapping(hdrImg,30))
 
 %% bonus task 2
@@ -33,9 +35,9 @@ imgs = genToneMapping(hdrImg, 30, [2,4,8], [0.12, 0.25, 100]);
 
 %% task 3
 % tone adjustment - awesomification
-awesomeImg = imread('imgs/forest.jpg');
+awesomeImg = imread('imgs/winterstorm.png');
 awesomeImg = double(awesomeImg)/255;
-baseImg = imread('imgs/lake.png');
+baseImg = imread('imgs/rock.png');
 baseImg = double(baseImg)/255;
 
 advOut = toneAdjustmentColorImg(baseImg, awesomeImg, 1);
