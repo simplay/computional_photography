@@ -32,7 +32,7 @@ function [ out ] = genToneMapping( hdrImg, output_range, sigma_s_seq, sigma_r_se
     for k=1:len_sig_s*len_sig_r,
         sigmas = sigma_pairs(k, :);
         
-    
+        % 
         log_base = bfilt(log_intensities, sigmas(1), sigmas(2));
         log_detail = log_intensities - log_base;
     
@@ -44,13 +44,10 @@ function [ out ] = genToneMapping( hdrImg, output_range, sigma_s_seq, sigma_r_se
         R_output = r .* exp(log_output_intensitiy);
         G_output = g .* exp(log_output_intensitiy);
         B_output = b .* exp(log_output_intensitiy);
-    
-
-       
-        out(:,:,:,k) = mat2Img(R_output, G_output, B_output );
+   
+       % 
+       out(:,:,:,k) = mat2Img(R_output, G_output, B_output );
     end
     
-
-
 end
 
