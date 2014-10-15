@@ -40,3 +40,6 @@ imshow(advOut)
 
 figure(1001)
 imshow(simpleOut)
+
+% bonus
+% imgs = toneAdjColorImgSigmas(baseImg, awesomeImg, 1, [1,2], [1]);
