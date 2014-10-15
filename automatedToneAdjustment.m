@@ -1,12 +1,12 @@
-function [ out ] = automatedToneAdjustment( input, model, scaleF )
+function [ out ] = automatedToneAdjustment( input, model, scaleF, sigma_s, sigma_r )
 %awesomify given input images refering to a given awesome model image.
 %  images which can be considered as rather being boring.
 %  model images which is suppoes to be awesome.
 %  scaleF enhancement factor, real numbered value.
 
     % obtain two scale decomposition of the input and model image
-    large_scale_input = bfilt(input, 2, 0.12);
-    large_scale_model = bfilt(model, 2, 0.12);
+    large_scale_input = bfilt(input, sigma_s, sigma_r);
+    large_scale_model = bfilt(model, sigma_s, sigma_r);
     
     % transfer the histogram of the large-scale layer of the model to the
     % large-scale layer of the input.

@@ -27,16 +27,16 @@ yuvImg = rgb2yuv(img2);
 %imshow(hdrToneMapping(hdrImg,30))
 
 % tone adjustment - awesomification
-awesomeImg = imread('imgs/forest.jpg');
+awesomeImg = imread('imgs/winterstorm.png');
 awesomeImg = double(awesomeImg)/255;
-baseImg = imread('imgs/lake.png');
+baseImg = imread('imgs/rock.png');
 baseImg = double(baseImg)/255;
 
-%advOut = toneAdjustmentColorImg(baseImg, awesomeImg, 1);
+advOut = toneAdjustmentColorImg(baseImg, awesomeImg, 1);
 simpleOut = simpleautoToneAdjustment(baseImg, awesomeImg);
 
-%figure(1000)
-%imshow(advOut)
+figure(1000)
+imshow(advOut)
 
 figure(1001)
 imshow(simpleOut)
