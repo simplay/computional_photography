@@ -1,3 +1,32 @@
+% Computational Photography Project 2
+% Turned in by <Michael Single>
+% Legi: 08-917-445
+%
+% Info:
+% I have implemented the following functions
+%
+% bilateral filtering functions:
+% demoBilateralFilter
+% bfilt - 1d imgs
+% bfiltImg3 - 3d imgs (color imgs)
+% bilateralFilter - automatically determining img dim
+
+% tone mapping functions:
+% genToneMapping - series of different sigma values
+% hdrToneMapping - also non hdr imgs using a bilat. filter
+% hdrToneMappingGaussian - also non hdr imgs using a gaussian kernel
+
+% tone adjustment functions:
+% automatedToneAdjustment - generalized helper
+% simpleautooneAdjustment - directly matching histograms
+% toneAdjColChanWise - match each color channel 
+% toneAdjColorImgSigmas - hist matching for a series of sigma values
+% toneAdjustmentColorImg - for color images
+%
+% util functions:
+% arrays2pairs - get all pair combinations of two vectors
+% getRanges - get neighborhood from given input
+
 %% Task2
 % bilateral filter
 img = imread('imgs/Bigel11.jpg');
@@ -13,6 +42,11 @@ demoBilateralFilter(img2(:,:,1), sigma_s, sigma_r);
 yuvImg = rgb2yuv(img2);
 demoBilateralFilter(yuvImg(:,:,1), sigma_s, sigma_r);
 
+img = imread('imgs/castle.jpg');
+img2 = double(img)/255;
+figure
+% blurry castle
+imshow(bilateralFilter(img2, 2, 4))
 %figure(1)
 %imshow(img3)
 
