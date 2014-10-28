@@ -30,8 +30,48 @@ disp(['Since the  Nyquist frequency f_n is equal to 0.5*f_s']);
 disp(['It follows f_n = ',num2str(N/2),' for N equal to ',num2str(N)]); 
 disp(['Since k denotes a frequency we can set k = f_n = ', num2str(N/2), '(i.e. hit k hits Nyquist frequency)']);
 disp(['Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi']);
-
+disp('');
 
 %% task 2
 
+% f_n are the samples of the input function
+% F_m are the Fourier coefficients
+% Let n,m in {0...M?1}, then for a fixed M
+% a) create an M ? M matrix for the DFT containing the entries of a DFT
 
+% F_m = \sum_{n=0}^{M-1} f_n e^{ \frac{-i 2\pi m*n}{M} }
+% this is equivalent to F_m = *f_n
+
+% predefined
+M = 4;
+
+W_loop = zeros(M,M);
+for m=0:M-1,
+    for n=0:M-1,
+        W_loop(m+1,n+1) = exp((-1i*2*pi()*m*n)/M);
+    end
+end
+
+% Note that this could be further simplified:
+% According to Euler's Formular exp(i*phi) = cos(phi) + i sin(phi)
+% for phi (-2*pi()*m*n)/M) in this case it follows:
+% cos(phi) + i sin(phi) = cos(-2*pi()*m*n)/M) + i sin(-2*pi()*m*n)/M)
+% = cos(2*pi()*m*n)/M) - i sin(2*pi()*m*n)/M) % since sine is odd, cos even
+
+% task a) without for loops 
+% m,n coefficient matrix
+
+% Indices set M as repeated row vector.
+IDX = repmat((0:M-1),M, 1);
+
+% m,n coefficient matrix
+Cmn = IDX.*IDX';
+
+% phi matrix as described above in Euler's Formula
+phi = 2*pi()*Cmn/M;
+
+% Note that we have used sin(-x) = -sin(x)
+% This allows us to abstain from the '-' sign in phi's def.
+W = cos(phi)-1i*sin(phi);
+
+% b)
