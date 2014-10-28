@@ -377,7 +377,7 @@ H_bandass = @(W,D0,n) 1-(1 ./ (1 + ((W.*D)./(D.^2 - D0^2)).^(2*n)));
 % ===================================================== end of subtask
 
 % c)
-ns = [2]; % n value used in the slides.
+ns = [2, 10]; % n value used in the slides.
 D0s = [0.1, 0.2, 0.3];
 Ws = [0.05, 0.1, 0.2];
 
@@ -404,7 +404,7 @@ for nIdx=1:length(ns),
         fig_title = strcat('LowP: D0='...
                             ,num2str(D0), ' n=', num2str(n));       
         normLow = normalizeMat(logPowerSpec(H_lowpass(D0, n)));
-        g = subplot(length(D0s),2+length(Ws),figIdx);
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
         subimage(normLow);
         xlabelHandler = get(g,'XLabel');
         set( xlabelHandler, 'String', fig_title); 
@@ -416,7 +416,7 @@ for nIdx=1:length(ns),
         fig_title = strcat('HiP: D0='...
                             ,num2str(D0), ' n=', num2str(n));                        
         normHigh = normalizeMat(logPowerSpec(H_highpass(D0, n)));
-        g = subplot(length(D0s),2+length(Ws),figIdx);
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
         subimage(normHigh);
         xlabelHandler = get(g,'XLabel');
         set( xlabelHandler, 'String', fig_title);
@@ -429,7 +429,7 @@ for nIdx=1:length(ns),
             fig_title = strcat('BandP: D0='...
                             ,num2str(D0), ' n=', num2str(n), ' W',num2str(W));       
             normBand = normalizeMat(logPowerSpec(H_bandass(W,D0,n)));
-            g = subplot(length(D0s),2+length(Ws),figIdx);
+            g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
             subimage(normBand);
             xlabelHandler = get(g,'XLabel');
             set( xlabelHandler, 'String', fig_title);
@@ -440,18 +440,39 @@ for nIdx=1:length(ns),
 end
 
 % some legend related information
-Disp('Note that in the previous figure all a row corresponds to a certain D0');
-Disp('The 1st column is the lowpass filter spectrums');
-Disp('The 2nd column is the highpass filter spectrum');
-Disp('And the columns 3-5 are the bandpass filter spectrums for varying W');
+disp('Note that in the previous figure all a row corresponds to a certain D0');
+disp('The 1st column is the lowpass filter spectrums');
+disp('The 2nd column is the highpass filter spectrum');
+disp('And the columns 3-5 are the bandpass filter spectrums for varying W');
+disp(char(10));
 disp(char(10));
 
 disp('My observations:')
 disp('The filters in the previous figure are normalized - range from [0,1]')
 disp('Therefore, the brighter the higher the weighting value and vice versa')
 disp('White corresponds to the weight 1, black to the weight 0');
-
+disp('Low Pass filter: weighting frequencies closer the center more than those further away');
+disp('Select the lower frequencies:') 
+disp('Filters hight frequencies out (the detail). Thus we get Blurs image');
+disp(char(10));
+disp('High Pass filter: weights frequencies further away from the center more than those closer to the center');
+disp('Filters low frequencies out.')
+disp('The closer this filter gets towards zero, the closer its filtered result is to the original input image');
+disp(char(10));
+disp('the bandpass filter is a disk selecting a certain band spectrum')
+disp(char(10));
 disp('D0 affects the size of the radius:');
 disp('The bigger D0 the bigger the radius gets and vice versa.');
 disp('W affects the width of the filter band:');
-disp('Increasing W increases the filter band width.')
+disp('Increasing W increases the filter band width.');
+disp('Loosly speaking it affects the inner radius of the disk');
+disp('the bigger W gets, the smaller the inner radius gets');
+disp('N Determins the smoothness of the circle border:');
+disp('The higher n gets the sharper the transition');
+disp('I.e. low value of n => smooth');
+disp('I.e. very high value of n => sharp');
+
+
+% ===================================================== end of subtask
+
+% d)
