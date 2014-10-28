@@ -387,6 +387,13 @@ scaleMatByMax = @(Mat) Mat ./ max(Mat(:));
 normalizeMat = @(Mat) scaleMatByMax(shiftMat2Min(Mat));
 
 % Superfancy-modular filter-visualization loop 
+
+    figure_handler = figure;
+    set(figure_handler, 'Position', [100, 100, 800, 800]);
+    title('Bilateral Filter Demo');
+
+
+figIdx = 1;
 for nIdx=1:length(ns),
     for D0Idx=1:length(D0s),
         
@@ -394,27 +401,40 @@ for nIdx=1:length(ns),
         n = ns(nIdx);
         
         % current lowpass filter
-        fig_title = strcat('Lowpass filter using D0='...
+        fig_title = strcat('LowP: D0='...
                             ,num2str(D0), ' n=', num2str(n));       
-        figure('name', fig_title);
         normLow = normalizeMat(H_lowpass(D0, n));
-        imshow(normLow);
+        g = subplot(length(D0s),2+length(Ws),figIdx);
+        subimage(normLow);
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title); 
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
+        
         
         % current highpass filter
-        fig_title = strcat('Highpass filter using D0='...
+        fig_title = strcat('HiP: D0='...
                             ,num2str(D0), ' n=', num2str(n));                        
-        figure('name', fig_title);
-        normHigh = normalizeMat(H_lowpass(D0, n));
-        imshow(normHigh);
+        normHigh = normalizeMat(H_highpass(D0, n));
+        g = subplot(length(D0s),2+length(Ws),figIdx);
+        subimage(normHigh);
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title);
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
         
         % only for bandpass filter
         for WIdx=1:length(Ws),
             W = Ws(WIdx);
-            fig_title = strcat('Bandpass filter using D0='...
+            fig_title = strcat('BandP: D0='...
                             ,num2str(D0), ' n=', num2str(n), ' W',num2str(W));       
-            figure('name', fig_title);
             normBand = normalizeMat(H_bandass(W,D0,n));
-            imshow(normBand);
+            g = subplot(length(D0s),2+length(Ws),figIdx);
+            subimage(normBand);
+            xlabelHandler = get(g,'XLabel');
+            set( xlabelHandler, 'String', fig_title);
+            set(gca,'xtick',[],'ytick',[]);
+            figIdx = figIdx + 1;
         end
     end
 end
