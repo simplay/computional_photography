@@ -4,6 +4,7 @@
 
 close all
 clear all
+clc
 
 %% task 1
 
@@ -32,8 +33,7 @@ disp(['Since the  Nyquist frequency f_n is equal to 0.5*f_s']);
 disp(['It follows f_n = ',num2str(N/2),' for N equal to ',num2str(N)]); 
 disp(['Since k denotes a frequency we can set k = f_n = ', num2str(N/2), '(i.e. hit k hits Nyquist frequency)']);
 disp(['Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi']);
-disp('');
-
+disp(char(10));
 % ===================================================== end of subtask
 
 %% task 2
@@ -85,7 +85,7 @@ if(abs(sum(deltaW(:))) < 1E-12)
 else 
     disp('Error: W does not correspond to its loop version!')
 end
-
+disp(char(10))
 % ===================================================== end of subtask
 
 % b) check det(U), U*U' = eye(M) = U'*U
@@ -94,14 +94,15 @@ U = (W / sqrt(M));
 
 % due to numerical precisson we have to check 
 % whether |U*U' - I| < eps |U'*U - I| < eps |det(U) - 1| < eps
+% test for squared error below eps 
 eps = 1E-12;
 
 % condition |det(U)| = 1
-cond1 = abs(abs(det(U))-1) < eps;
+cond1 = (abs(det(U))-1)^2 < eps;
 
 % conditions U*U = UU* = I.
-cond2 = abs(sum(sum(U*U'-eye(M)))) < eps;
-cond3 = abs(sum(sum(U'*U-eye(M)))) < eps;
+cond2 = (sum(sum(U*U'-eye(M))))^2 < eps;
+cond3 = (sum(sum(U'*U-eye(M))))^2 < eps;
 
 % in matlab comparison yielding true corresponds to be equal 1.
 % since we have three conditions to check, all are true if their sum is 3.
@@ -110,12 +111,13 @@ if( cond1 + cond2 + cond3 == 3 )
 else
     disp('Error: At least one condition, |det(U)| = 1 and U*U = UU* = I, does not true');
 end
+disp(char(10))
 
 % ===================================================== end of subtask
 
 % c)
 % Plot elements in DFT matrix
-figure('Position', [100, 100, 1024, 800], 'name', 'foobar');
+figure('Position', [100, 100, 1024, 800], 'name', 'real and imag DFT coefficent W plots');
 
 % A the k-th row in M corresponds to coefficients 
 % necessary in order to calculate F_k: F_k = M(k,;)*f_n
@@ -157,10 +159,92 @@ disp('Set M=10 in this task and we assume that the first figure is labeled by in
 disp('Comparing 3rd figure in column 1 with the 9th figure in column 1, we see that ');
 disp('their red curves are the same and that the blue curve of the 3rd one is -1 times the 9th one');
 disp('furthermore both have a period equal to 2');
+disp(char(10))
 
 % ===================================================== end of subtask
 
 %d)
+% Take M samples at 2n?/M, n = 0,...,M ?1 of cos(kx) and store them in a vector x.
+x = (2*pi()*(0:M-1));
+for k=0:M-1,
+    disp(['For k=',num2str(k), ':']);
+    Fk = W*cos(x)';
+    matlabFk = fft(cos(k * x))';
+    
+    % W*f_m is equal to FFT{f_m}
+    % squered error below eps
+    dftsAreTheSame = sum(Fk-matlabFk)^2 < eps;
+    if(dftsAreTheSame == 1)
+        disp('W*f_k is the same as Matlab`s FFT{f_k}')
+    else
+        display('Eror: W*f_k NOT SAME as Matlab`s FFT{f_k}')
+    end
+    
+    shiftedFk = fftshift(Fk);
+    shiftedMatlabFk = fftshift(matlabFk);
+    
+    shiftedDftsAreTheSame = (sum(shiftedFk-shiftedMatlabFk)^2 < eps);
+    if(shiftedDftsAreTheSame == 1)
+        disp('shifted W*f_k is the same as Matlab`s shifted FFT{f_k}')
+    else
+        display('Eror: shifted W*f_k NOT SAME as shifted Matlab`s FFT{f_k}')
+    end
+    disp(char(10));
+end
 
+disp('My Intuition:');
+disp('from Matlab`s help page about the fftshift function:');
+disp('1. shifts the zero-frequency component to center of spectrum');
+disp('I.e. For a vector v, fftshift(v) swaps the left and right halves of v');
+disp(char(10));
+disp('Fact: The dft of a function is a Periodic Function');
+disp('In our case we the dft of the function is a vector v with M elements.');
+disp('Appending the 2nd half of this vector to the first half');
+disp('which correspond to swapping the left and right halves of v');
+disp('this gives us a center symmetric vector looking like this');
+disp('[4,3,2,1,2,3] where `1` is the centered zero frequency.');
+disp('Before shifting: [1,2,3,4,3,2] we had this periodic function (aft dft)');
+disp(char(10));
 
+% In addition the following example
+% a random column vector with 9 elements.
+%{
+randV = 
+    0.9857
+    0.1528
+    0.7248
+    0.9652
+    0.3301
+    0.5656
+    0.0009
+    0.8532
+    0.5268
 
+% its dft transformation
+fft(randV) =
+   5.1052 + 0.0000i
+   0.4556 + 0.3877i
+  -0.1761 - 1.0960i
+   0.3752 - 0.4166i
+   1.2283 + 1.0215i
+   1.2283 - 1.0215i
+   0.3752 + 0.4166i
+  -0.1761 + 1.0960i
+   0.4556 - 0.3877i
+
+% its shifted dft transformation:
+ fftshift(fft(randV)) =
+   1.2283 - 1.0215i
+   0.3752 + 0.4166i
+  -0.1761 + 1.0960i
+   0.4556 - 0.3877i
+   5.1052 + 0.0000i
+   0.4556 + 0.3877i
+  -0.1761 - 1.0960i
+   0.3752 - 0.4166i
+   1.2283 + 1.0215i
+%}
+
+% ===================================================== end of subtask
+
+% e)

@@ -1,0 +1,465 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>start3</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-10-28"><meta name="DC.source" content="start3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">task 1</a></li><li><a href="#3">task 2</a></li></ul></div><pre class="codeinput"><span class="comment">% Computational Photography Project 1</span>
+<span class="comment">% Turned in by &lt;Michael Single&gt;</span>
+<span class="comment">% Legi: 08-917-445</span>
+
+close <span class="string">all</span>
+clear <span class="string">all</span>
+</pre><h2>task 1<a name="2"></a></h2><pre class="codeinput"><span class="comment">% a) plot function f(x) = cos(?ox) with ?o = 2?k/N, x ? [0, 16]</span>
+<span class="comment">% and the sampled version f (n) frequency k = 1, . . . , 16.</span>
+<span class="comment">% note that ?o denotes the angular frequency.</span>
+figure(<span class="string">'Position'</span>, [100, 100, 1024, 800], <span class="string">'name'</span>,<span class="string">'Plots of cos(2pi*k*x/N) Plots'</span>);
+N = 16;
+idx = 1;
+<span class="keyword">for</span> k=1:16
+    h = subplot(4,4,idx);
+    fplot(@(x) cos((2*pi()*k/N)*x), [0, 16])
+    hold <span class="string">on</span>
+    stem(cos((2*pi()*k/N)*(1:16)),<span class="string">'fill'</span>,<span class="string">'-.'</span>);
+    hold <span class="string">off</span>
+    title(strcat(<span class="string">'k='</span>,num2str(idx)))
+    idx = idx + 1;
+<span class="keyword">end</span>
+
+<span class="comment">% ===================================================== end of subtask</span>
+
+<span class="comment">% 2.b) Indicate the value of ?o and k at which f(x) hits the Nyquist frequency</span>
+disp([<span class="string">'N = '</span>, num2str(N), <span class="string">' thus N+1 = '</span>, num2str(N+1), <span class="string">' samples are used.'</span>]);
+disp([<span class="string">'Hence, the sample rate f_s is equal to '</span>, num2str(N), <span class="string">' samples per time unit.'</span>]);
+disp([<span class="string">'Since the  Nyquist frequency f_n is equal to 0.5*f_s'</span>]);
+disp([<span class="string">'It follows f_n = '</span>,num2str(N/2),<span class="string">' for N equal to '</span>,num2str(N)]);
+disp([<span class="string">'Since k denotes a frequency we can set k = f_n = '</span>, num2str(N/2), <span class="string">'(i.e. hit k hits Nyquist frequency)'</span>]);
+disp([<span class="string">'Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi'</span>]);
+disp(<span class="string">''</span>);
+
+<span class="comment">% ===================================================== end of subtask</span>
+</pre><pre class="codeoutput">N = 16 thus N+1 = 17 samples are used.
+Hence, the sample rate f_s is equal to 16 samples per time unit.
+Since the  Nyquist frequency f_n is equal to 0.5*f_s
+It follows f_n = 8 for N equal to 16
+Since k denotes a frequency we can set k = f_n = 8(i.e. hit k hits Nyquist frequency)
+Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi
+</pre><img vspace="5" hspace="5" src="start3_01.png" alt=""> <h2>task 2<a name="3"></a></h2><pre class="codeinput"><span class="comment">% f_n are the samples of the input function</span>
+<span class="comment">% F_m are the Fourier coefficients</span>
+<span class="comment">% Let n,m in {0...M?1}, then for a fixed M</span>
+<span class="comment">% a) create an M ? M matrix for the DFT containing the entries of a DFT</span>
+
+<span class="comment">% F_m = \sum_{n=0}^{M-1} f_n e^{ \frac{-i 2\pi m*n}{M} }</span>
+<span class="comment">% this is equivalent to F_m = *f_n</span>
+
+<span class="comment">% predefined</span>
+M = 10;
+
+W_loop = zeros(M,M);
+<span class="keyword">for</span> m=0:M-1,
+    <span class="keyword">for</span> n=0:M-1,
+        W_loop(m+1,n+1) = exp((-1i*2*pi()*m*n)/M);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Note that this could be further simplified:</span>
+<span class="comment">% According to Euler's Formular exp(i*phi) = cos(phi) + i sin(phi)</span>
+<span class="comment">% for phi (-2*pi()*m*n)/M) in this case it follows:</span>
+<span class="comment">% cos(phi) + i sin(phi) = cos(-2*pi()*m*n)/M) + i sin(-2*pi()*m*n)/M)</span>
+<span class="comment">% = cos(2*pi()*m*n)/M) - i sin(2*pi()*m*n)/M) % since sine is odd, cos even</span>
+
+<span class="comment">% task a) without for loops</span>
+<span class="comment">% m,n coefficient matrix</span>
+
+<span class="comment">% Indices set M as repeated row vector.</span>
+IDX = repmat((0:M-1),M, 1);
+
+<span class="comment">% m,n coefficient matrix</span>
+Cmn = IDX.*IDX';
+
+<span class="comment">% phi matrix as described above in Euler's Formula</span>
+phi = 2*pi()*Cmn/M;
+
+<span class="comment">% Note that we have used sin(-x) = -sin(x)</span>
+<span class="comment">% This allows us to abstain from the '-' sign in phi's def.</span>
+W = cos(phi)-1i*sin(phi);
+
+<span class="comment">% sanity check is loop W equal to loopless W?</span>
+deltaW = (W - W_loop);
+<span class="keyword">if</span>(abs(sum(deltaW(:))) &lt; 1E-12)
+    disp(<span class="string">'W is okay'</span>)
+<span class="keyword">else</span>
+    disp(<span class="string">'Error: W does not correspond to its loop version!'</span>)
+<span class="keyword">end</span>
+
+<span class="comment">% ===================================================== end of subtask</span>
+
+<span class="comment">% b) check det(U), U*U' = eye(M) = U'*U</span>
+disp(<span class="string">'Let U := W/sqrt(M)'</span>)
+U = (W / sqrt(M));
+
+<span class="comment">% due to numerical precisson we have to check</span>
+<span class="comment">% whether |U*U' - I| &lt; eps |U'*U - I| &lt; eps |det(U) - 1| &lt; eps</span>
+eps = 1E-12;
+
+<span class="comment">% condition |det(U)| = 1</span>
+cond1 = abs(abs(det(U))-1) &lt; eps;
+
+<span class="comment">% conditions U*U = UU* = I.</span>
+cond2 = abs(sum(sum(U*U'-eye(M)))) &lt; eps;
+cond3 = abs(sum(sum(U'*U-eye(M)))) &lt; eps;
+
+<span class="comment">% in matlab comparison yielding true corresponds to be equal 1.</span>
+<span class="comment">% since we have three conditions to check, all are true if their sum is 3.</span>
+<span class="keyword">if</span>( cond1 + cond2 + cond3 == 3 )
+    disp(<span class="string">'|det(U)| = 1 and U*U = UU* = I holds true'</span>);
+<span class="keyword">else</span>
+    disp(<span class="string">'Error: At least one condition, |det(U)| = 1 and U*U = UU* = I, does not true'</span>);
+<span class="keyword">end</span>
+
+<span class="comment">% ===================================================== end of subtask</span>
+
+<span class="comment">% c)</span>
+<span class="comment">% Plot elements in DFT matrix</span>
+figure(<span class="string">'Position'</span>, [100, 100, 1024, 800], <span class="string">'name'</span>, <span class="string">'real and imag DFT coefficent W plots'</span>);
+
+<span class="comment">% A the k-th row in M corresponds to coefficients</span>
+<span class="comment">% necessary in order to calculate F_k: F_k = M(k,;)*f_n</span>
+<span class="comment">% Plot rows in W, i.e. coefficients F_k wise.</span>
+<span class="keyword">for</span> m=0:M-1
+    subplot(M,2,2*(m+1)-1);
+    plot(0:M-1, real(W(m+1,:)), <span class="string">'r'</span>, 0:M-1, imag(W(m+1,:)), <span class="string">'b'</span>);
+    <span class="keyword">if</span>(m==0)
+        title(<span class="string">'Rows in DFT matrix, real (red) and imaginary (blue) (i-th figure are coeff of Fi)'</span>);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Plotting varying (sin, cos)(kx) for varying freq. values k. in range [0,M-1]</span>
+<span class="keyword">for</span> k=0:M-1
+    subplot(M,2,2*(k+1));
+    fplot(@(x)sin(k*x), [0,M-1], <span class="string">'r'</span>);
+    hold <span class="string">on</span>;
+    fplot(@(x)cos(k*x), [0,M-1], <span class="string">'b'</span>);
+    <span class="keyword">if</span>(k==0)
+        title(<span class="string">'sin (red) and cos (blue) for varying frequency values k (i-th figure is k=i)'</span>);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+disp(<span class="string">'My Observations:'</span>);
+disp(<span class="string">'Elements in W are equal to e^(-i*2*pi*k/M) = cos(-2*pi*k/M) + i*sin(-2*pi*k/M) (Euler Fromula)'</span>);
+disp(<span class="string">'real(e^(-i*2*pi*k/M)) = cos(2*pi*k) (cos is even function'</span>);
+disp(<span class="string">'imag(e^(-i*2*pi*k/M)) = -sin(2*pi*k/M) (sin is odd function'</span>);
+disp(<span class="string">'Until Index M/2 + 1 (assuming M is even) the follwoing holds true:'</span>);
+disp(<span class="string">'See first M/2 + 1 rows in first column in subfigure plots'</span>);
+disp(<span class="string">'Therefore plotting real(e^(-i*2*pi*k/M) gives us a cosine wave with period k'</span>);
+disp(<span class="string">'and plotting imag(e^(-i*2*pi*k/M) gives us a sine wave with period k'</span>);
+disp(<span class="string">'Index m=M/2 has imag = 0'</span>);
+disp(<span class="string">'The periods descrease symmetrically like they increased from this index on.'</span>);
+disp(<span class="string">'In addition, since the real part is a cos wave which is an even function'</span>);
+disp(<span class="string">'the plot of the k-th index is the same as (M/2 - k + 1)-th index (assuming M is even)'</span>);
+disp(<span class="string">'Similarly, the can reason for sine, but it is flipped since sine is an even function'</span>);
+disp(<span class="string">'i.e. sine at k-th plot corresponds to same plot times -1 of (M/2 - k + 1)-th'</span>);
+disp(<span class="string">'To make this observation clear'</span>);
+disp(<span class="string">'Set M=10 in this task and we assume that the first figure is labeled by index 1'</span>);
+disp(<span class="string">'Comparing 3rd figure in column 1 with the 9th figure in column 1, we see that '</span>);
+disp(<span class="string">'their red curves are the same and that the blue curve of the 3rd one is -1 times the 9th one'</span>);
+disp(<span class="string">'furthermore both have a period equal to 2'</span>);
+
+<span class="comment">% ===================================================== end of subtask</span>
+
+<span class="comment">%d)</span>
+
+
+<span class="comment">% Take M samples at 2n?/M, n = 0,...,M ?1 of cos(kx) and store them in a vector x.</span>
+x = (2*pi()*(0:M-1));
+<span class="keyword">for</span> k=0:M-1,
+    Fk = W*cos(x)';
+    matlabFk = fft(cos(k * x))';
+
+    <span class="comment">% W*f_m is equal to FFT{f_m}</span>
+    dftsAreTheSame = abs(sum(Fk-matlabFk)) &lt; eps;
+    <span class="keyword">if</span>(dftsAreTheSame == 1)
+        disp([<span class="string">'For k='</span>,num2str(k),<span class="string">' W*f_k is the same as Matlab`s FFT{f_k}'</span>])
+    <span class="keyword">else</span>
+        display(<span class="string">'fail'</span>)
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">W is okay
+Let U := W/sqrt(M)
+|det(U)| = 1 and U*U = UU* = I holds true
+My Observations:
+Elements in W are equal to e^(-i*2*pi*k/M) = cos(-2*pi*k/M) + i*sin(-2*pi*k/M) (Euler Fromula)
+real(e^(-i*2*pi*k/M)) = cos(2*pi*k) (cos is even function
+imag(e^(-i*2*pi*k/M)) = -sin(2*pi*k/M) (sin is odd function
+Until Index M/2 + 1 (assuming M is even) the follwoing holds true:
+See first M/2 + 1 rows in first column in subfigure plots
+Therefore plotting real(e^(-i*2*pi*k/M) gives us a cosine wave with period k
+and plotting imag(e^(-i*2*pi*k/M) gives us a sine wave with period k
+Index m=M/2 has imag = 0
+The periods descrease symmetrically like they increased from this index on.
+In addition, since the real part is a cos wave which is an even function
+the plot of the k-th index is the same as (M/2 - k + 1)-th index (assuming M is even)
+Similarly, the can reason for sine, but it is flipped since sine is an even function
+i.e. sine at k-th plot corresponds to same plot times -1 of (M/2 - k + 1)-th
+To make this observation clear
+Set M=10 in this task and we assume that the first figure is labeled by index 1
+Comparing 3rd figure in column 1 with the 9th figure in column 1, we see that 
+their red curves are the same and that the blue curve of the 3rd one is -1 times the 9th one
+furthermore both have a period equal to 2
+For k=0 W*f_k is the same as Matlab`s FFT{f_k}
+For k=1 W*f_k is the same as Matlab`s FFT{f_k}
+For k=2 W*f_k is the same as Matlab`s FFT{f_k}
+For k=3 W*f_k is the same as Matlab`s FFT{f_k}
+For k=4 W*f_k is the same as Matlab`s FFT{f_k}
+For k=5 W*f_k is the same as Matlab`s FFT{f_k}
+For k=6 W*f_k is the same as Matlab`s FFT{f_k}
+For k=7 W*f_k is the same as Matlab`s FFT{f_k}
+For k=8 W*f_k is the same as Matlab`s FFT{f_k}
+For k=9 W*f_k is the same as Matlab`s FFT{f_k}
+</pre><img vspace="5" hspace="5" src="start3_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Computational Photography Project 1
+% Turned in by <Michael Single>
+% Legi: 08-917-445
+
+close all
+clear all
+
+%% task 1
+
+% a) plot function f(x) = cos(?ox) with ?o = 2?k/N, x ? [0, 16]
+% and the sampled version f (n) frequency k = 1, . . . , 16.
+% note that ?o denotes the angular frequency.
+figure('Position', [100, 100, 1024, 800], 'name','Plots of cos(2pi*k*x/N) Plots');
+N = 16;
+idx = 1;
+for k=1:16
+    h = subplot(4,4,idx);
+    fplot(@(x) cos((2*pi()*k/N)*x), [0, 16])
+    hold on
+    stem(cos((2*pi()*k/N)*(1:16)),'fill','-.');
+    hold off
+    title(strcat('k=',num2str(idx)))
+    idx = idx + 1;
+end
+
+% ===================================================== end of subtask
+
+% 2.b) Indicate the value of ?o and k at which f(x) hits the Nyquist frequency
+disp(['N = ', num2str(N), ' thus N+1 = ', num2str(N+1), ' samples are used.']);
+disp(['Hence, the sample rate f_s is equal to ', num2str(N), ' samples per time unit.']); 
+disp(['Since the  Nyquist frequency f_n is equal to 0.5*f_s']); 
+disp(['It follows f_n = ',num2str(N/2),' for N equal to ',num2str(N)]); 
+disp(['Since k denotes a frequency we can set k = f_n = ', num2str(N/2), '(i.e. hit k hits Nyquist frequency)']);
+disp(['Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi']);
+disp('');
+
+% ===================================================== end of subtask
+
+%% task 2
+
+% f_n are the samples of the input function
+% F_m are the Fourier coefficients
+% Let n,m in {0...M?1}, then for a fixed M
+% a) create an M ? M matrix for the DFT containing the entries of a DFT
+
+% F_m = \sum_{n=0}^{M-1} f_n e^{ \frac{-i 2\pi m*n}{M} }
+% this is equivalent to F_m = *f_n
+
+% predefined
+M = 10;
+
+W_loop = zeros(M,M);
+for m=0:M-1,
+    for n=0:M-1,
+        W_loop(m+1,n+1) = exp((-1i*2*pi()*m*n)/M);
+    end
+end
+
+% Note that this could be further simplified:
+% According to Euler's Formular exp(i*phi) = cos(phi) + i sin(phi)
+% for phi (-2*pi()*m*n)/M) in this case it follows:
+% cos(phi) + i sin(phi) = cos(-2*pi()*m*n)/M) + i sin(-2*pi()*m*n)/M)
+% = cos(2*pi()*m*n)/M) - i sin(2*pi()*m*n)/M) % since sine is odd, cos even
+
+% task a) without for loops 
+% m,n coefficient matrix
+
+% Indices set M as repeated row vector.
+IDX = repmat((0:M-1),M, 1);
+
+% m,n coefficient matrix
+Cmn = IDX.*IDX';
+
+% phi matrix as described above in Euler's Formula
+phi = 2*pi()*Cmn/M;
+
+% Note that we have used sin(-x) = -sin(x)
+% This allows us to abstain from the '-' sign in phi's def.
+W = cos(phi)-1i*sin(phi);
+
+% sanity check is loop W equal to loopless W?
+deltaW = (W - W_loop);
+if(abs(sum(deltaW(:))) < 1E-12)
+    disp('W is okay')
+else 
+    disp('Error: W does not correspond to its loop version!')
+end
+
+% ===================================================== end of subtask
+
+% b) check det(U), U*U' = eye(M) = U'*U
+disp('Let U := W/sqrt(M)')
+U = (W / sqrt(M));
+
+% due to numerical precisson we have to check 
+% whether |U*U' - I| < eps |U'*U - I| < eps |det(U) - 1| < eps
+eps = 1E-12;
+
+% condition |det(U)| = 1
+cond1 = abs(abs(det(U))-1) < eps;
+
+% conditions U*U = UU* = I.
+cond2 = abs(sum(sum(U*U'-eye(M)))) < eps;
+cond3 = abs(sum(sum(U'*U-eye(M)))) < eps;
+
+% in matlab comparison yielding true corresponds to be equal 1.
+% since we have three conditions to check, all are true if their sum is 3.
+if( cond1 + cond2 + cond3 == 3 )
+    disp('|det(U)| = 1 and U*U = UU* = I holds true');
+else
+    disp('Error: At least one condition, |det(U)| = 1 and U*U = UU* = I, does not true');
+end
+
+% ===================================================== end of subtask
+
+% c)
+% Plot elements in DFT matrix
+figure('Position', [100, 100, 1024, 800], 'name', 'real and imag DFT coefficent W plots');
+
+% A the k-th row in M corresponds to coefficients 
+% necessary in order to calculate F_k: F_k = M(k,;)*f_n
+% Plot rows in W, i.e. coefficients F_k wise.
+for m=0:M-1
+    subplot(M,2,2*(m+1)-1);
+    plot(0:M-1, real(W(m+1,:)), 'r', 0:M-1, imag(W(m+1,:)), 'b');
+    if(m==0)
+        title('Rows in DFT matrix, real (red) and imaginary (blue) (i-th figure are coeff of Fi)');
+    end
+end
+
+% Plotting varying (sin, cos)(kx) for varying freq. values k. in range [0,M-1]
+for k=0:M-1
+    subplot(M,2,2*(k+1));
+    fplot(@(x)sin(k*x), [0,M-1], 'r');
+    hold on;
+    fplot(@(x)cos(k*x), [0,M-1], 'b');
+    if(k==0)
+        title('sin (red) and cos (blue) for varying frequency values k (i-th figure is k=i)');
+    end
+end
+disp('My Observations:');
+disp('Elements in W are equal to e^(-i*2*pi*k/M) = cos(-2*pi*k/M) + i*sin(-2*pi*k/M) (Euler Fromula)'); 
+disp('real(e^(-i*2*pi*k/M)) = cos(2*pi*k) (cos is even function');
+disp('imag(e^(-i*2*pi*k/M)) = -sin(2*pi*k/M) (sin is odd function');
+disp('Until Index M/2 + 1 (assuming M is even) the follwoing holds true:');
+disp('See first M/2 + 1 rows in first column in subfigure plots');
+disp('Therefore plotting real(e^(-i*2*pi*k/M) gives us a cosine wave with period k');
+disp('and plotting imag(e^(-i*2*pi*k/M) gives us a sine wave with period k');
+disp('Index m=M/2 has imag = 0');
+disp('The periods descrease symmetrically like they increased from this index on.');
+disp('In addition, since the real part is a cos wave which is an even function');
+disp('the plot of the k-th index is the same as (M/2 - k + 1)-th index (assuming M is even)');
+disp('Similarly, the can reason for sine, but it is flipped since sine is an even function');
+disp('i.e. sine at k-th plot corresponds to same plot times -1 of (M/2 - k + 1)-th');
+disp('To make this observation clear');
+disp('Set M=10 in this task and we assume that the first figure is labeled by index 1');
+disp('Comparing 3rd figure in column 1 with the 9th figure in column 1, we see that ');
+disp('their red curves are the same and that the blue curve of the 3rd one is -1 times the 9th one');
+disp('furthermore both have a period equal to 2');
+
+% ===================================================== end of subtask
+
+%d)
+
+
+% Take M samples at 2n?/M, n = 0,...,M ?1 of cos(kx) and store them in a vector x.
+x = (2*pi()*(0:M-1));
+for k=0:M-1,
+    Fk = W*cos(x)';
+    matlabFk = fft(cos(k * x))';
+    
+    % W*f_m is equal to FFT{f_m}
+    dftsAreTheSame = abs(sum(Fk-matlabFk)) < eps;
+    if(dftsAreTheSame == 1)
+        disp(['For k=',num2str(k),' W*f_k is the same as Matlab`s FFT{f_k}'])
+    else
+        display('fail')
+    end
+    
+end
+
+##### SOURCE END #####
+--></body></html>
