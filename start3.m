@@ -248,3 +248,25 @@ fft(randV) =
 % ===================================================== end of subtask
 
 % e)
+disp('For 1D Fourier tranformation when given M elements');
+disp('The DFT has an asymptotic complexity of O(M^2)');
+disp('The FTT has an asymptotic complexity of O(M*log(M)');
+disp('Speedup factor using the FFT algorithm instead computing DFT Matrix:'); 
+disp('O([M^2] / [M*log(M)]) which is in O(M/log(M))');
+disp('E.g. given an nxn image (monochromatic) => i.e. M = n^2 (serialized image');
+disp('using the DFT algorithm has a asym. complexity in O([n^4]');
+disp('using the FFT algorithm has a asym. complexity in O([n^2 log(n^2)]');
+disp('which is equal to O([2*(n^2) log(n)] = O([(n^2)*log(n)]');
+disp('Assuming for the derivation of the FFT algorithm was a regular Divide&Conquer approach applied')
+disp('we referre to the logarithm to the basis of 2, when talking about log')
+disp('Therefore, if n=400, then');
+disp('using the DFT algorithm: about 2.5600e+10 Iterations');
+disp('using the FFT algorithm: about 1.3830e+06 Iterations');
+disp('This is for this case a speedup about 4 orders of magnitude (1.8510e+04)');
+disp(char(10));
+
+% ===================================================== end of subtask
+
+%% task 3
+
+%a)
