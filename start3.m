@@ -9,6 +9,7 @@ clc
 % test for squared error below eps 
 eps = 1E-12;
 
+
 %% task 1
 
 % a) plot function f(x) = cos(?ox) with ?o = 2?k/N, x ? [0, 16]
@@ -38,6 +39,7 @@ disp(['Since k denotes a frequency we can set k = f_n = ', num2str(N/2), '(i.e. 
 disp(['Then omega = 2*pi*k/N = 2*pi*(N/2)/N = pi']);
 disp(char(10));
 % ===================================================== end of subtask
+
 
 %% task 2
 
@@ -268,6 +270,7 @@ disp(char(10));
 
 % ===================================================== end of subtask
 
+
 %% task 3
 
 % a) compute 2dim Fourier transform of a grayscale image
@@ -331,4 +334,53 @@ figure('name', 'Centered and Scaled phase angles of Image');
 imshow(dftPhase);
 
 % ===================================================== end of subtask
+
+
+%% task 4
+
+% a) 
+
+img = imread('imgs/castle_grey.jpg');
+img = im2double(img);
+
+% Since filtering in the Fourier domain corresponds to circular convolution
+% need to zero-pad the image to avoid boundary artifacts
+% zero-pad using twice the size of the image itself
+dims = size(img);
+
+% apply dft with zero padding
+imgDft2 = fft2(img, 2*dims(1), 2*dims(2));
+
+% ===================================================== end of subtask
+
+% b) 
+
+% from slides about sampling, reconstruction, fourier transformation
+D0 = 0.1;
+n = 2;
+W = 0.5;
+
+% basic dimensions:
+[height, width, ~] = size(imgDft2);
+
+% Normalized Distances
+[x,y] = meshgrid(-width:width,-height:height);
+D = x.^2 + y.^2;
+D = D-min(D(:));
+D = D ./ max(D(:));
+
+% Construct Buttworth Highpass filter: highpass = 1 - lowpass 
+% assuming (normalization)
+H_lowpass = 1./((1+(D/D0)).^(2*n));
+H_highpass = 1 - H_lowpass;
+
+% constr
+
+% Define band pass filter
+H_bandass = 1 ./ (1 + ((W.*D)./(D.^2 - D_0^2)).^(2*n));
+H_bandass = 1-H_bandass;
+
+% ===================================================== end of subtask
+
+% c)
 
