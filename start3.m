@@ -6,6 +6,9 @@ close all
 clear all
 clc
 
+% test for squared error below eps 
+eps = 1E-12;
+
 %% task 1
 
 % a) plot function f(x) = cos(?ox) with ?o = 2?k/N, x ? [0, 16]
@@ -94,8 +97,6 @@ U = (W / sqrt(M));
 
 % due to numerical precisson we have to check 
 % whether |U*U' - I| < eps |U'*U - I| < eps |det(U) - 1| < eps
-% test for squared error below eps 
-eps = 1E-12;
 
 % condition |det(U)| = 1
 cond1 = (abs(det(U))-1)^2 < eps;
@@ -269,4 +270,65 @@ disp(char(10));
 
 %% task 3
 
-%a)
+% a) compute 2dim Fourier transform of a grayscale image
+img = imread('imgs/castle_grey.jpg');
+img = im2double(img);
+imgDft2 = fft2(img);
+
+% ===================================================== end of subtask
+
+% b) 
+oneChannel = img(:,:,1);
+centerFreqSameAsPixelsum = (imgDft2(1,1)-sum(oneChannel(:)))^2 < eps;
+if(centerFreqSameAsPixelsum == 1)
+    disp('Element (1,1) of the Fourier transform corresponds to the sum over all pixel values.');
+else
+    disp('Error: Pixel value sum not central frequency (1,1)')
+end
+disp(char(10));
+
+% ===================================================== end of subtask
+
+% c) Verify Perseval's Theorem.
+M = size(img,1)*size(img,2);
+persevalsTheoremHoldsTrue = sum(sum(sum(img.^2))...
+                                -(1/M)*sum(sum(imgDft2.*conj(imgDft2)))).^2 < eps;
+if(sum(persevalsTheoremHoldsTrue) == 1)
+    disp('Perseval`s Theorem holds true');
+else
+    disp('Error: Perseval`s Theorem does NOT hold true')
+end
+disp(char(10));                    
+
+% ===================================================== end of subtask
+
+% d) Center dft2 of image
+centeredDFT = fftshift(imgDft2);
+
+% ===================================================== end of subtask
+
+% e) Visualize power spectrum
+
+% power spectrum S = |F|^2
+S = centeredDFT .* conj(centeredDFT);
+
+% logarithmic values in order to reduce the contrast
+spectrum = log(1+S);
+% normalize spectrum linearly into range [0,1]
+spectrum = (spectrum - min(spectrum(:)));
+spectrum = spectrum ./ max(spectrum(:));
+figure('name', 'Centered and Scaled Power Spectrum of Image');
+imshow(spectrum);
+
+% ===================================================== end of subtask
+
+% f) Visualize phase angles
+
+dftPhase = angle(centeredDFT);
+dftPhase = dftPhase - min(dftPhase(:));
+dftPhase = dftPhase ./ max(dftPhase(:));
+figure('name', 'Centered and Scaled phase angles of Image');
+imshow(dftPhase);
+
+% ===================================================== end of subtask
+
