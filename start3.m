@@ -446,3 +446,12 @@ Disp('The 2nd column is the highpass filter spectrum');
 Disp('And the columns 3-5 are the bandpass filter spectrums for varying W');
 disp(char(10));
 
+disp('My observations:')
+disp('The filters in the previous figure are normalized - range from [0,1]')
+disp('Therefore, the brighter the higher the weighting value and vice versa')
+disp('White corresponds to the weight 1, black to the weight 0');
+
+disp('D0 affects the size of the radius:');
+disp('The bigger D0 the bigger the radius gets and vice versa.');
+disp('W affects the width of the filter band:');
+disp('Increasing W increases the filter band width.')
