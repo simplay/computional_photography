@@ -377,15 +377,16 @@ H_bandass = @(W,D0,n) 1-(1 ./ (1 + ((W.*D)./(D.^2 - D0^2)).^(2*n)));
 % ===================================================== end of subtask
 
 % c)
-ns = [1,2,10];
+ns = [2]; % n value used in the slides.
 D0s = [0.1, 0.2, 0.3];
-Ws = [0.2, 0.1, 0.05];
+Ws = [0.05, 0.1, 0.2];
 
 % helper function: For normalizing
 shiftMat2Min = @(Mat) Mat - min(Mat(:));
 scaleMatByMax = @(Mat) Mat ./ max(Mat(:));
 normalizeMat = @(Mat) scaleMatByMax(shiftMat2Min(Mat));
 
+% Superfancy-modular filter-visualization loop 
 for nIdx=1:length(ns),
     for D0Idx=1:length(D0s),
         
@@ -417,3 +418,5 @@ for nIdx=1:length(ns),
         end
     end
 end
+
+
