@@ -382,16 +382,16 @@ D0s = [0.1, 0.2, 0.3];
 Ws = [0.05, 0.1, 0.2];
 
 % helper function: For normalizing
+logPowerSpec = @(Mat)log(1 + Mat.*conj(Mat));
+
 shiftMat2Min = @(Mat) Mat - min(Mat(:));
 scaleMatByMax = @(Mat) Mat ./ max(Mat(:));
 normalizeMat = @(Mat) scaleMatByMax(shiftMat2Min(Mat));
 
+
+
 % Superfancy-modular filter-visualization loop 
-
-    figure_handler = figure;
-    set(figure_handler, 'Position', [100, 100, 800, 800]);
-    title('Bilateral Filter Demo');
-
+figure('Position', [100, 100, 1024, 800], 'name','Visualize log Power Spectrum of filters');
 
 figIdx = 1;
 for nIdx=1:length(ns),
@@ -403,7 +403,7 @@ for nIdx=1:length(ns),
         % current lowpass filter
         fig_title = strcat('LowP: D0='...
                             ,num2str(D0), ' n=', num2str(n));       
-        normLow = normalizeMat(H_lowpass(D0, n));
+        normLow = normalizeMat(logPowerSpec(H_lowpass(D0, n)));
         g = subplot(length(D0s),2+length(Ws),figIdx);
         subimage(normLow);
         xlabelHandler = get(g,'XLabel');
@@ -415,7 +415,7 @@ for nIdx=1:length(ns),
         % current highpass filter
         fig_title = strcat('HiP: D0='...
                             ,num2str(D0), ' n=', num2str(n));                        
-        normHigh = normalizeMat(H_highpass(D0, n));
+        normHigh = normalizeMat(logPowerSpec(H_highpass(D0, n)));
         g = subplot(length(D0s),2+length(Ws),figIdx);
         subimage(normHigh);
         xlabelHandler = get(g,'XLabel');
@@ -428,7 +428,7 @@ for nIdx=1:length(ns),
             W = Ws(WIdx);
             fig_title = strcat('BandP: D0='...
                             ,num2str(D0), ' n=', num2str(n), ' W',num2str(W));       
-            normBand = normalizeMat(H_bandass(W,D0,n));
+            normBand = normalizeMat(logPowerSpec(H_bandass(W,D0,n)));
             g = subplot(length(D0s),2+length(Ws),figIdx);
             subimage(normBand);
             xlabelHandler = get(g,'XLabel');
@@ -439,4 +439,10 @@ for nIdx=1:length(ns),
     end
 end
 
+% some legend related information
+Disp('Note that in the previous figure all a row corresponds to a certain D0');
+Disp('The 1st column is the lowpass filter spectrums');
+Disp('The 2nd column is the highpass filter spectrum');
+Disp('And the columns 3-5 are the bandpass filter spectrums for varying W');
+disp(char(10));
 
