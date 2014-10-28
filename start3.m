@@ -355,11 +355,6 @@ imgDft2 = fft2(img, 2*dims(1), 2*dims(2));
 
 % b) 
 
-% from slides about sampling, reconstruction, fourier transformation
-D0 = 0.1;
-n = 2;
-W = 0.5;
-
 % basic dimensions:
 [height, width, ~] = size(imgDft2);
 
@@ -370,15 +365,14 @@ D = D-min(D(:));
 D = D ./ max(D(:));
 
 % Construct Buttworth Highpass filter: highpass = 1 - lowpass 
-% assuming (normalization)
-H_lowpass = 1./((1+(D/D0)).^(2*n));
-H_highpass = 1 - H_lowpass;
+% assuming (normalization): Is a function of (D0, n).
+H_lowpass = @(D0,n) 1./((1+(D/D0)).^(2*n));
+H_highpass = @(D0,n) 1 - H_lowpass(D0,n);
 
 % constr
 
-% Define band pass filter
-H_bandass = 1 ./ (1 + ((W.*D)./(D.^2 - D_0^2)).^(2*n));
-H_bandass = 1-H_bandass;
+% Define band pass filter: as a function of (W,D0,n)
+H_bandass = @(W,D,n) 1-(1 ./ (1 + ((W.*D)./(D.^2 - D0^2)).^(2*n)));
 
 % ===================================================== end of subtask
 
