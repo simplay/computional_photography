@@ -74,4 +74,28 @@ phi = 2*pi()*Cmn/M;
 % This allows us to abstain from the '-' sign in phi's def.
 W = cos(phi)-1i*sin(phi);
 
-% b)
+
+% b) check det(U), U*U' = eye(M) = U'*U
+U = (W / sqrt(M));
+
+% due to numerical precisson we have to check 
+% whether |U*U' - I| < eps |U'*U - I| < eps |det(U) - 1| < eps
+eps = 1E-8;
+
+% condition |det(U)| = 1
+cond1 = abs(abs(det(U))-1) < eps;
+
+% conditions U*U = UU* = I.
+cond2 = abs(sum(sum(U*U'-eye(M)))) < eps;
+cond3 = abs(sum(sum(U'*U-eye(M)))) < eps;
+
+% in matlab comparison yielding true corresponds to be equal 1.
+% since we have three conditions to check, all are true if their sum is 3.
+if( cond1 + cond2 + cond3 == 3 )
+    disp('|det(U)| = 1 and U*U = UU* = I holds true');
+else
+    disp('Error: At least one condition, |det(U)| = 1 and U*U = UU* = I, does not true');
+end
+
+
+% c)
