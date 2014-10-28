@@ -357,9 +357,10 @@ imgDft2 = fft2(img, 2*dims(1), 2*dims(2));
 
 % basic dimensions:
 [height, width, ~] = size(imgDft2);
-
+h = (height - 1)/2;
+w = (width - 1)/2;
 % Normalized Distances
-[x,y] = meshgrid(-width:width,-height:height);
+[x,y] = meshgrid(-w:w,-h:h);
 D = x.^2 + y.^2;
 D = D-min(D(:));
 D = D ./ max(D(:));
@@ -476,3 +477,114 @@ disp('I.e. very high value of n => sharp');
 % ===================================================== end of subtask
 
 % d)
+imgDft2 = imgDft2(:,:,1);
+imgDft2 = fftshift(imgDft2);
+
+figure('Position', [100, 100, 1024, 800], 'name','Spectrum of filtered DFT Img');
+figIdx = 1;
+for nIdx=1:length(ns),
+    for D0Idx=1:length(D0s),
+        
+        D0 = D0s(D0Idx);
+        n = ns(nIdx);
+        
+        % current lowpass filter
+        fig_title = strcat('LowP: D0='...
+                            ,num2str(D0), ' n=', num2str(n));       
+        normLow = normalizeMat(logPowerSpec(imgDft2 .* H_lowpass(D0, n)));
+        
+        
+        
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+        subimage(normLow);
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title); 
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
+        
+        
+        % current highpass filter
+        fig_title = strcat('HiP: D0='...
+                            ,num2str(D0), ' n=', num2str(n));                        
+        normHigh = normalizeMat(logPowerSpec(imgDft2.*H_highpass(D0, n)));
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+        subimage(normHigh);
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title);
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
+        
+        % only for bandpass filter
+        for WIdx=1:length(Ws),
+            W = Ws(WIdx);
+            fig_title = strcat('BandP: D0='...
+                            ,num2str(D0), ' n=', num2str(n), ' W',num2str(W));       
+            normBand = normalizeMat(logPowerSpec(imgDft2.*H_bandass(W,D0,n)));
+            g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+            subimage(normBand);
+            xlabelHandler = get(g,'XLabel');
+            set( xlabelHandler, 'String', fig_title);
+            set(gca,'xtick',[],'ytick',[]);
+            figIdx = figIdx + 1;
+        end
+    end
+end
+
+
+transformBack = @(Mat) ifft2(ifftshift(Mat));
+clipImg = @(Mat) abs(Mat(1:size(img,1), 1:size(img, 2)));
+clipTransformBack = @(Mat) clipImg(transformBack(Mat));
+
+
+figure('Position', [100, 100, 1024, 800], 'name','Filter Imges');
+figIdx = 1;
+for nIdx=1:length(ns),
+    for D0Idx=1:length(D0s),
+        
+        D0 = D0s(D0Idx);
+        n = ns(nIdx);
+        
+        % current lowpass filter
+        fig_title = strcat('LowP: D0='...
+                            ,num2str(D0), ' n=', num2str(n));       
+        normLow = imgDft2 .* H_lowpass(D0, n);
+        
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+        subimage(clipTransformBack(normLow));
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title); 
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
+        
+        
+        % current highpass filter
+        fig_title = strcat('HiP: D0='...
+                            ,num2str(D0), ' n=', num2str(n));                        
+        normHigh = imgDft2.*H_highpass(D0, n);
+        g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+        subimage(clipTransformBack(normHigh));
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title);
+        set(gca,'xtick',[],'ytick',[]);
+        figIdx = figIdx + 1;
+        
+        % only for bandpass filter
+        for WIdx=1:length(Ws),
+            W = Ws(WIdx);
+            fig_title = strcat('BandP: D0='...
+                            ,num2str(D0), ' n=', num2str(n), ' W',num2str(W));       
+            normBand = imgDft2.*H_bandass(W,D0,n);
+            g = subplot(length(ns)*length(D0s),2+length(Ws),figIdx);
+            subimage(clipTransformBack(normBand));
+            xlabelHandler = get(g,'XLabel');
+            set( xlabelHandler, 'String', fig_title);
+            set(gca,'xtick',[],'ytick',[]);
+            figIdx = figIdx + 1;
+        end
+    end
+end
+
+% ===================================================== end of subtask
+
+
+%% task 5
