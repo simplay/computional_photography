@@ -710,6 +710,11 @@ widthR = round((dims(2) - sqrt(q)*dims(2))/2);
 dftImg = fft2(img);
 save('imgs/uncompressed.mat', 'dftImg');
 
+% show file size
+fileInfo = dir('imgs/uncompressed.mat');
+disp(['Size Uncompressed File: ',num2str(fileInfo.bytes/1024^2), ' MB']);
+disp(char(10))
+
 dftImg = fftshift(dftImg);
 
 figure('Position', [100, 100, 1440, 800], 'name', 'Uncompressed Spectrum');
@@ -749,8 +754,14 @@ imshow(normalizeMat(logPowerSpec(dftImg)))
 % ===================================================== end of subtask
 
 % c)
+
 dftImg = ifftshift(dftImg);
 save('imgs/compressed.mat', 'dftImg');
+
+% show file size
+fileInfo = dir('imgs/compressed.mat');
+disp(['Size Compressed File: ',num2str(fileInfo.bytes/1024^2), ' MB']);
+disp(char(10))
 
 % ===================================================== end of subtask
 
