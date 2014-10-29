@@ -141,7 +141,7 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 % b)
 \item $\mathcal{F} \left \{ f \right\} (x) = f(x)f(x-1)$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
 
-\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\paragraph{Show} $\mathcal{F}$ is not \emph{linear} \\
 \begin{proof}
 \begin{align*}
     \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
@@ -155,23 +155,35 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 \paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= f(x+\delta)f(x-1+\delta) \\
+    &= S_{\delta}(f(x)f(x-1)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+% c)
+\item $\mathcal{F} \left \{ f \right\} (x) = \sum_{k=x-1}^{x+2}f(k)$ is $\emph{linear}$ and is $\emph{shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
+    &= \sum_{k=x-1}^{x+2}(\alpha f(k) + \beta g(k)) \\
+    &= \alpha \sum_{k=x-1}^{x+2} f(k) + \beta \sum_{k=x-1}^{x+2} g(k) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
 \paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= \sum_{k=x-1+\delta}^{x+2+\delta} f(k) \\
+    &= S_{\delta}(\sum_{k=x-1}^{x+2} f(k)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
