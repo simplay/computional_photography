@@ -5,9 +5,28 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+
 \usepackage{color}
 \usepackage{subcaption}
 \usepackage{caption}
+
+
+
+
+\usepackage{mathrsfs}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{mdwlist}
+\usepackage{gensymb}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[hmargin=3cm]{geometry}
+\usepackage{boxedminipage}
+
+
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{18pt}
@@ -21,6 +40,23 @@
    language=Matlab, 
    basicstyle=\small\ttfamily, 
 } 
+
+
+
+
+
+
+\renewcommand{\algorithmicforall}{\textbf{Foreach}}
+\newcommand{\init}{\textbf{INIT }}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\asteq}{\mathrel{*}=}
+\newcommand{\myto}{\textbf{TO }}
+\newcommand*\colvec[3][]{
+    \begin{pmatrix}\ifx\relax#1\relax\else#1\\\fi#2\\#3\end{pmatrix}
+}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 
 
@@ -39,12 +75,67 @@
 \maketitle
 
 
-\section{Task 1}
-\section{Task 2}
-\section{Task 3}
-\section{Task 4}
-\section{Task 5}
-\section{Task 6}
+\section*{Task 1}
+    
+\section*{Task 2}
+\begin{itemize}
+    \item Our given image $I$ is an $m$ by $n$
+    \item Image $I$ is monochromatic, i.e. there is only one color-channel.
+\end{itemize}
+
+
+
+
+\begin{algorithm}[H]
+\caption{Moving Average box filter}
+\begin{table}[H]
+  \begin{tabular}{@{}lll@{}}
+    \textbf{Input:} & Grayscale \emph{Image} I resolution m by n  \\
+    \textbf{Output:} & \emph{Image} $\hat{I}$   \\
+  \end{tabular} 
+\end{table}
+\textbf{Procedures:} $getDimensions(Image)$  \\
+\setlength{\fboxrule}{0pt} 
+\begin{boxedminipage}{1.0\textwidth}
+  \begin{algorithmic}[1]
+      \State $ [h,w] = getDimensions(I)$
+      \State $ r = \ceil{\frac{w-1}{2}}$
+      \ForAll{$Pixel \thinspace p \in Image \thinspace I$}
+        \State $ contribution = 0$
+        \ForAll{$Pixel \thinspace p_n \in r-Neighborhood \thinspace \ \mathcal{N}_r(p)$}
+            \State $ contribution = contribution + I(p+p_n)$
+        \EndFor
+        \State $ \hat{I}(p) = \frac{contribution}{m \cdot n}$
+      \EndFor
+  \end{algorithmic}
+  \end{boxedminipage}
+  \vskip1.5pt
+\label{alg:boxfilter}
+\end{algorithm}
+
+\paragraph{Remarks:}
+
+\begin{itemize}
+    \item By pixels in the Algorithm $\ref{alg:boxfilter}$ we are referring to the coordinates of the pixel in the image. 
+    \item $I(p)$ denotes accessing the pixel-(color)-values in the images at the position of the pixel $p$ in the image $I$.
+    \item $\mathcal{N}_r(p)$ denotes the neighborhood with radius $r$ around a given pixel $p$. In the context of pixel-coordinates, think of it as a box-grid, centred at the pixel coordinates of $p$. This grid has a radius of r. This means there are $r$ neighbors (pixel-coordinates in the grid) below, on top, on the left and on the right of $p$.
+    \item Our algorithm can easily be extended for color Images by simply applying the same algorithm to each color-channel separately.
+    \item The assumption of being provided by a m by n can easily be extended for the case when $n \neq m$. This only will affect the computation of the radius $r$ in algorithm $\ref{alg:boxfilter}$. \\ Computing $\ceil{0.5 \cdot \left( \ceil{\frac{m-1}{2}} + \ceil{\frac{n-1}{2}}\right)}$ would be a valid option in order to compute $r$. 
+    \item If $w$ (i.e. n) is odd, then $\ceil{\frac{w-1}{2}}$ is equal to $\frac{w-1}{2}$. 
+\end{itemize}
+
+
+\paragraph{Aysmptotic Complexity}
+
+
+\section*{Task 3}
+\section*{Task 4}
+\section*{Task 5}
+
+
+
+
+\section*{Task 6}
 
 
 
