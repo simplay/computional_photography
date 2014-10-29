@@ -815,7 +815,10 @@ disp(char(10))
 
 % f)
 
-for p=0.40:0.05:0.80,
+experimentPRange = 0.40:0.05:0.80;
+CompExpData = zeros(length(experimentPRange), 4);
+idx = 1;
+for p=experimentPRange,
     
     q = 1-p;
     heightR = round((dims(1) - sqrt(q)*dims(1))/2);
@@ -835,7 +838,7 @@ for p=0.40:0.05:0.80,
     save(filePathName, 'dftImg');
     
     load(filePathName, 'dftImg');
-    fileInfo = dir('imgs/compressed.mat');
+    fileInfo = dir(filePathName);
     compressedMB = fileInfo.bytes/1024^2;
     
     
@@ -851,5 +854,15 @@ for p=0.40:0.05:0.80,
     disp(['Compressed by a factor of ', num2str((compressedMB/uncompressedMB))]);
     disp(['L2 error: ', num2str(errorL2)]);
     disp(['Relative L2 error: ', num2str(errorRelL2)]);
+    disp(char(10))
+    
+    CompExpData(idx, :) = [p*100, errorL2, errorRelL2, compressedMB/uncompressedMB];
+    
+    idx = idx + 1;
 end
+
+disp('Evaluation Compression experiment')
+disp('Column Format: Percentag, L2 error, rel. L2 error, compression ratio')
+disp(CompExpData);
+disp(char(10))
 
