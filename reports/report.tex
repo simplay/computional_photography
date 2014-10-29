@@ -111,6 +111,8 @@ Therefore, directly applying the definition from equation $\ref{eq:shift_op}$ to
 Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_op_easy}$ and equation $\ref{eq:lin_op}$ let I solved this task,
 
 \begin{enumerate}[(a)] 
+
+% a)
 \item $\mathcal{F} \left \{ f \right\} (x) = e^{f(x)}$ is $\emph{not linear}$ and is $\emph{shift invariant}$. 
 
 \paragraph{Show:} $\mathcal{F}$ is not \emph{linear} \\
@@ -120,25 +122,33 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
     &= e^{\alpha f(x) + \beta g(x)} \\
     &= e^{\alpha f(x)} e^{\beta g(x)}\\
     &\neq \alpha e^{f(x)} + \beta e^{g(x)}\\
-    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(y)
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
 \paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= e^{f(x + \delta)} \\
+    &= S_{\delta}(e^{f(x)}) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
 
-
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+% b)
+\item $\mathcal{F} \left \{ f \right\} (x) = f(x)f(x-1)$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
+    &= (\alpha f(x) + \beta g(x))(\alpha f(x-1) + \beta g(x-1)) \\
+    &= \alpha^2 f(x)f(x-1) + \beta^2 g(x)g(x-1) + \alpha \beta (f(x)g(x-1)+f(x-1)g(x)) \\
+    &\neq \alpha f(x)f(x-1) + \beta g(x)g(x-1) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
