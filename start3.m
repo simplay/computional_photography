@@ -700,7 +700,7 @@ disp(char(10))
 % b)
 
 % user specified percentage value
-p = 0.7;
+p = 0.6;
 q = 1-p;
 
 heightR = round((dims(1) - sqrt(q)*dims(1))/2);
@@ -712,7 +712,8 @@ save('imgs/uncompressed.mat', 'dftImg');
 
 % show file size
 fileInfo = dir('imgs/uncompressed.mat');
-disp(['Size Uncompressed File: ',num2str(fileInfo.bytes/1024^2), ' MB']);
+uncompressedMB = fileInfo.bytes/1024^2;
+disp(['Size Uncompressed File: ',num2str(uncompressedMB), ' MB']);
 disp(char(10))
 
 dftImg = fftshift(dftImg);
@@ -760,7 +761,8 @@ save('imgs/compressed.mat', 'dftImg');
 
 % show file size
 fileInfo = dir('imgs/compressed.mat');
-disp(['Size Compressed File: ',num2str(fileInfo.bytes/1024^2), ' MB']);
+compressedMB = fileInfo.bytes/1024^2;
+disp(['Size Compressed File: ',num2str(compressedMB), ' MB']);
 disp(char(10))
 
 % ===================================================== end of subtask
@@ -782,3 +784,32 @@ title(['Compressed image (', num2str(100*p), ' percent set to 0)'])
 % ===================================================== end of subtask
 
 % e)
+
+firstImgColChang = img(:,:,1);
+deltaImg = (img-recoveredCompressedImg);
+firstColChan = deltaImg(:,:,1);
+errorL2 = (sum(firstColChan(:))^2);
+errorRelL2 = errorL2 / (norm(firstImgColChang(:)));
+
+disp('Status of Compressed Image')
+disp([num2str(100*p), ' percente of the image values got replaced by 0']);
+disp(['Compressed by a factor of ', num2str((compressedMB/uncompressedMB))]);
+disp(['L2 error: ', num2str(errorL2)]);
+disp(['Relative L2 error: ', num2str(errorRelL2)]);
+disp(char(10))
+
+disp('Given Compression Percentage is approx. equal to 100% - CompressionFactor*100%')
+disp('According to Parseval?s Theorem the spatial Energy of a signal is equal to ')
+disp('the Energy of the signal in the frequency domain')
+disp('times a factor (1/M) where M is the number of samples')
+disp('Since use q = 1-p, where p is the user specified % compression factor')
+disp('and set all high freq. values in a mask of diameter srt(q*dim) to zero')
+disp('and our image is 2d, this corresponds to affecting this scale factor 1/M.')
+disp('since we reduce each dim sqrt(q)length and we have two dimensions')
+disp('and reducing corresponds setting the boundary with a certain width equal zero');
+disp('we get in the compression the ratio of length*sqrt(q)^2');
+disp('This is exactly equal to the compression factor mentioned above');
+disp(char(10))
+
+% ===================================================== end of subtask
+
