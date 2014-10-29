@@ -439,6 +439,125 @@ From equation $\ref{eq:sincderi}$ we can conclude a box filter in the frequency 
 
 
 \section*{Task 4}
+
+In the following a list of steps that have to be performed in order to retrieve the $3 \times 3$ unsharp masking kernel:  
+
+\begin{enumerate}
+\item Define the
+$3 \times 3$ Box Filter:
+ 
+\begin{equation}
+B_{3 \times 3} = 
+\frac{1}{9}
+\begin{pmatrix}
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+\end{pmatrix}
+\label{eq:box_filter_3x3_2}
+\end{equation}
+
+Applying this filter will blur the image.
+
+\item Define the $3 \times 3$ Identity Filter 
+
+\begin{equation}
+I_{3 \times 3} = 
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix}
+\label{eq:id_filter}
+\end{equation}
+
+Applying this filter will give us the same image back.
+
+\item The details of an image can be obtained by subtraction the blurred version of the image from itself. A kernel (filter) that does this for us can be obtained by subtracting the identity kernel from a blur kernel. For our case the  $3 \times 3$ detail kernel $D_{3 \times 3}$ is equal to:
+
+\begin{align}
+     D_{3 \times 3} 
+     &= I_{3 \times 3} - B_{3 \times 3} \\
+     &= 
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix} 
+-\frac{1}{9}
+\begin{pmatrix}
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+\end{pmatrix} \\
+&= 
+\frac{1}{9}
+\begin{pmatrix}
+-1 & -1 & -1 \\
+-1 & 8 & -1 \\
+-1 & -1 & -1 \\
+\end{pmatrix}
+\label{eq:detail_boost}
+\end{align}
+
+
+\item The detail of an Image can be scaled (enhanced or lowered) by multiplying a scalar factor $\lambda$ to the kernel $D_{3 \times 3} $ when applying this kernel to an image.
+
+\item Unsharp masking is simply scaling the details of an given image by applying a certain kernel. The kernel $D_{3 \times 3}$ from equation $\ref{eq:detail_boost}$ will do the trick for us. The $3 \times 3$ unsharp masking kernel $U_{3\times 3}$ can be obtained by adding a scalar multiple of the kernel $D_{3 \times 3}$ to the identity kernel $I_{3 \times 3}$.
+
+\begin{align}
+    U_{3\times 3} 
+    &= I_{3 \times 3} + \lambda D_{3 \times 3} \\
+    &=
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix}
++ \frac{\lambda}{9}
+\begin{pmatrix}
+-1 & -1 & -1 \\
+-1 & 8 & -1 \\
+-1 & -1 & -1 \\
+\end{pmatrix} \\
+&=
+\frac{\lambda}{9}
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & \frac{9}{\lambda} & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix}
++ \frac{\lambda}{9}
+\begin{pmatrix}
+-1 & -1 & -1 \\
+-1 & 8 & -1 \\
+-1 & -1 & -1 \\
+\end{pmatrix} \\
+&=
+\frac{\lambda}{9}\left(
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & \frac{9}{\lambda} & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix}
++ 
+\begin{pmatrix}
+-1 & -1 & -1 \\
+-1 & 8 & -1 \\
+-1 & -1 & -1 \\
+\end{pmatrix} \right)\\
+&=
+\frac{\lambda}{9}
+\begin{pmatrix}
+-1 & -1 & -1 \\
+-1 & \frac{9}{\lambda}+8 & -1 \\
+-1 & -1 & -1 \\
+\end{pmatrix}
+\end{align}
+
+\end{enumerate}
+
+
 \section*{Task 5}
 
 
