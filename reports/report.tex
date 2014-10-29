@@ -78,27 +78,24 @@
 \section*{Task 1}
     
 \section*{Task 2}
-\begin{itemize}
-    \item Our given image $I$ is an $m$ by $n$
-    \item Image $I$ is monochromatic, i.e. there is only one color-channel.
-\end{itemize}
 
-
-
+Given an $m \times n$ monochromatic (i.e. there is only one color-channel) Image $I$. 
+Give an algorithm how to apply box-filtering on this image. Furthermore analyse the asymptotic complexity of this algorithm.
 
 \begin{algorithm}[H]
 \caption{Moving Average box filter}
 \begin{table}[H]
   \begin{tabular}{@{}lll@{}}
-    \textbf{Input:} & Grayscale \emph{Image} I resolution m by n  \\
-    \textbf{Output:} & \emph{Image} $\hat{I}$   \\
+    \textbf{Input:} & Grayscale \emph{Image} I with resolution $m \times n$  \\
+    \textbf{Output:} & Box filtered Image \emph{Image} $\hat{I}$   \\
   \end{tabular} 
 \end{table}
-\textbf{Procedures:} $getDimensions(Image)$  \\
+\textbf{Procedures:} $getDimensions(Image)$, $zeros(height, width)$  \\
 \setlength{\fboxrule}{0pt} 
 \begin{boxedminipage}{1.0\textwidth}
   \begin{algorithmic}[1]
       \State $ [h,w] = getDimensions(I)$
+      \State $ \hat{I} = zeros(h,w)$
       \State $ r = \ceil{\frac{w-1}{2}}$
       \ForAll{$Pixel \thinspace p \in Image \thinspace I$}
         \State $ contribution = 0$
@@ -116,12 +113,14 @@
 \paragraph{Remarks:}
 
 \begin{itemize}
-    \item By pixels in the Algorithm $\ref{alg:boxfilter}$ we are referring to the coordinates of the pixel in the image. 
+    \item By pixels in the Algorithm $\ref{alg:boxfilter}$ we are referring to the coordinates of the pixel in the image. Therefore $p$ corresponds to the $x$ and $y$ coordinates of pixel $p$ in the Image $I$.
     \item $I(p)$ denotes accessing the pixel-(color)-values in the images at the position of the pixel $p$ in the image $I$.
     \item $\mathcal{N}_r(p)$ denotes the neighborhood with radius $r$ around a given pixel $p$. In the context of pixel-coordinates, think of it as a box-grid, centred at the pixel coordinates of $p$. This grid has a radius of r. This means there are $r$ neighbors (pixel-coordinates in the grid) below, on top, on the left and on the right of $p$.
     \item Our algorithm can easily be extended for color Images by simply applying the same algorithm to each color-channel separately.
     \item The assumption of being provided by a m by n can easily be extended for the case when $n \neq m$. This only will affect the computation of the radius $r$ in algorithm $\ref{alg:boxfilter}$. \\ Computing $\ceil{0.5 \cdot \left( \ceil{\frac{m-1}{2}} + \ceil{\frac{n-1}{2}}\right)}$ would be a valid option in order to compute $r$. 
     \item If $w$ (i.e. n) is odd, then $\ceil{\frac{w-1}{2}}$ is equal to $\frac{w-1}{2}$. 
+    \item The procedure $getDimensions$ returns the width-and height resolution of a provided Image.
+    \item The procedure $zeros$ creates a new image with the provided resolutions.
 \end{itemize}
 
 
