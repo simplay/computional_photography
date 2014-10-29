@@ -631,6 +631,7 @@ imshow(normalizeMat(clipTransformBack(invFilteredNoisyBlured)))
 disp('Let I be a given image');
 disp('H denotes a filter (here a gaussian filter)');
 disp('and N denote noise');
+disp('Assuming the Degradation Model')
 disp('Then G = H*I + N is the noisy image')
 disp('Applying inverse filtering to G using H gives us then:')
 disp('invI = G/H = I + N/H');
@@ -649,3 +650,30 @@ disp(char(10))
 % ===================================================== end of subtask
 
 % d)
+
+figure('Position', [100, 100, 1440, 800], 'name', 'Recovered Noisy Image a using Wiener Filter');
+SNR = 0:0.1:0.8;
+for idx = 1:length(SNR),
+    recoveredImg = deconvwnr(noisyBluredImg, gaussianFilter, SNR(idx));
+    subplot(3,3,idx);
+    imshow(recoveredImg);
+    title(['Recovered image using a Wiener Filter with SNR = ', num2str(SNR(idx))]);
+end
+
+disp('The following reasoning does hold true for Wiener filters:');
+disp('SNR denotes signal to noise ratio, i.e. Sf(u;v) / Sn(u;v)');
+disp('IF the SNR is equal to zero then either');
+disp('a) Sf(u;v) is zero for all u,v i.e. there is no signal OR');
+disp('b) Sn(u;v) is extremly large for all u,v (almost infinity noise)');
+disp('Since case a) clearly cannot be true (since we do have a signal)');
+disp('i.e. an image != black');
+disp('Case be must be true');
+disp('Thus, case b) corresponds to the case when we have almost infinite noise (contribution)');
+disp('This can be observed in the first subfigure in the previous figure.');
+disp('Having almost inf. Noise will make the Wiener Filter formular almost equal zero');
+disp('and then only noise will then dominate.');
+disp(char(10))
+
+% ===================================================== end of subtask
+
+%% task 6
