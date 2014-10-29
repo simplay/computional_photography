@@ -368,7 +368,14 @@ Give an algorithm how to apply box-filtering on this image. Furthermore analyse 
 \end{itemize}
 
 
-\paragraph{Aysmptotic Complexity}
+\paragraph{Aysmptotic Complexity} Next let us have a closer look into algorithm $\ref{alg:boxfilter}$.
+\begin{itemize}
+    \item The most outer foreach loop will iterate over each pixel. This loop corresponds to two for loops, one over iterating over each row in the image, another iterating over each column in the image. Assuming there are $h$ rows and $w$ columns in the image, this most outer foreach loop has an asymptotic complexity of $\mathcal{O}(h \cdot w)$. From the assignment description we are supposed to assume that there are $m$ pixels in the image. Thus, we conclude, the most outer foreach loop has an asymptotic complexity in $\mathcal{O}(m)$.
+    \item The inner foreach loop iterates over each neighorhood pixel around the current pixel in iteration (according the the most outer foreach loop). Assuming we are allowed to ignore boundary issue, we always visit a neighborhood of $\mathcal{O}\left((2r+1\right)^2)$ pixels. Referring to the definition of $r$ at line 3 in algorithm $\label{alg:boxfilter}$ we see that $r$ linearly depends on the width of the image (note that we assume width is equal to height for the given image). Therefore $\mathcal{O}\left((2r+1\right)^2)$ is in the complexity class $\mathcal{O}\left(width^2\right)$. 
+\end{itemize}
+
+We can conclude the following: The asymptotic complexity of algorithm $\ref{alg:boxfilter}$ is in $\mathcal{O}\left(k^2 m \right)$. Note that $k$ denotes the width $w$ from before and m is the number of pixels.
+
 
 
 \section*{Task 3}
