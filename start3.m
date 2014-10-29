@@ -677,3 +677,79 @@ disp(char(10))
 % ===================================================== end of subtask
 
 %% task 6
+
+% a)
+disp('Parseval`s Theorem states that squared sum of the coefficients of the spatial') 
+disp('signal are equal to the squared sum of the signal in the frequency') 
+disp('domain up to a factor N.');
+disp('I.e. the Energy of the spatial signal corresponds to ')
+disp('the energy of the signal in the frequency scaled by a certain factor');
+disp('the factor M is the number of samples taken')
+disp('Since a image has n x n samples (assuming image has a quadratic resolution)')
+disp('A user specified value to the square root of 2 is proportinal the length and widht')
+disp('i.e. (imgLength - sqrt(1-percentage)*imgLength)) /2 ')
+disp('This length determines the the window of zero elements in the DFT of the image')
+disp('A good strategy will be the following: Set high freqencies equal to zero')
+disp('related to the computed length above.');
+disp('Setting high-frequencies should work rather well since the human eye is more sensitive to low frequencies');
+disp('and is not able to distinguish exactly between strength levels of a high frequency brightness variation');
+disp(char(10))
+
+% ===================================================== end of subtask
+
+% b)
+
+% user specified percentage value
+p = 0.7;
+q = 1-p;
+
+heightR = round((dims(1) - sqrt(q)*dims(1))/2);
+widthR = round((dims(2) - sqrt(q)*dims(2))/2);
+
+% dft is centered i.e. low freq. closer to center
+dftImg = fft2(img);
+save('imgs/uncompressed.mat', 'dftImg');
+
+dftImg = fftshift(dftImg);
+
+figure('Position', [100, 100, 1440, 800], 'name', 'Uncompressed Spectrum');
+imshow(normalizeMat(logPowerSpec(dftImg)))
+
+% Replace high frequencies with 0 
+% zero-mask frequencies with a top-down-left-right-box having some
+% width-height.
+%{ 
+E.g.
+
+a a a a a a a a      0 0 0 0 0 0 0 0
+a a a a a a a a      0 0 0 0 0 0 0 0
+a a a a a a a a      0 0 a a a a 0 0
+a a a a a a a a  =>  0 0 a a a a 0 0
+a a a a a a a a      0 0 a a a a 0 0
+a a a a a a a a      0 0 0 0 0 0 0 0
+a a a a a a a a      0 0 0 0 0 0 0 0
+
+%}
+% set all rows from row 1 to row heightR equal zero
+dftImg(1:heightR, :, :) = 0;
+
+% set all rows from row dims(1)-r_height to dims(1) equal zero
+dftImg(dims(1)-heightR:dims(1), :, :) = 0;
+
+% set all columns from column 1 to row heightR equal zero
+dftImg(:, 1:widthR, :) = 0;
+
+% set all columns from column dims(1)-r_height to dims(1) equal zero
+dftImg(:, dims(2)-widthR:dims(2), :) = 0;
+
+% show spectrum
+figure('Position', [100, 100, 1440, 800], 'name', 'Compessed Spectrum');
+imshow(normalizeMat(logPowerSpec(dftImg)))
+
+dftImg = ifftshift(dftImg);
+save('imgs/compressed.mat', 'dftImg');
+
+% ===================================================== end of subtask
+
+% c)
+
