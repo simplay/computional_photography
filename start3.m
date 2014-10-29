@@ -746,10 +746,28 @@ dftImg(:, dims(2)-widthR:dims(2), :) = 0;
 figure('Position', [100, 100, 1440, 800], 'name', 'Compessed Spectrum');
 imshow(normalizeMat(logPowerSpec(dftImg)))
 
+% ===================================================== end of subtask
+
+% c)
 dftImg = ifftshift(dftImg);
 save('imgs/compressed.mat', 'dftImg');
 
 % ===================================================== end of subtask
 
-% c)
+% d)
 
+load('imgs/compressed.mat', 'dftImg');
+recoveredCompressedImg = abs(ifft2(dftImg));
+
+figure('Position', [100, 100, 1440, 800], 'name', 'Original (left) and Compressed (right) Image')
+subplot(1,2,1);
+imshow(img);
+title('Original image');
+
+subplot(1,2,2);
+imshow(recoveredCompressedImg);
+title(['Compressed image (', num2str(100*p), ' percent set to 0)'])
+
+% ===================================================== end of subtask
+
+% e)
