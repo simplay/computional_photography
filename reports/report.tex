@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 
 \usepackage{color}
 \usepackage{subcaption}
@@ -76,39 +77,178 @@
 
 
 \section*{Task 1}
-Let asdf
 
-LIST FORMULAS 
+\paragraph{Def(Linear)} Given two measurable function $f$ and $g$ and $\alpha$, $\beta \in \mathbb{C}$. An operator $\mathcal{F}$ is called $\emph{linear}$ if the following identity holds true: \\
+\begin{equation}
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x) = \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
+\label{eq:lin_op}
+\end{equation}
+
+\paragraph{Def(Shift Invariant)} Given a measurable function $f$. An operator $\mathcal{F}$ is called $\emph{shift invariant}$ if the following identity holds true: \\
+\begin{equation}
+    \mathcal{F} \left \{S_\delta f \right\} (x) = S_\delta(\mathcal{F}\left \{f \right\})(x)
+\label{eq:shift_inv_op}
+\end{equation}
+
+where the shift operator $S_{\delta}$ is defined as the following: 
+
+\begin{equation}
+    S_{\delta}(f)(x) = f(x+\delta)
+\label{eq:shift_op}
+\end{equation}
+
+For any given function $f$ and small number $\delta \in \mathbb{R}$. \\
+
+Note that notational convention the operation notion for any operator $F$, we write $F(f)(x)$ instead of $F(f(x))$. In words we apply the operator F (i.e. the functional F) to the function $f$. Thus is would even be possible to omit the argument $x$. However to make the reasoning clear, I will keep it. \\
+
+Therefore, directly applying the definition from equation $\ref{eq:shift_op}$ to equation $\ref{eq:shift_inv_op}$ we can also define the property $\emph{shift invariant}$ as the follwoing:
+
+\begin{equation}
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} := \mathcal{F} \left\{ f(x+\delta) \right\} = S_\delta(\mathcal{F}\left \{f \right\}(x)
+\label{eq:shift_inv_op_easy}
+\end{equation}
+
+Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_op_easy}$ and equation $\ref{eq:lin_op}$ let I solved this task,
 
 \begin{enumerate}[(a)] 
-\item Let \\
+\item $\mathcal{F} \left \{ f \right\} (x) = e^{f(x)}$ is $\emph{not linear}$ and is $\emph{shift invariant}$. 
 
-\begin{equation*}
-    a = 13
-\end{equation*}
-
-\paragraph{Proof} f is \emph{linear} \\
-
-
+\paragraph{Show:} $\mathcal{F}$ is not \emph{linear} \\
+\begin{proof}
 \begin{align*}
-    \mathcal{F} \left \{\alpha f + \beta g \right\}(u,v) 
-    &= foobar stuff \\
-    &= \alpha \mathcal{F} \left \{f\right\}(u,v) + \beta \mathcal{F} \left \{g \right\}(u,v)
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x) 
+    &= e^{\alpha f(x) + \beta g(x)} \\
+    &= e^{\alpha f(x)} e^{\beta g(x)}\\
+    &\neq \alpha e^{f(x)} + \beta e^{g(x)}\\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(y)
 \end{align*}
+\end{proof}
 
-asdfadsf
-\paragraph{Proof} adsfasdf is \emph{shift invariant} \\
-asdfadsf
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
 
-\item adsfadsf
-\paragraph{Proof}
-asdfasdfasdf
 
-\item asdfasdf
-\item adsfasdf
-\item adsfasdf
-\item adsfasdf
-\item adsfasdf
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    a = a
+\end{align*}
+\end{proof}
+
+
 \end{enumerate}
 
     
