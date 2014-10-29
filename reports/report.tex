@@ -187,20 +187,28 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 \end{align*}
 \end{proof}
 
-
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+% d)
+\item $\mathcal{F} \left \{ f \right\} (x) = f(2x)$ is $\emph{linear}$ and is $\emph{not shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
+    &= \alpha f(2x) + \beta g(2x) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
-\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
+\paragraph{Show} $\mathcal{F}$ is not \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= f(2(x+\delta)) \\
+    &= f(2x + 2\delta) \\
+    &\neq f(2x + \delta) \\
+    &= S_\delta (f(2x)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
