@@ -6,8 +6,30 @@ close all
 clear all
 clc
 
+% the following variables and handles are globally available
+
+img = imread('imgs/castle_grey.jpg');
+img = im2double(img);
+
 % test for squared error below eps 
 eps = 1E-12;
+
+% helper function: For normalizing
+
+% log power spectrum log(1+|F|^2)
+logPowerSpec = @(Mat)log(1 + Mat.*conj(Mat));
+
+shiftMat2Min = @(Mat) Mat - min(Mat(:));
+scaleMatByMax = @(Mat) Mat ./ max(Mat(:));
+
+% map values of a given matrix to range [0,1]
+normalizeMat = @(Mat) scaleMatByMax(shiftMat2Min(Mat));
+
+transformBack = @(Mat) ifft2(ifftshift(Mat));
+clipImg = @(Mat) abs(Mat(1:size(img,1), 1:size(img, 2)));
+
+% for inverse filtering
+clipTransformBack = @(Mat) clipImg(transformBack(Mat));
 
 
 %% task 1
@@ -340,9 +362,6 @@ imshow(dftPhase);
 
 % a) 
 
-img = imread('imgs/castle_grey.jpg');
-img = im2double(img);
-
 % Since filtering in the Fourier domain corresponds to circular convolution
 % need to zero-pad the image to avoid boundary artifacts
 % zero-pad using twice the size of the image itself
@@ -381,15 +400,6 @@ H_bandass = @(W,D0,n) 1-(1 ./ (1 + ((W.*D)./(D.^2 - D0^2)).^(2*n)));
 ns = [2, 10]; % n value used in the slides.
 D0s = [0.1, 0.2, 0.3];
 Ws = [0.05, 0.1, 0.2];
-
-% helper function: For normalizing
-logPowerSpec = @(Mat)log(1 + Mat.*conj(Mat));
-
-shiftMat2Min = @(Mat) Mat - min(Mat(:));
-scaleMatByMax = @(Mat) Mat ./ max(Mat(:));
-normalizeMat = @(Mat) scaleMatByMax(shiftMat2Min(Mat));
-
-
 
 % Superfancy-modular filter-visualization loop 
 figure('Position', [100, 100, 1024, 800], 'name','Visualize log Power Spectrum of filters');
@@ -480,6 +490,7 @@ disp('I.e. very high value of n => sharp');
 imgDft2 = imgDft2(:,:,1);
 imgDft2 = fftshift(imgDft2);
 
+% showing power spectrum of images.
 figure('Position', [100, 100, 1024, 800], 'name','Spectrum of filtered DFT Img');
 figIdx = 1;
 for nIdx=1:length(ns),
@@ -530,12 +541,7 @@ for nIdx=1:length(ns),
     end
 end
 
-
-transformBack = @(Mat) ifft2(ifftshift(Mat));
-clipImg = @(Mat) abs(Mat(1:size(img,1), 1:size(img, 2)));
-clipTransformBack = @(Mat) clipImg(transformBack(Mat));
-
-
+% recovering images using the filters
 figure('Position', [100, 100, 1024, 800], 'name','Filter Imges');
 figIdx = 1;
 for nIdx=1:length(ns),
@@ -588,3 +594,58 @@ end
 
 
 %% task 5
+
+% a)
+% gaussian 5x5 kernel with sigma=3
+gaussianFilter = fspecial('gaussian',5,1);
+blurredImg = imfilter(img, gaussianFilter);
+
+% ===================================================== end of subtask
+
+% b) 
+
+noisyBluredImg = imnoise(blurredImg, 'gaussian', 0, 0.05);
+
+% c)
+% centered zero-padded-dft of noisy and noisy-blured imgs
+dftBluredImg = fftshift(fft2(blurredImg, 2*dims(1), 2*dims(2)));
+dftBluredImg = dftBluredImg(:,:,1);
+dftNoisyBluredImg = fftshift(fft2(noisyBluredImg, 2*dims(1), 2*dims(2)));
+dftNoisyBluredImg = dftNoisyBluredImg(:,:,1);
+dftGaussian = fftshift(fft2(gaussianFilter, 2*dims(1), 2*dims(2)));
+
+% Inverse filtering
+invFilteredBlurred = dftBluredImg ./ dftGaussian;
+invFilteredNoisyBlured = dftNoisyBluredImg ./ dftGaussian;
+
+figure('name', 'Recovered blury image by Inverse Filtering')
+imshow(clipTransformBack(invFilteredBlurred))
+
+figure('name', 'Recovered Noisy image by Inverse Filtering')
+imshow(clipTransformBack(invFilteredNoisyBlured))
+
+figure('name', 'Recovered Noisy image by Inverse Filtering scaled linearly to [0,1] range')
+imshow(normalizeMat(clipTransformBack(invFilteredNoisyBlured)))
+
+
+disp('Let I be a given image');
+disp('H denotes a filter (here a gaussian filter)');
+disp('and N denote noise');
+disp('Then G = H*I + N is the noisy image')
+disp('Applying inverse filtering to G using H gives us then:')
+disp('invI = G/H = I + N/H');
+disp('If the elements in H are relatively small')
+disp('the ratio N/H will be relatively large')
+disp('Thus, assuming - which is the case in our example -')
+disp('that the values the elements in H (our gaussian Filter) are very small')
+disp('The noisy will then dominate in the recovered image invI')
+disp('This can be observed in the figures shown previousely.')
+disp('Note that scale the image linearly into the range [0,1] does not help')
+disp('This can also be oberved in one of the previous figures.')
+disp('In contrary, images without exhibiting any significant noise')
+disp('can be rather well recovered relying on the inverse method')
+disp(char(10))
+
+% ===================================================== end of subtask
+
+% d)
