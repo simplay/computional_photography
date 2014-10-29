@@ -164,14 +164,14 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 \end{proof}
 
 % c)
-\item $\mathcal{F} \left \{ f \right\} (x) = \sum_{k=x-1}^{x+2}f(k)$ is $\emph{linear}$ and is $\emph{shift invariant}$.
+\item $\mathcal{F} \left \{ f \right\} (x) = \sum_{k=x-4}^{x+2}f(k)$ is $\emph{linear}$ and is $\emph{shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
     \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
-    &= \sum_{k=x-1}^{x+2}(\alpha f(k) + \beta g(k)) \\
-    &= \alpha \sum_{k=x-1}^{x+2} f(k) + \beta \sum_{k=x-1}^{x+2} g(k) \\
+    &= \sum_{k=x-4}^{x+2}(\alpha f(k) + \beta g(k)) \\
+    &= \alpha \sum_{k=x-4}^{x+2} f(k) + \beta \sum_{k=x-4}^{x+2} g(k) \\
     &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
@@ -181,8 +181,9 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 \begin{align*}
     \mathcal{F} \left \{S_\delta (f(x)) \right\} 
     &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
-    &= \sum_{k=x-1+\delta}^{x+2+\delta} f(k) \\
-    &= S_{\delta}(\sum_{k=x-1}^{x+2} f(k)) \\
+    &= \sum_{k=x-4+\delta}^{x+2+\delta} f(k) \\
+    &= \sum_{k=x-4}^{x+2} f(k+\delta) \\
+    &= S_{\delta}(\sum_{k=x-4}^{x+2} f(k)) \\
     &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
@@ -213,68 +214,106 @@ Relying on the definitions of the equations before, equation $\ref{eq:shift_inv_
 \end{proof}
 
 
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+% e)
+\item $\mathcal{F} \left \{ f \right\} (x) = \sin(2x)f(x)$ is $\emph{linear}$ and is $\emph{not shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
+    &= \sin(2x)\left( \alpha f(x) + \beta g(x) \right) \\
+    &= \sin(2x) \alpha f(x) + \sin(2x) \beta g(x) \\
+    &= \alpha \sin(2x) f(x) + \beta \sin(2x) g(x) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is not \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= \sin(2x)f(x + \delta) \\
+    &\neq \sin(2x+\delta)f(x + \delta) \\
+    &= S_{\delta} (\sin(2x)f(x)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
+\end{align*}
+\end{proof}
+
+
+% f)
+\item $\mathcal{F} \left \{ f \right\} (x) = x f(x)$ is $\emph{linear}$ and is $\emph{not shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x)
+    &= x(\alpha f(x) + \beta f(x)) \\
+    &= x \alpha f(x) + x \beta f(x) \\
+    &= \alpha x f(x) + \beta x f(x) \\ 
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
+\end{align*}
+\end{proof}
+
+\paragraph{Show} $\mathcal{F}$ is not \emph{shift invariant} \\
+\begin{proof}
+\begin{align*}
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= x f(x+\delta) \\
+    &\neq (x+\delta)f(x+\delta) \\
+    &= S_{\delta} (x f(x)) \\ 
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x) 
+\end{align*}
+\end{proof}
+
+% g)
+\item $\mathcal{F} \left \{ f \right\} (x) = f(x) - f(x-5)$ is $\emph{linear}$ and is $\emph{shift invariant}$.
+
+\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
+\begin{proof}
+\begin{align*}
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x) 
+    &= (\alpha f(x) + \beta g(x)) - (\alpha f(x-5) + \beta g(x-5)) \\
+    &= (\alpha f(x) - \alpha f(x-5)) + (\beta g(x) - \beta g(x-5)) \\
+    &= \alpha(f(x) - f(x-5)) + \beta(g(x) - g(x-5)) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
 \paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= f(x+\delta) - f(x -5 + \delta) \\
+    &= S_{\delta} (f(x) - f(x-5)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
-
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
+% h)
+\item $\mathcal{F} \left \{ f \right\} (x) = f(x-3)-2f(x-12)$ is $\emph{linear}$ and is $\emph{shift invariant}$.
 
 \paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
 \begin{proof}
 \begin{align*}
-    a = a
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(x) 
+    &= (\alpha f(x-3) + \beta g(x-3))-2(\alpha f(x-12) + \beta g(x-12)) \\
+    &= (\alpha f(x-3) - 2\alpha f(x-12)) + (\beta g(x-3) - 2\beta g(x-12)) \\
+    &= \alpha  (f(x-3) - 2 f(x-12)) + \beta (g(x-3) - 2 g(x-12)) \\
+    &= \alpha \mathcal{F} \left \{f\right\}(x) + \beta \mathcal{F} \left \{g \right\}(x)
 \end{align*}
 \end{proof}
 
 \paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
 \begin{proof}
 \begin{align*}
-    a = a
-\end{align*}
-\end{proof}
-
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
-
-\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
-\begin{proof}
-\begin{align*}
-    a = a
-\end{align*}
-\end{proof}
-
-\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
-\begin{proof}
-\begin{align*}
-    a = a
-\end{align*}
-\end{proof}
-
-\item $\mathcal{F} \left \{ f \right\} (x) = s$ is $\emph{not linear}$ and is $\emph{shift invariant}$.
-
-\paragraph{Show} $\mathcal{F}$ is \emph{linear} \\
-\begin{proof}
-\begin{align*}
-    a = a
-\end{align*}
-\end{proof}
-
-\paragraph{Show} $\mathcal{F}$ is \emph{shift invariant} \\
-\begin{proof}
-\begin{align*}
-    a = a
+    \mathcal{F} \left \{S_\delta (f(x)) \right\} 
+    &= \mathcal{F} \left\{ f(x+\delta) \right\} \\
+    &= f(x-3 + \delta) - 2f(x-12 + \delta) \\
+    &= S_{\delta} (f(x-3)-2f(x-12)) \\
+    &= S_\delta(\mathcal{F}\left \{f \right\}(x)
 \end{align*}
 \end{proof}
 
