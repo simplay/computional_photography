@@ -813,3 +813,43 @@ disp(char(10))
 
 % ===================================================== end of subtask
 
+% f)
+
+for p=0.40:0.05:0.80,
+    
+    q = 1-p;
+    heightR = round((dims(1) - sqrt(q)*dims(1))/2);
+    widthR = round((dims(2) - sqrt(q)*dims(2))/2);
+    dftImg = fftshift(fft2(img));
+      
+    dftImg(1:heightR, :, :) = 0;
+    dftImg(dims(1)-heightR:dims(1), :, :) = 0;
+    dftImg(:, 1:widthR, :) = 0;
+    dftImg(:, dims(2)-widthR:dims(2), :) = 0;
+    
+    dftImg = ifftshift(dftImg);
+    
+    filePathName = strcat('imgs/compressed_p_',num2str(p),'.mat');
+    
+    
+    save(filePathName, 'dftImg');
+    
+    load(filePathName, 'dftImg');
+    fileInfo = dir('imgs/compressed.mat');
+    compressedMB = fileInfo.bytes/1024^2;
+    
+    
+    recoveredCompressedImg = abs(ifft2(dftImg));
+    
+    
+    deltaImg = (img-recoveredCompressedImg);
+    firstColChan = deltaImg(:,:,1);
+    errorL2 = (sum(firstColChan(:))^2);
+    errorRelL2 = errorL2 / (norm(firstImgColChang(:)));
+    
+    disp([num2str(100*p), ' percente of the image values got replaced by 0']);
+    disp(['Compressed by a factor of ', num2str((compressedMB/uncompressedMB))]);
+    disp(['L2 error: ', num2str(errorL2)]);
+    disp(['Relative L2 error: ', num2str(errorRelL2)]);
+end
+
