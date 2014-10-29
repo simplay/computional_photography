@@ -379,6 +379,65 @@ We can conclude the following: The asymptotic complexity of algorithm $\ref{alg:
 
 
 \section*{Task 3}
+Given a $3 \times 3$ box filter
+
+\begin{equation}
+B_{3 \times 3} = 
+\frac{1}{9}
+\begin{pmatrix}
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+1 & 1 & 1 \\
+\end{pmatrix}
+\label{eq:box_filter_3x3}
+\end{equation}
+
+Applying the boxfilter from equation $\ref{eq:box_filter_3x3}$ twice corresponds to convolving the the box filter with itself, i.e. $B_{3 \times 3} \ast B_{3 \times 3}$. This will gives us the following filter:
+
+\begin{equation}
+B_{3 \times 3}^2 = 
+\frac{1}{81}
+\begin{pmatrix}
+1 & 2 & 3 & 2 & 1 \\
+2 & 4 & 6 & 4 & 2 \\
+3 & 6 & 9 & 6 & 3 \\
+2 & 4 & 6 & 4 & 2 \\
+1 & 2 & 3 & 2 & 1 \\
+\end{pmatrix}
+\label{eq:box_filter_3x3_twice}
+\end{equation}
+
+In Matlab we can compute $B_{3 \times 3}^2$ applying the function $\emph{conv2}$ to the kernel $B_{3 \times 3}$ with itself, i.e.
+\begin{equation}
+    B_{3 \times 3}^2 = conv2(B_{3 \times 3},B_{3 \times 3})
+\end{equation}
+
+Having a closer look to the filter $B_{3 \times 3}^2$ it resembles a gaussian bell (in 2d). \\ 
+ 
+In spatial domain, the filter $B_{3 \times 3}$ is just a box function (here 2d). In the frequency domain, this corresponds to a $sinc$ function. For simplification, let us consider the one-dimensional box function $rect_T(x)$ which is one if $x$ is in the range $\left[-\frac{T}{2}, \frac{T}{2}\right]$ and zero otherwise.
+
+\begin{equation}
+rect_T(x) = \left\{ \begin{array}{rl}
+1 &\mbox{ if $ - \frac{T}{2} \leq x \leq \frac{T}{2}$} \\
+0 &\mbox{ otherwise}
+\end{array} \right.
+\end{equation}
+
+Next let us apply the Fourier Transformation on $rect_T(x)$:
+\begin{align}
+    \int_{\mathbb{R}} rect_T(x) e^{-2j\pi \omega t } dt
+    &= \int_{-\frac{T}{2}}^{\frac{T}{2}} e^{-2j\pi \omega t } dt \\
+    &= \frac{1}{2 \pi i \omega} [ e^{-2j\pi \omega t } |_{t=-\frac{T}{2}}^{\frac{T}{2}} \\
+    &= \frac{1}{2 \pi i  \omega} (e^{-j\pi \omega T} - e^{j\pi \omega T}) \\
+    &= \frac{T}{\pi \omega} (\frac{e^{j\pi \omega T} - e^{-j\pi \omega T}}{2j}) \\
+    &= \frac{T}{\pi \omega} (\sin(\pi \omega T)) \\
+    &= T sinc(\omega T) 
+\label{eq:sincderi}
+\end{align}
+
+From equation $\ref{eq:sincderi}$ we can conclude a box filter in the frequency domain is equal to a $sinc$ function. Similarly, we can reason when applying a two dimensional box function. Using green's theorem, we can separate a multi-dimensional box function, when applying a Fourier operator (i.e. the n-dimensional Fourier Transformation), since a two dimensional box function is the cartesian product of two one dimensional rect functions. Notice that each of these rect functions only depends on one particular variable (dimension). Thus the integral from equation $\ref{eq:sincderi}$ is separable in the multidimensional case. Therefore, applying the box filter twice corresponds to $rect^2(x,y)$ which is equal to $sinc(u)*sinc(v)$ according to my previous reasoning. Thus, when applying the box function a infinite amount corresponds to the limit of $sinc$ to the power of n, where n converges towards infinite. This converges towards a delta spike function, centred at zero (in the frequency domain). In the spatial domain, however, the function gets wider. Practically speaking, applying the box filter infinite times will average the whole image and  the colors in the image will be everywhere all the same.
+
+
 \section*{Task 4}
 \section*{Task 5}
 
