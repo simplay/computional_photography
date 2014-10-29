@@ -564,7 +564,58 @@ Applying this filter will give us the same image back.
 
 
 \section*{Task 6}
+\paragraph{Def(Linear)} Given two measurable function $f$ and $g$ and $\alpha$, $\beta \in \mathbb{C}$. An operator $\mathcal{F}$ is called $\emph{linear}$ if the following identity holds true: \\
+\begin{equation}
+    \mathcal{F} \left \{\alpha f + \beta g \right\}(u)(v) = \alpha \mathcal{F} \left \{f\right\}(u)(v) + \beta \mathcal{F} \left \{g \right\}(u)(v)
+\label{eq:lin_op}
+\end{equation}
+
+\paragraph{Def(Two dimensional Fourier Transformation)} Given two measurable function $f$. Then
+\begin{equation}
+    F(u,v) := \mathcal{F}_2 \left \{ f  \right\}(u,v)
+\end{equation}
+denotes the two dimensional Fourier Transformation of $f$ and is defined as the following \\
+\begin{equation}
+    \mathcal{F}_2 \left \{ f  \right\}(u,v) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(t,z) e^{-j 2 \pi (ut+vz)} dt dz
+\label{eq:fourier2}
+\end{equation}
+
+\paragraph{Def(Two dimensional Inverse Fourier Transformation)} Given two measurable function $F$. Then
+\begin{equation}
+    f(t,z) := \mathcal{F}^{-1}_{2} \left \{ F  \right\}(t,z)
+\end{equation}
+denotes the two dimensional inverse Fourier Transformation of $F$ and is defined as the following \\
+\begin{equation}
+    \mathcal{F}^{-1}_{2} \left \{ F \right\}(t,z) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} F(u,v) e^{j 2 \pi (ut+vz)} du dv
+\label{eq:fourier2}
+\end{equation}
+
+\begin{enumerate}[(a)] 
 
 
+\item $\mathcal{F}_2$ is a linear operator. 
+\begin{proof}
+\begin{align*}
+    \mathcal{F}_2 \left \{\alpha f + \beta g \right\}(u,v) 
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} ( \alpha f(t,z) + \beta g(t,z) ) e^{-j 2 \pi (ut+vz)} dt dz \\
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \alpha f(t,z) e^{-j 2 \pi (ut+vz)} + \beta g(t,z) e^{-j 2 \pi (ut+vz)} dt dz \\
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \alpha f(t,z) e^{-j 2 \pi (ut+vz)} dt dz + \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \beta g(t,z) e^{-j 2 \pi (ut+vz)} dt dz \\
+    &= \alpha \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}  f(t,z) e^{-j 2 \pi (ut+vz)} dt dz + \beta \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(t,z) e^{-j 2 \pi (ut+vz)} dt dz \\
+    &= \alpha \mathcal{F}_2 \left \{f\right\}(u,v) + \beta \mathcal{F}_2 \left \{g \right\}(u,v)  
+\end{align*}
+\end{proof}
+
+\item $\mathcal{F}^{-1}_2$ is a linear operator. 
+\begin{proof}
+\begin{align*}
+    \mathcal{F}^{-1}_2 \left \{\alpha F + \beta G \right\}(t,z) 
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} ( \alpha F(u,v) + \beta G(u,v) ) e^{j 2 \pi (ut+vz)} du dv \\
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \alpha F(u,v) e^{j 2 \pi (ut+vz)} + \beta G(u,v) e^{j 2 \pi (ut+vz)} du dv \\
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \alpha F(u,v) e^{j 2 \pi (ut+vz)} du dv + \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \beta G(u,v) e^{j 2 \pi (ut+vz)} du dv \\
+    &= \alpha \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} F(u,v) e^{j 2 \pi (ut+vz)} du dv + \beta \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} G(u,v) e^{j 2 \pi (ut+vz)} du dv \\
+    &= \alpha \mathcal{F}^{-1}_2 \left \{G\right\}(t,z) + \beta \mathcal{F}^{-1}_2 \left \{G \right\}(t,z)  
+\end{align*}
+\end{proof}
+\end{enumerate} 
 
 \end{document}
