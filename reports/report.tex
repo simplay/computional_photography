@@ -560,7 +560,29 @@ Applying this filter will give us the same image back.
 
 \section*{Task 5}
 
-Before starting this task, helper intermediate result later used for the proof. This is rather advanced stuff, but the final result will help us proving the fact we have to prove. :) \\
+Before starting this task, I have derived a intermediate result shown in equation $\ref{eq:final_helper_thingy}$.
+
+
+\begin{align}
+    h(t,z) &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} H(u,v) e^{j 2 \pi (ut + vz)} du dv \\
+    &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} A e^{-\frac{u^2 + v^2}{2 \sigma^2}} e^{j 2 \pi (ut + vz)} du dv \\
+    &= A \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\frac{u^2 + v^2}{2 \sigma^2} + j 2 \pi (ut + vz)} du dv \\
+    &= A \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\frac{u^2}{2 \sigma^2}-\frac{v^2}{2 \sigma^2} + j 2 \pi ut + j 2 \pi vz} du dv \\
+    &= A \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\frac{v^2}{2 \sigma^2} + j 2 \pi vz -\frac{u^2}{2 \sigma^2} + j 2 \pi ut} du dv \\
+    &= A \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\frac{v^2}{2 \sigma^2} + j 2 \pi vz} \left(e^{-\frac{u^2}{2 \sigma^2} + j 2 \pi ut} du \right) dv \\
+    &= A \left(\int_{-\infty}^{\infty} e^{-\frac{v^2}{2 \sigma^2} + j 2 \pi vz} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{u^2}{2 \sigma^2} + j 2 \pi ut} du \right)
+\label{eq:first_res}
+\end{align}
+
+
+
+
+
+
+
+
+
+% helper stuff
 
 \paragraph{Def(Transformation into Polar Coordinates)} All Cartesian coordinates $(x,y) \in \mathbb{R}^2$ can be expressed in so called polar coordinates by applying the following mapping:
 \begin{align}
@@ -677,10 +699,6 @@ We only used the rule for swapping integration limits in the derivation steps of
     &= \sqrt{\frac{\pi}{a}}
 \label{eq:final_helper_thingy}
 \end{align}
-
-The final result in equation $\ref{eq:final_helper_thingy}$ will be used in the following proof.
-
-
 
 
 
