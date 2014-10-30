@@ -560,7 +560,18 @@ Applying this filter will give us the same image back.
 
 \section*{Task 5}
 
+Let 
+\begin{itemize}
+    \item $H(u,v) = A e ^{-\frac{u^2 + v^2}{2 \sigma^2}}$ 
+    \item $h(u,v) = A 2 \pi \sigma^2 e^{-2 \pi^2 \sigma^2 (t^2 + v^2)}$ 
+\end{itemize}
+
+
 Before starting this task, I have derived a intermediate result shown in equation $\ref{eq:final_helper_thingy}$.
+
+\paragraph{Show} The Gaussian lowpass filter in the frequency domain $H(u,v)$ corresponds to the spatial domain filter $h(t,z)$. \\
+\begin{proof}
+
 
 \begin{align}
     h(t,z) &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} H(u,v) e^{j 2 \pi (ut + vz)} du dv \\
@@ -621,14 +632,14 @@ A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} (\sqrt{2\pi \sigma^2}) (\sqrt{2\pi \sigma^2}
 = 
 A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} 2\pi \sigma^2 \\
 =
-A 2\pi \sigma^2 e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} 
+A 2\pi \sigma^2 e^{- 2\pi^2 \sigma^2  (t^2 + z^2)} 
 \label{eq:proof_done}
 \end{align}
 
-
-
+\end{proof}
 
 % helper stuff
+In the following some additional derivations used for deriving our super-duper-helper function.
 
 \paragraph{Def(Transformation into Polar Coordinates)} All Cartesian coordinates $(x,y) \in \mathbb{R}^2$ can be expressed in so called polar coordinates by applying the following mapping:
 \begin{align}
@@ -639,6 +650,8 @@ A 2\pi \sigma^2 e^{- 2\sigma^2 \pi^2 (t^2 + z^2)}
 \end{align}
 
 Where $r$ denotes a radius with $0 \leq r < \infty$ and $\phi$ denotes an angle that is in the range $[0,2\pi]$.
+
+\paragraph{The very useful helper}
 
 Our goal is to find a solution for this evil thing:
 
