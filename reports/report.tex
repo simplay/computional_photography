@@ -560,6 +560,8 @@ Applying this filter will give us the same image back.
 
 \section*{Task 5}
 
+Before starting this task, helper intermediate result later used for the proof. This is rather advanced stuff, but the final result will help us proving the fact we have to prove. :) \\
+
 \paragraph{Def(Transformation into Polar Coordinates)} All Cartesian coordinates $(x,y) \in \mathbb{R}^2$ can be expressed in so called polar coordinates by applying the following mapping:
 \begin{align}
 \begin{pmatrix}x\\y\end{pmatrix} 
@@ -570,18 +572,21 @@ Applying this filter will give us the same image back.
 
 Where $r$ denotes a radius with $0 \leq r < \infty$ and $\phi$ denotes an angle that is in the range $[0,2\pi]$.
 
+Our goal is to find a solution for this evil thing:
 
 \begin{align}
-    \int_{\mathbb{R}} e^{-x^2} dx 
-    &= \sqrt{\left(\int_{\mathbb{R}} e^{-x^2} dx\right)^2} \\
-    &= \sqrt{\int_{\mathbb{R}} \int_{\mathbb{R}} e^{-(x^2 + y^2)} dx dy}
+    \int_{\mathbb{R}} e^{-ax^2} dx 
+    &= \sqrt{\left(\int_{\mathbb{R}} e^{-ax^2} dx\right)^2} \\
+    &= \sqrt{\int_{\mathbb{R}} \int_{\mathbb{R}} e^{-a(x^2 + y^2)} dx dy}
 \label{eq:orig_hard}
 \end{align}
 
+Note that $a$ denotes a scalar value.
+
 \begin{align}
-    \int_{\mathbb{R}} \int_{\mathbb{R}} e^{-(x^2 + y^2)} dx dy 
-    & = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} dx dy \\
-    &= \int_{0}^{2 \pi} \int_{0}^{\infty} e^{-r^2} r dr d\phi
+    \int_{\mathbb{R}} \int_{\mathbb{R}} e^{-a(x^2 + y^2)} dx dy 
+    & = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-a(x^2 + y^2)} dx dy \\
+    &= \int_{0}^{2 \pi} \int_{0}^{\infty} e^{-ar^2} r dr d\phi
 \label{eq:into_polar_coordinates_transformed}
 \end{align}
 
@@ -629,6 +634,52 @@ As you might have noticed, the exponential is to the power of $-r^2$ instead of 
 \end{align}
 
 Note that we only used the definition of the polar coordinates and that $\cos^2(\phi) + \sin^2(\phi) = 1$. \\
+
+Next, let us further simplify the integral from equation $\ref{eq:into_polar_coordinates_transformed}$.
+
+\begin{align}
+    \int_{0}^{2 \pi} \int_{0}^{\infty} e^{-ar^2} r dr d\phi
+    &= (\int_{0}^{2 \pi} d\phi)\cdot (\int_{0}^{\infty} e^{-ar^2} r dr) \\
+    &= 2\pi \int_{0}^{\infty} e^{-ar^2} r dr
+\label{eq:greenified_hard}
+\end{align}
+
+In equation $\ref{eq:greenified_hard}$ we used greens' identity for splitting multi-dimensional integrals into a product of one-dimensional integrals. This can be done if the integral can be split into independent parts. In the following we will simplify this integral even further by using the following substitute:
+
+\begin{align}
+    s(r) := s &= -ar^2 \\
+    \frac{ds}{dr} &= -2ar \\
+    dr &= \frac{ds}{-2ar} \\
+    s(0) &= 0 \\
+    \lim_{A \rightarrow \infty} s(A) &= -\infty
+\label{eq:subst_facts}
+\end{align}
+
+Using the substitution from equation $\ref{eq:subst_facts}$ and the corresponding derived facts and plugging these facts into equation $\ref{eq:greenified_hard}$ we can further conclude:
+
+\begin{align}
+    2\pi \int_{0}^{\infty} e^{-ar^2} r dr 
+    &= 2\pi \int_{0}^{-\infty} e^{s} r (\frac{ds}{-2ar}) \\
+    &= \frac{\pi}{a} \int_{0}^{-\infty} -e^{s} ds \\
+    &= \frac{\pi}{a} \int_{-\infty}^{0} e^{s} ds \\
+    &= \frac{\pi}{a} \lim_{A \rightarrow -\infty} \left( e^0 - e^{A} \right) \\
+    &= \frac{\pi}{a} \left( e^0 - \lim_{A \rightarrow -\infty} e^{A} \right) \\
+    &= \frac{\pi}{a} (1 - 0) \\
+    &= \frac{\pi}{a}
+\label{eq:da_pi}
+\end{align}
+
+We only used the rule for swapping integration limits in the derivation steps of equation $\ref{eq:da_pi}$. Now, after knowing all these facts we know the solution to equation $\ref{eq:orig_hard}$ using the final result from equation $\ref{eq:da_pi}$ which gives us:
+
+\begin{align}
+    \int_{\mathbb{R}} e^{-ax^2} dx 
+    &= \sqrt{\int_{\mathbb{R}} \int_{\mathbb{R}} e^{-a(x^2 + y^2)} dx dy} \\
+    &= \sqrt{\frac{\pi}{a}}
+\label{eq:final_helper_thingy}
+\end{align}
+
+The final result in equation $\ref{eq:final_helper_thingy}$ will be used in the following proof.
+
 
 
 
