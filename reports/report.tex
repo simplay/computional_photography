@@ -560,6 +560,76 @@ Applying this filter will give us the same image back.
 
 \section*{Task 5}
 
+\paragraph{Def(Transformation into Polar Coordinates)} All Cartesian coordinates $(x,y) \in \mathbb{R}^2$ can be expressed in so called polar coordinates by applying the following mapping:
+\begin{align}
+\begin{pmatrix}x\\y\end{pmatrix} 
+    &\mapsto \begin{pmatrix}x(r,\phi)\\y(r, \phi)\end{pmatrix} \\
+    &= \begin{pmatrix}r \cos(\phi)\\r \sin(\phi)\end{pmatrix}
+\label{eq:polar_coordinates}
+\end{align}
+
+Where $r$ denotes a radius with $0 \leq r < \infty$ and $\phi$ denotes an angle that is in the range $[0,2\pi]$.
+
+
+\begin{align}
+    \int_{\mathbb{R}} e^{-x^2} dx 
+    &= \sqrt{\left(\int_{\mathbb{R}} e^{-x^2} dx\right)^2} \\
+    &= \sqrt{\int_{\mathbb{R}} \int_{\mathbb{R}} e^{-(x^2 + y^2)} dx dy}
+\label{eq:orig_hard}
+\end{align}
+
+\begin{align}
+    \int_{\mathbb{R}} \int_{\mathbb{R}} e^{-(x^2 + y^2)} dx dy 
+    & = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} dx dy \\
+    &= \int_{0}^{2 \pi} \int_{0}^{\infty} e^{-r^2} r dr d\phi
+\label{eq:into_polar_coordinates_transformed}
+\end{align}
+
+In equation $\ref{eq:into_polar_coordinates_transformed}$ We transformed the integral from equation $\ref{eq:orig_hard}$ to polar coordinates using the definition from equation $\ref{eq:polar_coordinates}$. The factor $r$ results due to the change of integration variables from $dx dy$ to $dr d\phi$. This can easily be shown, by computing the Jacobian $J$ of the polar-coordinate transformation. This is the so called correction factor when we change integration variables into a new coordinate system. In order to compute $J$ we first have to compute the partial derivatives of the polar coordinate transformation:
+
+\begin{align}
+    \frac{d}{dr} \begin{pmatrix}r \cos(\phi)\\r \sin(\phi)\end{pmatrix} 
+    &= \begin{pmatrix} \cos(\phi)\\ \sin(\phi)\end{pmatrix}
+\end{align}
+
+\begin{align}
+    \frac{d}{d\phi} \begin{pmatrix}r \cos(\phi)\\r \sin(\phi)\end{pmatrix} 
+    &= \begin{pmatrix}-r \sin(\phi)\\ r \cos(\phi)\end{pmatrix}
+\end{align}
+
+Then the correction factor (jacobian) is the determinate to the square root of two of the matrix consisting of the derivatives (columns):
+
+\begin{align}
+J
+&=
+\sqrt{\det
+\begin{pmatrix}
+\frac{d}{dr} x(r,\phi) & \frac{d}{d\phi} x(r,\phi) \\
+\frac{d}{dr} y(r,\phi) & \frac{d}{d\phi} y(r,\phi) \\
+\end{pmatrix}} \\
+&= 
+\sqrt{\det
+\begin{pmatrix}
+\cos(\phi) & -r \sin(\phi) \\
+\sin(\phi) & r \cos(\phi) \\
+\end{pmatrix}} \\
+&= \sqrt{r^2(\cos^2(\phi) + \sin^2(\phi))} \\
+&= r
+\label{eq:jacobian}
+\end{align}
+
+As you might have noticed, the exponential is to the power of $-r^2$ instead of to the power of $x^2 + y^2$. This is also a direct result coming from the coordinate transformation.
+
+\begin{align}
+    x^2 + y^2 
+    &= x(r, \phi)^2 y(r, \phi)^2 \\
+    &= (r\cos(\phi))^2+(r \sin(\phi))^2 \\
+    &= r^2 (\cos^2(\phi) + \sin^2(\phi)) \\
+    &= r^2
+\end{align}
+
+Note that we only used the definition of the polar coordinates and that $\cos^2(\phi) + \sin^2(\phi) = 1$. \\
+
 
 
 
