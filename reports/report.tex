@@ -435,7 +435,7 @@ Next let us apply the Fourier Transformation on $rect_T(x)$:
 \label{eq:sincderi}
 \end{align}
 
-From equation $\ref{eq:sincderi}$ we can conclude a box filter in the frequency domain is equal to a $sinc$ function. Similarly, we can reason when applying a two dimensional box function. Using green's theorem, we can separate a multi-dimensional box function, when applying a Fourier operator (i.e. the n-dimensional Fourier Transformation), since a two dimensional box function is the cartesian product of two one dimensional rect functions. Notice that each of these rect functions only depends on one particular variable (dimension). Thus the integral from equation $\ref{eq:sincderi}$ is separable in the multidimensional case. Therefore, applying the box filter twice corresponds to $rect^2(x,y)$ which is equal to $sinc(u)*sinc(v)$ according to my previous reasoning. Thus, when applying the box function a infinite amount corresponds to the limit of $sinc$ to the power of n, where n converges towards infinite. This converges towards a delta spike function, centred at zero (in the frequency domain). In the spatial domain, however, the function gets wider. Practically speaking, applying the box filter infinite times will average the whole image and  the colors in the image will be everywhere all the same.
+From equation $\ref{eq:sincderi}$ we can conclude a box filter in the frequency domain is equal to a $sinc$ function. Similarly, we can reason when applying a two dimensional box function. Using Fubini's theorem, we can separate a multi-dimensional box function, when applying a Fourier operator (i.e. the n-dimensional Fourier Transformation), since a two dimensional box function is the cartesian product of two one dimensional rect functions. Notice that each of these rect functions only depends on one particular variable (dimension). Thus the integral from equation $\ref{eq:sincderi}$ is separable in the multidimensional case. Therefore, applying the box filter twice corresponds to $rect^2(x,y)$ which is equal to $sinc(u)*sinc(v)$ according to my previous reasoning. Thus, when applying the box function a infinite amount corresponds to the limit of $sinc$ to the power of n, where n converges towards infinite. This converges towards a delta spike function, centred at zero (in the frequency domain). In the spatial domain, however, the function gets wider. Practically speaking, applying the box filter infinite times will average the whole image and  the colors in the image will be everywhere all the same.
 
 
 \section*{Task 4}
@@ -562,7 +562,6 @@ Applying this filter will give us the same image back.
 
 Before starting this task, I have derived a intermediate result shown in equation $\ref{eq:final_helper_thingy}$.
 
-
 \begin{align}
     h(t,z) &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} H(u,v) e^{j 2 \pi (ut + vz)} du dv \\
     &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} A e^{-\frac{u^2 + v^2}{2 \sigma^2}} e^{j 2 \pi (ut + vz)} du dv \\
@@ -574,10 +573,57 @@ Before starting this task, I have derived a intermediate result shown in equatio
 \label{eq:first_res}
 \end{align}
 
+So far we have split a two dimensional integral into a product of two one-dimensional integral according to Fubini's Theorem from analysis. \\
 
+Before we continue with our derivation the I provide the following helpful intermediate result:
 
+\begin{align}
+    -\frac{x^2}{2\sigma^2} + j 2\pi x y &= -\frac{(x - j 2 \pi \sigma^2 y)^2}{2 \sigma^2} - 2\sigma^2 \pi^2 y^2
+\label{eq:nice_helper}
+\end{align}
 
+I omit the proof of the result from equation $\ref{eq:nice_helper}$ since it is just based on simple algebra rules. \\
 
+In equation $\ref{eq:nice_helper}$ we can substitute $(x,y)$ by $(u,t)$ or by $(v,z)$ when later used in equation $\ref{eq:first_res}$. Let us continue with the derivation of equation $\ref{eq:first_res}$.
+
+\begin{align}
+A \left(\int_{-\infty}^{\infty} e^{-\frac{v^2}{2 \sigma^2} + j 2 \pi vz} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{u^2}{2 \sigma^2} + j 2 \pi ut} du \right) \\
+= 
+A \left(\int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2} - 2\sigma^2 \pi^2 z^2} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{(u - j 2 \pi \sigma^2 t)^2}{2 \sigma^2} - 2\sigma^2 \pi^2 t^2} du \right) \\
+=
+A \left(\int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2}} e^{- 2\sigma^2 \pi^2 z^2} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{(u - j 2 \pi \sigma^2 t)^2}{2 \sigma^2}} e^{- 2\sigma^2 \pi^2 t^2} du \right) \\
+=
+A e^{- 2\sigma^2 \pi^2 t^2} e^{- 2\sigma^2 \pi^2 z^2} \left(\int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2}} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{(u - j 2 \pi \sigma^2 t)^2}{2 \sigma^2}} du \right) \\
+=
+A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} \left(\int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2}} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{(u - j 2 \pi \sigma^2 t)^2}{2 \sigma^2}} du \right) \\
+\label{eq:second_res}
+\end{align}
+
+We are almost done concluding our proof. We see that both remaining integrals basically have the same solution, just having different integration identifier variables. To keep things simple I will solve just one of the integrals and then use this result for the other integral as well. I focus on the integral over $dv$ and will use the following substitution: $s = v - j 2 \pi \sigma^2 z$. Further I will rely on the super-helper-result that I have derived below in equation $\ref{eq:final_helper_thingy}$.
+
+\begin{align}
+    \int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2}} dv
+    &= \int_{-\infty}^{\infty} e^{-\frac{s^2}{2 \sigma^2}} ds \\
+    &= \sqrt{2\pi \sigma^2}
+\label{eq:int_res2}
+\end{align}
+
+For the last step in equation $\ref{eq:int_res2}$ I used the result from equation $\ref{eq:final_helper_thingy}$ using $a = \frac{1}{2\sigma^2}$. \\
+
+Last we simply can use the result from equation $\ref{eq:int_res2}$ for the other integral. Both integrals give us the same result, namely $\sqrt{2\pi \sigma^2}$. \\
+
+Thus we conclude:
+
+\begin{align}
+A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} \left(\int_{-\infty}^{\infty} e^{-\frac{(v - j 2 \pi \sigma^2 z)^2}{2 \sigma^2}} dv \right) \left( \int_{-\infty}^{\infty} e^{-\frac{(u - j 2 \pi \sigma^2 t)^2}{2 \sigma^2}} du \right) \\
+=
+A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} (\sqrt{2\pi \sigma^2}) (\sqrt{2\pi \sigma^2}) \\
+= 
+A e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} 2\pi \sigma^2 \\
+=
+A 2\pi \sigma^2 e^{- 2\sigma^2 \pi^2 (t^2 + z^2)} 
+\label{eq:proof_done}
+\end{align}
 
 
 
@@ -666,7 +712,7 @@ Next, let us further simplify the integral from equation $\ref{eq:into_polar_coo
 \label{eq:greenified_hard}
 \end{align}
 
-In equation $\ref{eq:greenified_hard}$ we used greens' identity for splitting multi-dimensional integrals into a product of one-dimensional integrals. This can be done if the integral can be split into independent parts. In the following we will simplify this integral even further by using the following substitute:
+In equation $\ref{eq:greenified_hard}$ we used Fubini's identity for splitting multi-dimensional integrals into a product of one-dimensional integrals. This can be done if the integral can be split into independent parts. In the following we will simplify this integral even further by using the following substitute:
 
 \begin{align}
     s(r) := s &= -ar^2 \\
