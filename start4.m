@@ -1,3 +1,9 @@
+clc
+clear all;
+close all;
+addpath('util/');
+addpath('p4/');
+
 img = imread('imgs/rock.png');
 img = im2double(img);
 yuvImg = rgb2yuv(img);

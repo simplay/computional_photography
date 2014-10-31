@@ -3,6 +3,13 @@
 % Legi: 08-917-445
 
 %% Assignement 1
+clc;
+clear all;
+close all;
+
+addpath('util/');
+addpath('src/p1');
+
 
 % spanish castle illusion.
 img = imread('imgs/castle.jpg');

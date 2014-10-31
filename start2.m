@@ -27,6 +27,13 @@
 % arrays2pairs - get all pair combinations of two vectors
 % getRanges - get neighborhood from given input
 
+clc;
+clear all;
+close all;
+
+addpath('util/');
+addpath('src/p2');
+
 %% Task2
 % bilateral filter
 img = imread('imgs/Bigel11.jpg');
