@@ -5,3 +5,5 @@ imgs/*.jpg
 *.aux
 *.log
 *.ps
+imgs/*.mat
+
