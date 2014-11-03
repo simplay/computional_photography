@@ -8,24 +8,21 @@ function [ out ] = poissonSolver( target, gradientField, mask )
 %   @param out an image (grayscale) represented as a (m x n) matrix.
     
     % boundary condition and initial guess.
-    out = target .* mask;
+    out = target;
 
 
     % retrieve relevant pixel indices in image. 
     [I,J] = find(mask(:,:) == 0);
     
     % split directional components of gradient field
-    vx = gradientField(:,:,1);
-    vy = gradientField(:,:,2);
-    
-    % current solution
-    x = zeros(length(I));
+    vx = gradientField(:,:,2);
+    vy = gradientField(:,:,1);
     
     % error tolerance
-    EPS = 1E-16;
+    EPS = 1E-8;
     
     % ensure termination of solver
-    MAX_ITER = 1000;
+    MAX_ITER = 10000;
     
     % do while loop with invariante: make loop deterministic
     iter = 0;
@@ -46,7 +43,7 @@ function [ out ] = poissonSolver( target, gradientField, mask )
         end
         
         % end loop if error is below threshold EPS.
-        if(norm(out(:)-prev_out(:)) < EPS)
+        if(abs(max(out(:)-prev_out(:))) < EPS)
             break;
         end
         
