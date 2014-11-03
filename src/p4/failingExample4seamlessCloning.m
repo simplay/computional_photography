@@ -1,6 +1,7 @@
-function [ output_args ] = failingExample4seamlessCloning( input_args )
+function failingExample4seamlessCloning
 %FAILINGEXAMPLE4SEAMLESSCLONING Summary of this function goes here
 %   Detailed explanation goes here
+
     baseX=550;
     baseY=850;
 
