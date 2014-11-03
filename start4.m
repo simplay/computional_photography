@@ -9,7 +9,7 @@ addpath('util/');
 addpath('src/p4/');
 
 
-%% task 1.2.1 Seamless Cloning
+%% task 1.2 Seamless Cloning
 
 % determines boundary
 mask = imread('imgs/p4/seamless_cloning/mask.png');
@@ -46,13 +46,11 @@ xlabelHandler = get(g,'XLabel');
 set( xlabelHandler, 'String', fig_title); 
 set(gca,'xtick',[],'ytick',[]);
 
-%out = seamlessCloning(target, source, mask);
+out = seamlessCloning(target, source, mask);
 figure('Position', [100, 100, 1024, 800], ...
        'name', 'Seamless Cloning: Output')
-%imshow(out)
+imshow(out)
 
-%% task 1.2.2 Seamless Cloning - failing example
-%failingExample4seamlessCloning;
 
 %% task 1.3: Gradient Mixing.
 source = imread('imgs/p4/gradient_mixing/i1.png');
@@ -85,3 +83,5 @@ mask = im2double(mask);
 out = highlightRemoval(target, mask, alpha);
 figure('name', strcat('highlight removal using alpha= ', num2str(alpha) ))
 imshow(out)
+
+%% task 2.1
