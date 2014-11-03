@@ -39,5 +39,14 @@ imshow(out)
 
 %% task 1.3:  gradient mixing.
 
-%% task 1.4: highligh removel
+%% task 1.4: highligh removal
+alpha = 1.2;
 
+img = imread('imgs/orange.jpg');
+img = im2double(img);
+mask = imread('imgs/orange_mask.jpg');
+mask = im2double(mask);
+
+out = highlightRemoval(img,mask, alpha);
+figure('name', strcat('highlight removal using alpha= ', num2str(alpha) ))
+imshow(out)
