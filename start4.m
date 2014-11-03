@@ -67,6 +67,30 @@ mask(1:end, end) = 1;
 mask(1, 1:end) = 1;
 mask(end, 1:end) = 1;
 mask = mat2Img(mask(:,:), mask(:,:), mask(:,:));
+
+figure('Position', [100, 100, 1024, 800], ...
+       'name', 'Gradient Mixing: Input')
+g = subplot(1,3, 1);
+subimage(target)
+fig_title = strcat('Target');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
+
+g = subplot(1,3, 2);
+subimage(source)
+fig_title = strcat('Source');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
+
+g = subplot(1,3, 3);
+subimage(mask)
+fig_title = strcat('Mask');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
+
 out = gradientMixing(target, source, mask);
 figure('name', 'Gradient Mixing: Output')
 imshow(out)
@@ -80,8 +104,25 @@ target = im2double(target);
 mask = imread('imgs/orange_mask.jpg');
 mask = im2double(mask);
 
+figure('Position', [100, 100, 1024, 800], ...
+       'name', 'Highlight Removal: Input')
+g = subplot(1,2, 1);
+subimage(target)
+fig_title = strcat('Target');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
+
+g = subplot(1,2, 2);
+subimage(mask)
+fig_title = strcat('Mask');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
+
+
 out = highlightRemoval(target, mask, alpha);
-figure('name', strcat('highlight removal using alpha= ', num2str(alpha) ))
+figure('name', strcat('Highlight Removal: Output using alpha= ', num2str(alpha) ))
 imshow(out)
 
 %% task 2.1
