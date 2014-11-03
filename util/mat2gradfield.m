@@ -5,8 +5,10 @@ function [ dx, dy ] = mat2gradfield( matrix )
 %   @return dx a [(m-1) x n] matrix
 %   @return dy a [m x (n-1)] matrix
 
-    dy = matrix(:, 2:end) - matrix(:, 1:end-1);
-    dx = matrix(2:end,:) - matrix(1:end-1,:);
-
+    dx = matrix(:, 2:end) - matrix(:, 1:end-1);
+    dx = [matrix(:, end),dx];
+    dy = matrix(2:end,:) - matrix(1:end-1,:);
+    dy = [dy; matrix(end,:)];
+    
 end
 
