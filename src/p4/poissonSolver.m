@@ -1,10 +1,11 @@
-function [ out ] = poissonSolver( target, gradientField, mask )
+function [ out ] = poissonSolver( target, gradientField, mask, errorTol )
 %POISSONSOLVER Summary of this function goes here
 %   @param target image (grayscale) represented as a (m x n) matrix.
 %   @param gradientField gradient field from source image.
 %   @param mask (m x n) a binary valued matrix.
 %          the coordinates of entries that are equal zero
 %          represent the position of the source imga in the target image.
+%   @param errorTol indicates maximal tollerated error. Optional argument.
 %   @param out an image (grayscale) represented as a (m x n) matrix.
     
     % boundary condition and initial guess.
@@ -17,8 +18,13 @@ function [ out ] = poissonSolver( target, gradientField, mask )
     vx = gradientField(:,:,1);
     vy = gradientField(:,:,2);
     
-    % error tolerance
     EPS = 1E-12;
+    if nargin == 4
+        EPS = errorTol;
+    end
+    
+    % error tolerance
+    
     
     % ensure termination of solver
     MAX_ITER = 1000000;

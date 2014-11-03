@@ -52,18 +52,36 @@ figure('Position', [100, 100, 1024, 800], ...
 %imshow(out)
 
 %% task 1.2.2 Seamless Cloning - failing example
-failingExample4seamlessCloning;
+%failingExample4seamlessCloning;
 
 %% task 1.3: Gradient Mixing.
+input1 = imread('imgs/p4/gradient_mixing/i1.png');
+input1 = im2double(input1);
+
+input2 = imread('imgs/p4/gradient_mixing/i2.png');
+input2 = im2double(input2);
+
+M = size(input2, 1); N = size(input2, 2);
+
+mask = zeros(M,N);
+mask(1:end, 1) = 1;
+mask(1:end, end) = 1;
+mask(1, 1:end) = 1;
+mask(end, 1:end) = 1;
+mask = mat2Img(mask(:,:), mask(:,:), mask(:,:));
+out = gradientMixing(input1, input2, mask);
+figure('name', 'Gradient Mixing: Output')
+imshow(out)
+
 
 %% task 1.4: Highligh Removal
 alpha = 1.2;
 
-img = imread('imgs/orange.jpg');
-img = im2double(img);
+target = imread('imgs/orange.jpg');
+target = im2double(target);
 mask = imread('imgs/orange_mask.jpg');
 mask = im2double(mask);
 
-out = highlightRemoval(img,mask, alpha);
+out = highlightRemoval(target, mask, alpha);
 figure('name', strcat('highlight removal using alpha= ', num2str(alpha) ))
 imshow(out)
