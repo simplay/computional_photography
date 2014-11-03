@@ -19,8 +19,11 @@ function [ out ] = highlightRemoval(target, mask, alpha)
     gradField = real(gradField.^alpha);
     
     M = size(target,1); N = size(target,2);
-    out = zeros(M,N,3);
     
+    figureText = 'dx (left) and dy (right) of gradient taken from target';
+    showGradientFieldImgs(gradField, figureText, M, N); 
+    
+    out = zeros(M,N,3);
     tic
     parfor k=1:3
         out(:,:,k) = poissonSolver(target(:,:,k), gradField(:,:,:,k), mask(:,:,k));

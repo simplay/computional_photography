@@ -49,10 +49,13 @@ function [ out ] = gradientMixing( target, source, mask)
     % this gives a nice relief effect along the gradient.
     %gradField = max(abs(gradFieldTarget), abs(gradFieldSource));  
     
+    figureText = 'dx (left) and dy (right) of gradient taken from combined gradient';
+    showGradientFieldImgs(gf, figureText, M, N); 
+    
     tic
     parfor k=1:3
         out(:,:,k) = poissonSolver(target(:,:,k), ...
-                                   gf(:,:,:,k), mask(:,:,k), 1E-1);
+                                   gf(:,:,:,k), mask(:,:,k), 1E-3);
     end
     toc
     
