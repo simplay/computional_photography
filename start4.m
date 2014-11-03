@@ -23,28 +23,14 @@ source = im2double(source);
 target = imread('imgs/p4/seamless_cloning/target.png');
 target = im2double(target);
 
-figure('Position', [100, 100, 1024, 800], ...
-       'name', 'Seamless Cloning: Input')
-g = subplot(1,3, 1);
-subimage(target)
-fig_title = strcat('Target');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
+title = 'Seamless Cloning: Input';
+labels = {'Target' 'Source' 'Mask'};
+imgs = zeros(size(source,1), size(source,2), 3, 3);
+imgs(:,:,:,1) = target(:,:,:);
+imgs(:,:,:,2) = source(:,:,:);
+imgs(:,:,:,3) = mask(:,:,:);
 
-g = subplot(1,3, 2);
-subimage(source)
-fig_title = strcat('Source');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
-
-g = subplot(1,3, 3);
-subimage(mask)
-fig_title = strcat('Mask');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
+showImgSeries(title, imgs, labels);
 
 out = seamlessCloning(target, source, mask);
 figure('Position', [100, 100, 1024, 800], ...
@@ -68,28 +54,14 @@ mask(1, 1:end) = 1;
 mask(end, 1:end) = 1;
 mask = mat2Img(mask(:,:), mask(:,:), mask(:,:));
 
-figure('Position', [100, 100, 1024, 800], ...
-       'name', 'Gradient Mixing: Input')
-g = subplot(1,3, 1);
-subimage(target)
-fig_title = strcat('Target');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
+title = 'Gradient Mixing: Input';
+labels = {'Target' 'Source' 'Mask'};
+imgs = zeros(size(source,1), size(source,2), 3, 3);
+imgs(:,:,:,1) = target(:,:,:);
+imgs(:,:,:,2) = source(:,:,:);
+imgs(:,:,:,3) = mask(:,:,:);
 
-g = subplot(1,3, 2);
-subimage(source)
-fig_title = strcat('Source');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
-
-g = subplot(1,3, 3);
-subimage(mask)
-fig_title = strcat('Mask');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
+showImgSeries(title, imgs, labels);
 
 out = gradientMixing(target, source, mask);
 figure('name', 'Gradient Mixing: Output')
@@ -104,22 +76,13 @@ target = im2double(target);
 mask = imread('imgs/orange_mask.jpg');
 mask = im2double(mask);
 
-figure('Position', [100, 100, 1024, 800], ...
-       'name', 'Highlight Removal: Input')
-g = subplot(1,2, 1);
-subimage(target)
-fig_title = strcat('Target');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
+title = 'Highlight Removal: Input';
+labels = {'Target' 'Mask'};
+imgs = zeros(size(target,1), size(target,2), 3, 2);
+imgs(:,:,:,1) = target(:,:,:);
+imgs(:,:,:,2) = mask(:,:,:);
 
-g = subplot(1,2, 2);
-subimage(mask)
-fig_title = strcat('Mask');
-xlabelHandler = get(g,'XLabel');
-set( xlabelHandler, 'String', fig_title); 
-set(gca,'xtick',[],'ytick',[]);
-
+showImgSeries(title, imgs, labels);
 
 out = highlightRemoval(target, mask, alpha);
 figure('name', strcat('Highlight Removal: Output using alpha= ', num2str(alpha) ))
