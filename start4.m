@@ -55,13 +55,13 @@ figure('Position', [100, 100, 1024, 800], ...
 %failingExample4seamlessCloning;
 
 %% task 1.3: Gradient Mixing.
-input1 = imread('imgs/p4/gradient_mixing/i1.png');
-input1 = im2double(input1);
+source = imread('imgs/p4/gradient_mixing/i1.png');
+source = im2double(source);
 
-input2 = imread('imgs/p4/gradient_mixing/i2.png');
-input2 = im2double(input2);
+target = imread('imgs/p4/gradient_mixing/i2.png');
+target = im2double(target);
 
-M = size(input2, 1); N = size(input2, 2);
+M = size(target, 1); N = size(target, 2);
 
 mask = zeros(M,N);
 mask(1:end, 1) = 1;
@@ -69,7 +69,7 @@ mask(1:end, end) = 1;
 mask(1, 1:end) = 1;
 mask(end, 1:end) = 1;
 mask = mat2Img(mask(:,:), mask(:,:), mask(:,:));
-out = gradientMixing(input1, input2, mask);
+out = gradientMixing(target, source, mask);
 figure('name', 'Gradient Mixing: Output')
 imshow(out)
 

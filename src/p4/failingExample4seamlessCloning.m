@@ -25,7 +25,7 @@ function [ output_args ] = failingExample4seamlessCloning( input_args )
     S((baseX+1):(baseX+m), (baseY+1):(baseY+n),:) = source(:,:,:);
 
     
-    out = seamlessCloning(target,S,mask);
+    out = seamlessCloning(target, S, mask);
     figure('name', 'Seamless Cloning')
     imshow(out)
 
