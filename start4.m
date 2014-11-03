@@ -9,37 +9,54 @@ addpath('util/');
 addpath('src/p4/');
 
 
-%% task 1.2: seamless cloning
-baseX=550;
-baseY=850;
+%% task 1.2.1 Seamless Cloning
 
-source = imread('imgs/airplane.jpg');
+% determines boundary
+mask = imread('imgs/p4/seamless_cloning/mask.png');
+mask = im2double(mask);
+
+% patch we place into target
+source = imread('imgs/p4/seamless_cloning/source.png');
 source = im2double(source);
-source = imresize(source, 0.05);
-m = size(source,1); n = size(source,2);
 
-target = imread('imgs/landsacpe.jpg');
+% image that gets modified
+target = imread('imgs/p4/seamless_cloning/target.png');
 target = im2double(target);
 
-M = size(target,1); N = size(target,2);
+figure('Position', [100, 100, 1024, 800], ...
+       'name', 'Seamless Cloning: Input')
+g = subplot(1,3, 1);
+subimage(target)
+fig_title = strcat('Target');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
 
-% image mask
-mask = ones(M,N);
-mask((baseX+1):(baseX+m), (baseY+1):(baseY+n)) = 0;
+g = subplot(1,3, 2);
+subimage(source)
+fig_title = strcat('Source');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
 
-% zero-pad source image. Keep source in S at position where mask is
-% selecting.
-S = zeros(M,1600,3);
-S((baseX+1):(baseX+m), (baseY+1):(baseY+n),:) = source(:,:,:);
+g = subplot(1,3, 3);
+subimage(mask)
+fig_title = strcat('Mask');
+xlabelHandler = get(g,'XLabel');
+set( xlabelHandler, 'String', fig_title); 
+set(gca,'xtick',[],'ytick',[]);
 
+%out = seamlessCloning(target, source, mask);
+figure('Position', [100, 100, 1024, 800], ...
+       'name', 'Seamless Cloning: Output')
+%imshow(out)
 
-out = seamlessCloning(target,S,mask);
-figure('name', 'Seamless Cloning')
-imshow(out)
+%% task 1.2.2 Seamless Cloning - failing example
+failingExample4seamlessCloning;
 
-%% task 1.3:  gradient mixing.
+%% task 1.3: Gradient Mixing.
 
-%% task 1.4: highligh removal
+%% task 1.4: Highligh Removal
 alpha = 1.2;
 
 img = imread('imgs/orange.jpg');
