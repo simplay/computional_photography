@@ -1,4 +1,4 @@
-function failingExample4seamlessCloning
+function seamlessCloningPlaneExample
 %FAILINGEXAMPLE4SEAMLESSCLONING Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -7,7 +7,7 @@ function failingExample4seamlessCloning
 
     source = imread('imgs/airplane.jpg');
     source = im2double(source);
-    source = imresize(source, 0.05);
+    source = imresize(source, 0.1);
     m = size(source,1); n = size(source,2);
 
     target = imread('imgs/landsacpe.jpg');
