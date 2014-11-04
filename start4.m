@@ -32,10 +32,13 @@ imgs(:,:,:,3) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-%out = seamlessCloning(target, source, mask);
+out = seamlessCloning(target, source, mask);
 figure('Position', [100, 100, 1024, 800], ...
        'name', 'Seamless Cloning: Output')
-%imshow(out)
+imshow(out)
+
+% show another example: Plane in a landscape
+seamlessCloningPlaneExample;
 
 
 %% Task 1.3: Gradient Mixing.
@@ -63,9 +66,9 @@ imgs(:,:,:,3) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-%out = gradientMixing(target, source, mask);
+out = gradientMixing(target, source, mask);
 figure('name', 'Gradient Mixing: Output')
-%imshow(out)
+imshow(out)
 
 
 %% Task 1.4: Highlight Removal
@@ -84,7 +87,7 @@ imgs(:,:,:,2) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-alpha = 1.2;
+alpha = 1.5;
 out = highlightRemoval(target, mask, alpha);;
 figure('name', strcat('Alpha Compression: Highlight Removal: Output using alpha= ', num2str(alpha) ))
 imshow(out)

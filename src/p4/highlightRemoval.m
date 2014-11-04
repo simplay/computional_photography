@@ -20,7 +20,7 @@ function [ out ] = highlightRemoval(target, mask, alpha)
     
     M = size(target,1); N = size(target,2);
     
-    figureText = 'dx (left) and dy (right) of gradient taken from target';
+    figureText = 'Alpha Compression: dx (left) and dy (right) of gradient taken from target';
     showGradientFieldImgs(gradField, figureText, M, N); 
     
     out = zeros(M,N,3);
