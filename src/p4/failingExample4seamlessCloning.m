@@ -2,8 +2,8 @@ function failingExample4seamlessCloning
 %FAILINGEXAMPLE4SEAMLESSCLONING Summary of this function goes here
 %   Detailed explanation goes here
 
-    baseX=550;
-    baseY=850;
+    baseX=50;
+    baseY=550;
 
     source = imread('imgs/airplane.jpg');
     source = im2double(source);
@@ -16,8 +16,10 @@ function failingExample4seamlessCloning
     M = size(target,1); N = size(target,2);
 
     % image mask
+    delta=4;
     mask = ones(M,N);
-    mask((baseX+1+1):(baseX+m-1), (baseY+1+1):(baseY+n-1)) = 0;
+    mask((baseX+1+delta):(baseX+m-delta), ...
+         (baseY+1+delta):(baseY+n-delta)) = 0;
     mask = mat2Img(mask(:,:),mask(:,:),mask(:,:));
     
     % zero-pad source image. Keep source in S at position where mask is
