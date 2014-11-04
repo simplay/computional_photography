@@ -111,5 +111,22 @@ clc
 
 % extract fore-and background colors from masked selection
 [fcolors, bcolors] = extractBackAndForeGroundColors(img, fmask, bmask);
-
-
+%% 
+% Fit a Gaussian mixture distribution (gmm) to data: foreground an background
+componentCount = 2;
+gmmForeground = fitgmdist(fcolors', componentCount);
+gmmBackground = fitgmdist(bcolors', componentCount);
+    
+figure('name', 'foreground');
+for k = 1:componentCount,
+    subplot(1,componentCount, k);
+    foregroundMeanColor = reshape(gmmForeground.mu(k,:,:),1,1,3);
+    imshow(imresize(foregroundMeanColor, [150,150]));
+end
+    
+figure('name', 'background');
+for k = 1:componentCount,
+    subplot(1,componentCount, k);
+    backgroundMeanColor = reshape(gmmBackground.mu(k,:,:),1,1,3);
+    imshow(imresize(backgroundMeanColor, [150,150]));
+end

@@ -26,5 +26,6 @@ function [ fcolors, bcolors ] = extractBackAndForeGroundColors( img, fmask, bmas
     % extract only labeled foreground and background pixels
     fcolors = colors(:,findicess);
     bcolors = colors(:,bindicess);
+    
 end
 
