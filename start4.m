@@ -92,6 +92,8 @@ imshow(out)
 clc
 img = imread('imgs/nils.jpg');
 img = im2double(img);
+
+% get fore-and background separating masks.
 [fmask, bmask] = selectionForeAndBackground(img);
 
 FM = mat2Img(fmask(:,:), fmask(:,:), fmask(:,:));
@@ -106,3 +108,8 @@ imgs(:,:,:,2) = BM(:,:,:);
 
 showImgSeries(title, imgs, labels);
 clc
+
+% extract fore-and background colors from masked selection
+[fcolors, bcolors] = extractBackAndForeGroundColors(img, fmask, bmask);
+
+
