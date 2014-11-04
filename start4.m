@@ -9,7 +9,7 @@ addpath('util/');
 addpath('src/p4/');
 
 
-%% task 1.2 Seamless Cloning
+%% Task 1.2 Seamless Cloning
 
 % determines boundary
 mask = imread('imgs/p4/seamless_cloning/mask.png');
@@ -38,7 +38,7 @@ figure('Position', [100, 100, 1024, 800], ...
 imshow(out)
 
 
-%% task 1.3: Gradient Mixing.
+%% Task 1.3: Gradient Mixing.
 source = imread('imgs/p4/gradient_mixing/i1.png');
 source = im2double(source);
 
@@ -68,7 +68,7 @@ figure('name', 'Gradient Mixing: Output')
 imshow(out)
 
 
-%% task 1.4: Highligh Removal
+%% Task 1.4: Highlight Removal
 alpha = 1.2;
 
 target = imread('imgs/orange.jpg');
@@ -88,4 +88,21 @@ out = highlightRemoval(target, mask, alpha);
 figure('name', strcat('Highlight Removal: Output using alpha= ', num2str(alpha) ))
 imshow(out)
 
-%% task 2.1
+%% Task 2 Image segmentation using Graph Cut Optimization
+clc
+img = imread('imgs/nils.jpg');
+img = im2double(img);
+[fmask, bmask] = selectionForeAndBackground(img);
+
+FM = mat2Img(fmask(:,:), fmask(:,:), fmask(:,:));
+BM = mat2Img(bmask(:,:), bmask(:,:), bmask(:,:));
+
+title = 'Foreground (left) and background mask(right)';
+labels = {'Foreground Mask' 'Background Mask'};
+imgs = zeros(size(fmask,1), size(fmask,2), 3, 2);
+
+imgs(:,:,:,1) = FM(:,:,:);
+imgs(:,:,:,2) = BM(:,:,:);
+
+showImgSeries(title, imgs, labels);
+clc
