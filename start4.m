@@ -137,12 +137,10 @@ backgroundPDF = pdf(gmmBackground, colors');
 
 figure('name', 'Probability pixel belongs to foreground (brigther means higher probability)');
 density = reshape(foregroundPDF, size(img,1), size(img,2));
-density = density - min(density(:));
-density = density ./ max(density(:));
+density = mat2normalied(density);
 imshow(density);
 
 figure('name', 'Probability pixel belongs to background (brigther means higher probability)');
 density = reshape(backgroundPDF, size(img,1), size(img,2));
-density = density - min(density(:));
-density = density ./ max(density(:));
+density = mat2normalied(density);
 imshow(density);
