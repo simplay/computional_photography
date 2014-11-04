@@ -21,7 +21,7 @@ function out = seamlessCloning(target, source, mask)
        
     tic
     parfor k=1:3
-        out(:,:,k) = poissonSolver(target(:,:,k), gradField(:,:,:,k), mask(:,:,k));
+        out(:,:,k) = poissonSolver(target(:,:,k), gradField(:,:,:,k), mask(:,:,k), 1E-5);
     end
     toc
     

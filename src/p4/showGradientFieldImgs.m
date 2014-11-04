@@ -1,6 +1,25 @@
 function showGradientFieldImgs( gradField, figureText, M, N )
 %SHOWGRADIENTFIELDIMGS Summary of this function goes here
 %   Detailed explanation goes here
+    
+    figure('Position', [100, 100, 1024, 800], ...
+           'name', strcat('[Composed Gradients]',figureText))
+
+
+        g = subplot(1,2, 1);
+        subimage(reshape(gradField(:,:,1,:), M, N, 3))
+        fig_title = strcat('dx ');
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title); 
+        set(gca,'xtick',[],'ytick',[]);
+    
+        g = subplot(1,2, 2);
+        subimage(reshape(gradField(:,:,2,:), M, N, 3))
+        fig_title = strcat('dy ');
+        xlabelHandler = get(g,'XLabel');
+        set( xlabelHandler, 'String', fig_title); 
+        set(gca,'xtick',[],'ytick',[]); 
+
 
     figure('Position', [100, 100, 1024, 800], ...
            'name', figureText)

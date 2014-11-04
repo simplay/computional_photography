@@ -17,7 +17,7 @@ function failingExample4seamlessCloning
 
     % image mask
     mask = ones(M,N);
-    mask((baseX+1):(baseX+m), (baseY+1):(baseY+n)) = 0;
+    mask((baseX+1+1):(baseX+m-1), (baseY+1+1):(baseY+n-1)) = 0;
     mask = mat2Img(mask(:,:),mask(:,:),mask(:,:));
     
     % zero-pad source image. Keep source in S at position where mask is
