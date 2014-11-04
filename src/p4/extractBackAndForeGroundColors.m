@@ -1,4 +1,4 @@
-function [ fcolors, bcolors ] = extractBackAndForeGroundColors( img, fmask, bmask )
+function [ fcolors, bcolors, colors ] = extractBackAndForeGroundColors( img, fmask, bmask )
 %EXTRACTBACKANDFOREGROUNDCOLORS separates fore-and background of a given
 %image using a foreground and background masl
 %   @param img image to separate of resolution (m x n x 3)
@@ -6,6 +6,7 @@ function [ fcolors, bcolors ] = extractBackAndForeGroundColors( img, fmask, bmas
 %   @param bmask boolean matrix separating background from the given img.
 %   @return fcolors pixels from image that belong to the foreground.
 %   @return bcolors pixels from image that belong to the background.
+%   @return colors all colors of given image as a  3 x (#pixels) array.
     
     % get all pixel colors in a 3 x (#pixels) array
     colors = reshape(shiftdim(img,2),3,size(img,1)*size(img,2));

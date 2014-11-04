@@ -110,8 +110,8 @@ showImgSeries(title, imgs, labels);
 clc
 
 % extract fore-and background colors from masked selection
-[fcolors, bcolors] = extractBackAndForeGroundColors(img, fmask, bmask);
-%% 
+[fcolors, bcolors, colors] = extractBackAndForeGroundColors(img, fmask, bmask);
+
 % Fit a Gaussian mixture distribution (gmm) to data: foreground an background
 componentCount = 2;
 gmmForeground = fitgmdist(fcolors', componentCount);
@@ -130,3 +130,19 @@ for k = 1:componentCount,
     backgroundMeanColor = reshape(gmmBackground.mu(k,:,:),1,1,3);
     imshow(imresize(backgroundMeanColor, [150,150]));
 end
+
+% Calculate probability density functions
+foregroundPDF = pdf(gmmForeground, colors');
+backgroundPDF = pdf(gmmBackground, colors');
+
+figure('name', 'Probability pixel belongs to foreground (brigther means higher probability)');
+density = reshape(foregroundPDF, size(img,1), size(img,2));
+density = density - min(density(:));
+density = density ./ max(density(:));
+imshow(density);
+
+figure('name', 'Probability pixel belongs to background (brigther means higher probability)');
+density = reshape(backgroundPDF, size(img,1), size(img,2));
+density = density - min(density(:));
+density = density ./ max(density(:));
+imshow(density);
