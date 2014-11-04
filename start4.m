@@ -32,10 +32,10 @@ imgs(:,:,:,3) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-out = seamlessCloning(target, source, mask);
+%out = seamlessCloning(target, source, mask);
 figure('Position', [100, 100, 1024, 800], ...
        'name', 'Seamless Cloning: Output')
-imshow(out)
+%imshow(out)
 
 
 %% Task 1.3: Gradient Mixing.
@@ -63,13 +63,13 @@ imgs(:,:,:,3) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-out = gradientMixing(target, source, mask);
+%out = gradientMixing(target, source, mask);
 figure('name', 'Gradient Mixing: Output')
-imshow(out)
+%imshow(out)
 
 
 %% Task 1.4: Highlight Removal
-alpha = 1.2;
+
 
 target = imread('imgs/orange.jpg');
 target = im2double(target);
@@ -84,8 +84,15 @@ imgs(:,:,:,2) = mask(:,:,:);
 
 showImgSeries(title, imgs, labels);
 
-out = highlightRemoval(target, mask, alpha);
-figure('name', strcat('Highlight Removal: Output using alpha= ', num2str(alpha) ))
+alpha = 1.2;
+out = highlightRemoval(target, mask, alpha);;
+figure('name', strcat('Alpha Compression: Highlight Removal: Output using alpha= ', num2str(alpha) ))
+imshow(out)
+
+alpha = 0.005;
+beta = 0.4;
+out = highlightRemovalGammaCompression(target, mask, alpha, beta);
+figure('name', strcat('Gamma Compression: Highlight Removal: Output using alpha= ', num2str(alpha), ' and beta= ', num2str(beta) ))
 imshow(out)
 
 %% Task 2 Image segmentation using Graph Cut Optimization
