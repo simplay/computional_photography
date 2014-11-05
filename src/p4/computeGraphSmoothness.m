@@ -45,37 +45,13 @@ for n=1:N
 
         if hasLeftN(m) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m,n-1));
-            A_i(index) = rowIndex;
-            A_j(index) = pixelIdx - M;
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        end
-
-        if hasBotLeftN(m,n,N) == 1
-           index = index+1;
-           dist2 = computeDist2(img_mn, img(m+1,n-1));
-           A_i(index) = rowIndex;
-           A_j(index) = pixelIdx - M + 1;
-           A_value(index) = penaltyTerm(beta, gamma, dist2);
-        end
-
-        if hasTopN(n) == 1
-            index = index + 1;
             dist2 = computeDist2(img_mn, img(m-1,n));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx - 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasBotN(n,N) == 1
-            index = index + 1;
-            dist2 = computeDist2(img_mn, img(m+1,n));
-            A_i(index) = rowIndex;
-            A_j(index) = pixelIdx + 1;
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        end
-
-        if hasTopRightN(m,n,M,N) == 1
+        if hasBotLeftN(m,n,N) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m-1,n+1));
             A_i(index) = rowIndex;
@@ -83,11 +59,35 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasRightN(m,M) == 1
+        if hasTopN(n) == 1
+            index = index + 1;
+            dist2 = computeDist2(img_mn, img(m,n-1));
+            A_i(index) = rowIndex;
+            A_j(index) = pixelIdx - M;
+            A_value(index) = penaltyTerm(beta, gamma, dist2);
+        end
+
+        if hasBotN(n,N) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m,n+1));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + M;
+            A_value(index) = penaltyTerm(beta, gamma, dist2);
+        end
+
+        if hasTopRightN(m,n,M,N) == 1
+           index = index+1;
+           dist2 = computeDist2(img_mn, img(m+1,n-1));
+           A_i(index) = rowIndex;
+           A_j(index) = pixelIdx - M + 1;
+           A_value(index) = penaltyTerm(beta, gamma, dist2);
+        end
+
+        if hasRightN(m,M) == 1
+            index = index + 1;
+            dist2 = computeDist2(img_mn, img(m+1,n));
+            A_i(index) = rowIndex;
+            A_j(index) = pixelIdx + 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
@@ -123,7 +123,7 @@ end
 
 function has = hasLeftN(m)
 % @return has is there a left neighbor [l]?
-    has = m > 1;
+    has = (m > 1);
 end
 
 function has = hasRightN(m, M)
@@ -153,7 +153,7 @@ end
 
 function has = hasTopRightN(m, n, M, N)
 % @return has is there a top right neighbor [tr]?
-    has = hasTop(n, N) && hasRightN(m, M);
+    has = hasTopN(n) && hasRightN(m, M);
 end
 
 function has = hasBotRightN(m, n, M, N)

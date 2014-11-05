@@ -56,7 +56,7 @@ density = mat2normalied(density);
 imshow(density);
 
 % Task 2.3
-% 1 x N vector specifies the initial labels of eac hof the N nodes in the
+% 1 x N vector specifies the initial labels of each of the N nodes in the
 % graph. Initially, it is supposed to be equal zero. 
 % N is the number of pixels in the image.
 class = zeros(size(img,1)*size(img,2), 1);
@@ -79,6 +79,8 @@ expansion = 0;
 
 % [LABELS ENERGY ENERGYAFTER] = GCMex(CLASS, UNARY, PAIRWISE, LABELCOST,EXPANSION)
 [labels, ~, ~] = GCMex(class, single(unary), pairwise, single(labelcost), expansion);
+
+
 
 
 end
