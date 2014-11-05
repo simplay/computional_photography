@@ -5,6 +5,8 @@
 clc
 clear all;
 close all;
+
+% load dependencies
 addpath('util/');
 addpath('src/p4/');
 addpath('lib/GCMex/');
@@ -100,7 +102,7 @@ imshow(out)
 
 %% Task 2 Image segmentation using Graph Cut Optimization
 clc
-img = imread('imgs/nils.jpg');
+img = imread('imgs/p4/image_segmentation/zebras.jpg');
 img = im2double(img);
 
 imageSegmentation(img)
