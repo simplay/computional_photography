@@ -90,7 +90,7 @@ imgs(:,:,:,2) = mask(:,:,:);
 showImgSeries(title, imgs, labels);
 
 alpha = 1.5;
-out = highlightRemoval(target, mask, alpha);;
+out = highlightRemoval(target, mask, alpha);
 figure('name', strcat('Alpha Compression: Highlight Removal: Output using alpha= ', num2str(alpha) ))
 imshow(out)
 

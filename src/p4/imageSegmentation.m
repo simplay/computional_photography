@@ -1,6 +1,6 @@
 function imageSegmentation( img )
 %IMAGESEGMENTATION Summary of this function goes here
-%   Detailed explanation goes here
+%   @param img
 
 
 % get fore-and background separating masks.
@@ -54,6 +54,31 @@ figure('name', 'Probability pixel belongs to background (brigther means higher p
 density = reshape(backgroundPDF, size(img,1), size(img,2));
 density = mat2normalied(density);
 imshow(density);
+
+% Task 2.3
+% 1 x N vector specifies the initial labels of eac hof the N nodes in the
+% graph. Initially, it is supposed to be equal zero. 
+% N is the number of pixels in the image.
+class = zeros(size(img,1)*size(img,2), 1);
+
+% A CxN matrix specifying the potentials (data term) for each of the C
+% possible classes at each of the N nodes.
+unary = computeClassPotentials(fmask, bmask, foregroundPDF, backgroundPDF);
+
+% A NxN sparse matrix sparse matrix specifiying the graph structure and
+% cost for each link between nodes in the graph.
+pairwise = computeGraphSmoothness(img, colors);
+
+% A CxC matrix specifiying the label cost for the labels of each adjacent
+% node in the graph.
+labelcost = [0,1; 1,0];
+
+% A 0-1 flag which determines if the swapof expansion method is used to
+% solve the minimization. 0 == swap, 1 == expansion.
+expansion = 0;
+
+% [LABELS ENERGY ENERGYAFTER] = GCMex(CLASS, UNARY, PAIRWISE, LABELCOST,EXPANSION)
+[labels, ~, ~] = GCMex(class, single(unary), pairwise, single(labelcost), expansion);
 
 
 end
