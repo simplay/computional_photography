@@ -35,7 +35,7 @@ for n=1:N
         rowIndex = rowIndex + 1;
         img_mn = img(m,n);
 
-        if hasTopLeftDiagN(m,n) == 1
+        if hasTopLeftN(m,n) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m-1,n-1));    
             A_i(index) = rowIndex;
@@ -43,7 +43,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasLeftN(m,n,M,N) == 1
+        if hasLeftN(m) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m,n-1));
             A_i(index) = rowIndex;
@@ -51,7 +51,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasBotLeftDiagN(m,n,M,N) == 1
+        if hasBotLeftN(m,n,N) == 1
            index = index+1;
            dist2 = computeDist2(img_mn, img(m+1,n-1));
            A_i(index) = rowIndex;
@@ -59,7 +59,7 @@ for n=1:N
            A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasTopN(m,n,M,N) == 1
+        if hasTopN(n) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m-1,n));
             A_i(index) = rowIndex;
@@ -67,7 +67,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasBotN(m,n,M,N) == 1
+        if hasBotN(n,N) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m+1,n));
             A_i(index) = rowIndex;
@@ -75,7 +75,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasTopRightDiagN(m,n,M,N) == 1
+        if hasTopRightN(m,n,M,N) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m-1,n+1));
             A_i(index) = rowIndex;
@@ -83,7 +83,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasRightN(m,n,M,N) == 1
+        if hasRightN(m,M) == 1
             index = index + 1;
             dist2 = computeDist2(img_mn, img(m,n+1));
             A_i(index) = rowIndex;
@@ -91,7 +91,7 @@ for n=1:N
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasBotRightDiagN(m,n,M,N) == 1
+        if hasBotRightN(m,n,M,N) == 1
             index = index+1;
             dist2 = computeDist2(img_mn, img(m+1,m+1));
             A_i(index) = rowIndex;
@@ -112,32 +112,59 @@ pairwise = sparse(A_i, A_j, A_value, pixelCount, pixelCount);
 
 end
 
-function has = hasTopLeftDiagN(m, n)
-    has = (m > 1 && n > 1);
+% Neighborhood labels for a given pixel p.
+% ===============
+% | tl | t | tr |
+% |  l | p |  r |
+% | bl | b | br |
+% ===============
+
+% Neighborhood queries.
+
+function has = hasLeftN(m)
+% @return has is there a left neighbor [l]?
+    has = m > 1;
 end
 
-function has = hasLeftN(m, n, M, N)
+function has = hasRightN(m, M)
+% @return has is there a right neighbor [r]?
+    has = (m < M);
 end
 
-function has = hasBotLeftDiagN(m, n, M, N)
+function has = hasTopN(n)
+% @return has is there a top neighbor [t]?
+    has = (n > 1);
 end
 
-function has = hasTopN(m, n, M, N)
+function has = hasBotN(n, N)
+% @return has is there a bottom neighbor [b]?
+    has = (n < N);
 end
 
-function has = hasBotN(m, n, M, N)
+function has = hasTopLeftN(m, n)
+% @return has is there a top left neighbor [tl]?
+    has = hasTopN(n) && hasLeftN(m);
 end
 
-function has = hasTopRightDiagN(m, n, M, N)
+function has = hasBotLeftN(m, n, N)
+% @return has is there a bottom left neighbor [bl]?
+    has = hasLeftN(m) && hasBotN(n, N);
 end
 
-function has = hasRightN(m, n, M, N)
+function has = hasTopRightN(m, n, M, N)
+% @return has is there a top right neighbor [tr]?
+    has = hasTop(n, N) && hasRightN(m, M);
 end
 
-function has = hasBotRightDiagN(m, n, M, N)
+function has = hasBotRightN(m, n, M, N)
+% @return has is there a bottom right neighbor [br]?
+    has = hasBotN(n, N) && hasRightN(m, M);
 end
 
 function dist2 = computeDist2(a, b)
+% @param a base pixel
+% @param b neighbor pixel
+% @return compute squared distances of two given pixels
     dist2 = (a - b)^2;
 end
 
