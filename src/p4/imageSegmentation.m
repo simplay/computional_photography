@@ -81,7 +81,26 @@ expansion = 0;
 [labels, ~, ~] = GCMex(class, single(unary), pairwise, single(labelcost), expansion);
 
 
+% Compute smoothness of each pixel: 1 x N array
+smoothnessEachPixel = sum(pairwise);
 
+% make a full matrix and reshape to image resolution
+smoothness = reshape(full(smoothnessEachPixel), size(img,1), size(img,2));
+smoothness = mat2normalied(smoothness);
+figure('name', 'smoothness term');
+imshow(smoothness);
+
+% Visualize min cut, i.e. image segmenation.
+backgroundLabels = reshape(labels, size(img, 1), size(img, 2));
+backgroundLabels = repmat(backgroundLabels, 1, 1, 3);
+foregroundLabels = 1-backgroundLabels;
+
+figure('name', 'Foreground (left) and Background (right)');
+subplot(1,2, 1);
+imshow(img .* foregroundLabels);
+
+subplot(1,2, 2);
+imshow(img .* backgroundLabels);
 
 end
 
