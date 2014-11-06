@@ -33,11 +33,11 @@ for n=1:N
 
         % create the equations for the pixel (x,y) and it's 8 neighbors
         rowIndex = rowIndex + 1;
-        img_mn = img(m,n);
+        img_mn = img(m,n, :);
 
         if hasTopLeftN(m,n) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m-1,n-1));    
+            dist2 = computeDist2(img_mn, img(m-1,n-1, :));    
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx - M - 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -45,7 +45,7 @@ for n=1:N
 
         if hasLeftN(m) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m-1,n));
+            dist2 = computeDist2(img_mn, img(m-1,n, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx - 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -53,7 +53,7 @@ for n=1:N
 
         if hasBotLeftN(m,n,N) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m-1,n+1));
+            dist2 = computeDist2(img_mn, img(m-1,n+1, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + M - 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -61,7 +61,7 @@ for n=1:N
 
         if hasTopN(n) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m,n-1));
+            dist2 = computeDist2(img_mn, img(m,n-1, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx - M;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -69,15 +69,15 @@ for n=1:N
 
         if hasBotN(n,N) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m,n+1));
+            dist2 = computeDist2(img_mn, img(m,n+1, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + M;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
         end
 
-        if hasTopRightN(m,n,M,N) == 1
+        if hasTopRightN(m,n,M) == 1
            index = index+1;
-           dist2 = computeDist2(img_mn, img(m+1,n-1));
+           dist2 = computeDist2(img_mn, img(m+1,n-1, :));
            A_i(index) = rowIndex;
            A_j(index) = pixelIdx - M + 1;
            A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -85,7 +85,7 @@ for n=1:N
 
         if hasRightN(m,M) == 1
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m+1,n));
+            dist2 = computeDist2(img_mn, img(m+1,n, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -93,7 +93,7 @@ for n=1:N
 
         if hasBotRightN(m,n,M,N) == 1
             index = index+1;
-            dist2 = computeDist2(img_mn, img(m+1,m+1));
+            dist2 = computeDist2(img_mn, img(m+1,m+1, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + M + 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
@@ -151,7 +151,7 @@ function has = hasBotLeftN(m, n, N)
     has = hasLeftN(m) && hasBotN(n, N);
 end
 
-function has = hasTopRightN(m, n, M, N)
+function has = hasTopRightN(m, n, M)
 % @return has is there a top right neighbor [tr]?
     has = hasTopN(n) && hasRightN(m, M);
 end
@@ -165,7 +165,8 @@ function dist2 = computeDist2(a, b)
 % @param a base pixel
 % @param b neighbor pixel
 % @return compute squared distances of two given pixels
-    dist2 = (a - b)^2;
+    c = (a-b).^2;
+    dist2 = sqrt(sum(c(:)));
 end
 
 function beta = getBetaFromColorVar(colors)

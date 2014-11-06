@@ -5,7 +5,7 @@ function imageSegmentation( img )
 
 % get fore-and background separating masks.
 [fmask, bmask] = selectionForeAndBackground(img);
-
+%%
 FM = mat2Img(fmask(:,:), fmask(:,:), fmask(:,:));
 BM = mat2Img(bmask(:,:), bmask(:,:), bmask(:,:));
 
