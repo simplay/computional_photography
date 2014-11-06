@@ -3,113 +3,141 @@ function [ pairwise ] = computeGraphSmoothness( img, colors )
 % link between nodes in the graph. Stores the smoothness term in this
 % matrix. For each pair of intersecting pixels, this matrix contains the
 % penalty if the labels of the pixels do not agree. 
-% @param img
-% @param colors
-% return colors
+%
+% CFO (COLUMN FIRST ORDER)
+% For a given image, iterate over each of its column vectors from left to
+% the right. I.e. Foreach column vector in the given image, iterate over each of
+% the corresponding rows. If the last row has been processed, continue with
+% the corresponding successor column vector in the image.
+% @param img a color image of size (M x N x 3)
+% @param colors all colors in the image - used in order to compute beta.
+% @return pairwise: all penalities, in sparse matrix. Its full variant if of size M*N.
+%         note that the row idx in the full matrix corresponds to a pixel
+%         in the original image img in the column first order. A row
+%         contains all the neighborhood penalty information. A particular
+%         element in a row exhibits a value != zero, if it is a neighbor to
+%         the row idx pixel. the value is the corresponding penalty value.
 
-% paramters for the penalty term
-beta = getBetaFromColorVar(colors);
-gamma = 5;
+    % paramters for the penalty term
+    beta = getBetaFromColorVar(colors);
+    gamma = 5;
 
-% Global indices
-M = size(img, 1);
-N = size(img, 2);
-pixelCount = M*N;
+    % total number of rows
+    M = size(img, 1);
 
-% initializations components of spare matrix
-A_value = zeros(8*(M-2)*(N-2), 1);
-A_i = zeros(8*(M-2)*(N-2), 1);
-A_j = zeros(8*(M-2)*(N-2), 1);
+    % total number of columns
+    N = size(img, 2);
 
-% local helper indices
-index = 0;
+    % total number of pixels in image
+    pixelCount = M*N;
 
-% traverse the pixels in the image column-wise from top to bottom.
-% we ignore boundary which won't have any effect.
-for n=2:(N-1)
-    for m=2:(M-1)
+    % a row index corresponds to one particular pixel in the rows-first-order.
+    rowIdxs = zeros(8*(M-2)*(N-2), 1);
 
-        % create the equations for the pixel (x,y) and it's 8 neighbors
+    % a column index corresponds to one particular neighbor pixel to its parent
+    columnIdxs = zeros(8*(M-2)*(N-2), 1);
 
-        img_mn = img(m,n, :);
-        
-        % has top left neighbor
+    % contains all penalty values.
+    elementValues = zeros(8*(M-2)*(N-2), 1);
+
+    % thus, we conclude: the k-th row is the k-th pixel in the image in the
+    % rows-first orders. All corresponding column indices - i.e. the whole
+    % row-vector k, are the pixel indices of the k-th pixel's neighbors.
+
+    % Index aggregation index - used for collecting indices.
+    index = 0;
+
+    % traverse the pixels in the image column-wise from top to bottom.
+    % Note that we do not iterate over the boundary pixels in the image,
+    % i.e. we are going to assume that the boundary has value zero.
+    % this assumption is viable, since for usual image resultion,
+    % the smoothness term won't have any effect anyhow. Splitting excatly at
+    % the boundary pixels won't ever happen, since then, there is nothing to
+    % split on the other side anyhow.
+    % FOREACH PIXEL in the IMAGE 
+    % COMPUTE the penalty to its neighbors.
+    % Assume taht the boundary pixels may be ignored.
+    % Iterate column-wise.
+    for n=2:(N-1)
+        for m=2:(M-1)
+
+            % current pixel value in iteration: visit its 1-Neighborhood.
+            img_mn = img(m,n, :);
+
+            % has top left neighbor
             index = index + 1;
-            dist2 = computeDist2(img_mn, img(m-1,n-1, :));    
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m-1,n-1, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has left neighbor
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m-1,n-1, M);
+            dist2 = computeDist2(img_mn, img(m-1,n-1, :));
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has left neighbor
             index = index + 1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m-1,n, M);
             dist2 = computeDist2(img_mn, img(m-1,n, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m-1,n, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has bottom left neighbor
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has bottom left neighbor
             index = index + 1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m-1,n+1, M);
             dist2 = computeDist2(img_mn, img(m-1,n+1, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m-1,n+1, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has top neighbor
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has top neighbor
             index = index + 1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m,n-1, M);
             dist2 = computeDist2(img_mn, img(m,n-1, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m,n-1, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has bottom neighbor
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has bottom neighbor
             index = index + 1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m,n+1, M);
             dist2 = computeDist2(img_mn, img(m,n+1, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m,n+1, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        
-        % has top right neighbor
-           index = index+1;
-           dist2 = computeDist2(img_mn, img(m+1,n-1, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m+1,n-1, M);
-           A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has right neighbor
-            index = index + 1;
-            dist2 = computeDist2(img_mn, img(m+1,n, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m+1,n, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
-        
-        % has top bottom right neighbor
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has top right neighbor
             index = index+1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m+1,n-1, M);
+            dist2 = computeDist2(img_mn, img(m+1,n-1, :));
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has right neighbor
+            index = index + 1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m+1,n, M);
+            dist2 = computeDist2(img_mn, img(m+1,n, :));
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
+
+            % has top bottom right neighbor
+            index = index+1;
+            rowIdxs(index) = pixelIdxRFO(m,n, M);
+            columnIdxs(index) = pixelIdxRFO(m+1,n+1, M);
             dist2 = computeDist2(img_mn, img(m+1,n+1, :));
-            A_i(index) = pixelIdxRFO(m,n, M);
-            A_j(index) = pixelIdxRFO(m+1,n+1, M);
-            A_value(index) = penaltyTerm(beta, gamma, dist2);
+            elementValues(index) = penaltyTerm(beta, gamma, dist2);
 
+        end
     end
-end
 
-% create the sparse matrix pairwise
-pairwise = sparse(A_i, A_j, A_value, pixelCount, pixelCount);
+    % create the sparse matrix pairwise
+    pairwise = sparse(rowIdxs, columnIdxs, elementValues, pixelCount, pixelCount);
 
 end
 
 
 function pixelIDX = pixelIdxRFO(m,n, M)
-% RFO = ROW FIRST ORDER
+% CFO = Column FIRST ORDER
 % compute pixel index when iteration over image in the following order:
 % fix a certain column, then iterate over each rows, i.e. process all
 % elements of a column vector.
 % @param m row idx of pixel in image
 % @param n column idx of pixel in image
-% @param N number of columns in image
+% @param M number of rows in image
 % @return pixel index in RFO pixelvector.
-
-
     pixelIDX = m + M*(n-1);
 
 end
