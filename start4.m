@@ -100,7 +100,7 @@ imshow(out)
 
 %% Task 2 Image segmentation using Graph Cut Optimization
 clc
-img = imread('imgs/p4/image_segmentation/zebras.jpg');
+img = imread('imgs/p4/image_segmentation/puppy.jpg');
 img = im2double(img);
 
 imageSegmentation(img)

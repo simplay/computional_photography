@@ -93,7 +93,7 @@ for n=1:N
 
         if hasBotRightN(m,n,M,N) == 1
             index = index+1;
-            dist2 = computeDist2(img_mn, img(m+1,m+1, :));
+            dist2 = computeDist2(img_mn, img(m+1,n+1, :));
             A_i(index) = rowIndex;
             A_j(index) = pixelIdx + M + 1;
             A_value(index) = penaltyTerm(beta, gamma, dist2);
