@@ -20,6 +20,8 @@ function out = seamlessCloning(target, source, mask)
     showGradientFieldImgs(gradField, figureText, M, N); 
        
     tic
+    
+    target = downsampledGuess(target, source, mask);
     parfor k=1:3
         out(:,:,k) = poissonSolver(target(:,:,k), gradField(:,:,:,k), mask(:,:,k), 1E-6);
     end
