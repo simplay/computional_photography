@@ -74,8 +74,6 @@ imshow(out)
 
 
 %% Task 1.4: Highlight Removal
-
-
 target = imread('imgs/orange.jpg');
 target = im2double(target);
 mask = imread('imgs/orange_mask.jpg');

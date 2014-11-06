@@ -27,7 +27,9 @@ function seamlessCloningPlaneExample
     S = ones(M,1600,3);
     S((baseX+1):(baseX+m), (baseY+1):(baseY+n),:) = source(:,:,:);
 
-    
+    % running 
+    % seamlessCloning(target, S, mask, 1);
+    % will compute an initial guess based on downsampling
     out = seamlessCloning(target, S, mask);
     figure('name', 'Seamless Cloning')
     imshow(out)

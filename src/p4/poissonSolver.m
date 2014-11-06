@@ -18,13 +18,13 @@ function [ out ] = poissonSolver( target, gradientField, mask, errorTol )
     vx = gradientField(:,:,1);
     vy = gradientField(:,:,2);
     
+    % Error tolerance: if diff between current and previous solution 
+    % is below this threshold value, we have found 
+    % a good approximative solution. 
     EPS = 1E-12;
     if nargin == 4
         EPS = errorTol;
     end
-    
-    % error tolerance
-    
     
     % ensure termination of solver
     MAX_ITER = 1000000;

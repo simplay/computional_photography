@@ -1,4 +1,4 @@
-function out = seamlessCloning(target, source, mask)
+function out = seamlessCloning(target, source, mask, useInitialGuess)
 % SEAMLESSCLONING copy-and-pastes the gradient of a source image onto a
 % target image using a poisson solver. 
 %   @param target color image (3 channels). The gradient fields of the source
@@ -8,9 +8,17 @@ function out = seamlessCloning(target, source, mask)
 %   are pasted onto the target field.
 %   @param mask acts as the boundary condition selector. Thus, this image 
 %          determines which pixels are copy-pasted onto the target image.
+%   @param useInitialGuess Apply downsampling and use its approximation as 
+%          initial guess for the poisson solver. This argument is
+%          optionally passed.
 %   @return out image with adjusted gradient field according to
 %   description.
-
+    
+    shouldComputeInitialGuess = 0;
+    if nargin == 4 && useInitialGuess == 1
+        shouldComputeInitialGuess = 1;
+    end
+    
     gradField = img2gradfield(source);
     
     M = size(target,1); N = size(target,2);
@@ -21,7 +29,13 @@ function out = seamlessCloning(target, source, mask)
        
     tic
     
-    target = downsampledGuess(target, source, mask);
+    % if user specified, compute an initial guess
+    % by downsampling the solution.
+    if shouldComputeInitialGuess == 1
+        disp('Computing an initial guess');
+        target = downsampledGuess(target, source, mask);
+    end
+
     parfor k=1:3
         out(:,:,k) = poissonSolver(target(:,:,k), gradField(:,:,:,k), mask(:,:,k), 1E-6);
     end
