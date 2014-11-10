@@ -42,6 +42,9 @@ imshow(out)
 % show another example: Plane in a landscape
 seamlessCloningPlaneExample;
 
+% and a 3rd example
+seamlessCloningMonsterExample;
+
 
 %% Task 1.3: Gradient Mixing.
 source = imread('imgs/p4/gradient_mixing/i1.png');

@@ -24,7 +24,7 @@ function seamlessCloningPlaneExample
     
     % zero-pad source image. Keep source in S at position where mask is
     % selecting.
-    S = ones(M,1600,3);
+    S = ones(M,N,3);
     S((baseX+1):(baseX+m), (baseY+1):(baseY+n),:) = source(:,:,:);
 
     % running 
