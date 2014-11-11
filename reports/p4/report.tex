@@ -188,6 +188,10 @@ You can find the implementation of my Seamless Cloning driver in the Matlab file
 
 \subsection{Gradient Mixing}
 
+In this experiment we are interested in combining two images: One that is supposed to depict a foreground - usually a texture - and another image acting as the background image supposed to enhance some details in the given image. The method of gradient mixing will combine the gradient fields of the two images by selecting the gradient with the larger magnitude at each pixel. This will give us an output image having an additional detail layer following the gradient of the target image. Results are shown below. \\
+
+You can find the implementation of my Seamless Cloning driver in the Matlab file \emph{gradientMixing.m}.
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}{1.0\textwidth}
@@ -277,10 +281,21 @@ You can find the implementation of my Highlight Removal driver in the Matlab fil
 
 \section{Image Segmentation}
 
+In this part of the project I have implemented an interactive image segmentation tool using graph cut opimization.
 
 \subsection{Sheep Example}
 
-Selection foreground sheep, background grass and some hay in the background gives us quite nice segmentation results.
+Selection foreground sheep, background grass and some hay in the background gives us quite nice segmentation results. \\
+
+In the following the results from some experiments I performed. For the smoothness therm I used a gamma parameter value equal to $20$. In the \emph{outputs} folder are additional examples using different values for gamma. \\
+
+Note that a user can modify the value of gamma which is determing the smoothness penalty in the file \emph{computeGraphSmoothness.m}. \
+
+You can start a Matlab demo of my image segmentation code by running the script \emph{start4.m}. In order to run my image segmentation code on an arbitrary, user-specified image, you have to run the Matlab function \emph{imageSegmentation.m}. This function expects being provided by an input image - this image is supposed to be segmented into a foreground-and a background image. \\
+
+When running this function, a user has to specify foreground-and background masks. When running my function, a GUI will pop up, allowing a user to specify this masked regions. Please follow the instructions given by the Matlab console, when the GUI is running. Type \emph{'f'} in order to select a foreground mask, type \emph{'b'} to specify a background mask in the image or enter \emph{'e'} to exit the mask selection process. \\
+
+After the user has provided masking regions, the program will run by its own and computes the image segmentation. In addition it also will show some other helpful information: The user-specified masks, the probability images that a certain pixel belongs to the fore-or background, the mean colors of the fore-and background images, the smoothness term image and last, the segmentation of the image into a foreground and background image.
 
 % input and selection
 \begin{figure}[H]
