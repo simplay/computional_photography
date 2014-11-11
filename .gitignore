@@ -4,5 +4,6 @@
 *.aux
 *.log
 *.ps
+*.dvi
 imgs/*.mat
 
