@@ -5,12 +5,12 @@ function seamlessCloningPlaneExample
     baseX=50;
     baseY=550;
 
-    source = imread('imgs/airplane.jpg');
+    source = imread('imgs/p4/airplane.jpg');
     source = im2double(source);
     source = imresize(source, 0.1);
     m = size(source,1); n = size(source,2);
 
-    target = imread('imgs/landsacpe.jpg');
+    target = imread('imgs/p4/landsacpe.jpg');
     target = im2double(target);
 
     M = size(target,1); N = size(target,2);
