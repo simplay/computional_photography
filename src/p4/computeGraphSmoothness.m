@@ -20,7 +20,7 @@ function [ pairwise ] = computeGraphSmoothness( img, colors )
 
     % paramters for the penalty term
     beta = getBetaFromColorVar(colors);
-    gamma = 5;
+    gamma = 20;
 
     % total number of rows
     M = size(img, 1);

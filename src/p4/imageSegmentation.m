@@ -27,14 +27,14 @@ componentCount = 2;
 gmmForeground = fitgmdist(fcolors', componentCount);
 gmmBackground = fitgmdist(bcolors', componentCount);
     
-figure('name', 'foreground');
+figure('name', 'Mean Foreground Colors');
 for k = 1:componentCount,
     subplot(1,componentCount, k);
     foregroundMeanColor = reshape(gmmForeground.mu(k,:,:),1,1,3);
     imshow(imresize(foregroundMeanColor, [150,150]));
 end
     
-figure('name', 'background');
+figure('name', 'Mean Background Colors');
 for k = 1:componentCount,
     subplot(1,componentCount, k);
     backgroundMeanColor = reshape(gmmBackground.mu(k,:,:),1,1,3);

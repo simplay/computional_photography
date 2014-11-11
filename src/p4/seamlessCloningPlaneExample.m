@@ -30,6 +30,22 @@ function seamlessCloningPlaneExample
     % running 
     % seamlessCloning(target, S, mask, 1);
     % will compute an initial guess based on downsampling
+    
+    
+    
+    
+    
+    title = 'Seamless Cloning: Input';
+labels = {'Target' 'Source' 'Mask'};
+imgs = zeros(size(S,1), size(S,2), 3, 3);
+imgs(:,:,:,1) = target(:,:,:);
+imgs(:,:,:,2) = S(:,:,:);
+imgs(:,:,:,3) = mask(:,:,:);
+
+showImgSeries(title, imgs, labels);
+    
+    
+    
     out = seamlessCloning(target, S, mask);
     figure('name', 'Seamless Cloning')
     imshow(out)

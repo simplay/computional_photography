@@ -54,6 +54,18 @@ addpath('lib/GCMex/');
     % running 
     % seamlessCloning(target, S, mask, 1);
     % will compute an initial guess based on downsampling
+    
+    
+        title = 'Seamless Cloning: Input';
+labels = {'Target' 'Source' 'Mask'};
+imgs = zeros(size(target,1), size(target,2), 3, 3);
+imgs(:,:,:,1) = target(:,:,:);
+imgs(:,:,:,2) = S(:,:,:);
+imgs(:,:,:,3) = Ma(:,:,:);
+
+showImgSeries(title, imgs, labels);
+    
+    
     out = seamlessCloning(target, S, Ma);
     figure('name', 'Seamless Cloning')
     imshow(out)
