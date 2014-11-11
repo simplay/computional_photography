@@ -77,16 +77,32 @@
 
 
 \section{Poisson Solver}
+
+The following examples of \emph{Seamless Cloning}, \emph{Gradient Mixing} and \emph{Highlight Removal} are based on the so called \emph{Poisson equation} using a different gradient field. \\
+
+In order to run a Matlab demo of these examples, please run the script \emph{start4.m} from my submitted source code. \\
+
+All the images (and also some more), can be found in the folder \emph{outputs} in the zip file that contains my submitted Matlab code for this Project. \\
+
+You can find the implementation of my Poisson solver in the Matlab file \emph{poissonSolver.m}.
+
 \subsection{Seamless Cloning}
 
+The gradient field of a certain region (determined by a mask) in a given target image is supposed to be replaced by the (masked) gradient field from a source image. The task is to fit the source gradient field to the gradient field of the target image at the masked location in the image. \\
+
+For this task I have implemented three examples shown below. \\
+
+You can find the implementation of my Seamless Cloning driver in the Matlab file \emph{seamlessCloning.m}.
+
+% input
 \subsubsection{Map Example}
 \begin{figure}[H]
     \centering
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/map/input}
     \end{subfigure}
-    \caption{Visualization of Input images: Target Image is a texture of a Wall (legt), the source image is a scrible (center), and the corresponding mask (right) having a border of 1, everything else is zero.}
-    \label{fig:gradient_mixing_input}       
+    \caption{Visualization of Input images: Target Image is a texture map (legt), the source image is a patch of another map (center), and the corresponding mask (right)  is a sub-selection of the source patch-map.}
+    \label{fig:seamless_cloning_map_input}       
 \end{figure}
 
 
@@ -95,8 +111,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/map/gradients}
     \end{subfigure}
-    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel.}
-    \label{fig:gradient_mixing_gradients}       
+    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel encoded as an RGB image.}
+    \label{fig:seamless_cloning_map_gradients}       
 \end{figure}
 
 
@@ -105,8 +121,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/map/output}
     \end{subfigure}
-    \caption{Output resulting from the gradient mixing method applied on our given input images using the gradient field as shown above.}
-    \label{fig:gradient_mixing_out}       
+    \caption{Output resulting from the seamless cloning method applied on our given input images using the gradient field as shown above.}
+    \label{fig:seamless_cloning_map_out}       
 \end{figure}
 
 \subsubsection{Plane Example}
@@ -115,8 +131,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/plane/input}
     \end{subfigure}
-    \caption{Visualization of Input images: Target Image is a texture of a Wall (legt), the source image is a scrible (center), and the corresponding mask (right) having a border of 1, everything else is zero.}
-    \label{fig:gradient_mixing_input}       
+    \caption{Visualization of Input images: Target Image illustrates a landscape (left), is an image of a plane (center), and the corresponding mask (right) is a box capturing the whole plane image.}
+    \label{fig:seamless_cloning_plane_input}       
 \end{figure}
 
 
@@ -125,8 +141,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/plane/gradients}
     \end{subfigure}
-    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel.}
-    \label{fig:gradient_mixing_gradients}       
+    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel encoded as RGB images.}
+    \label{fig:seamless_cloning_plane_gradients}       
 \end{figure}
 
 
@@ -135,8 +151,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/plane/output}
     \end{subfigure}
-    \caption{Output resulting from the gradient mixing method applied on our given input images using the gradient field as shown above.}
-    \label{fig:gradient_mixing_out}       
+    \caption{Output resulting from the seamless cloning method applied on our given input images using the gradient field as shown above.}
+    \label{fig:seamless_cloning_plane_out}       
 \end{figure}
 
 \subsubsection{Monster Example}
@@ -145,8 +161,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/monster/input}
     \end{subfigure}
-    \caption{Visualization of Input images: Target Image is a texture of a Wall (legt), the source image is a scrible (center), and the corresponding mask (right) having a border of 1, everything else is zero.}
-    \label{fig:gradient_mixing_input}       
+    \caption{Visualization of Input images: Target Image is again a hilly grass landscape (left), the source image is a hairy monster (center), and the corresponding mask (right) is the contour of the monster.}
+    \label{fig:seamless_cloning_monster_input}       
 \end{figure}
 
 
@@ -155,8 +171,8 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/monster/gradients}
     \end{subfigure}
-    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel.}
-    \label{fig:gradient_mixing_gradients}       
+    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel encoded in RGB images.}
+    \label{fig:seamless_cloning_monster_gradients}       
 \end{figure}
 
 
@@ -165,10 +181,9 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/seamless_cloning/monster/output}
     \end{subfigure}
-    \caption{Output resulting from the gradient mixing method applied on our given input images using the gradient field as shown above.}
-    \label{fig:gradient_mixing_out}       
+    \caption{Output resulting from the seamless cloning method applied on our given input images using the gradient field as shown above.}
+    \label{fig:seamless_cloning_monster_out}       
 \end{figure}
-
 
 
 \subsection{Gradient Mixing}
@@ -178,7 +193,7 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/gradient_mixing/input}
     \end{subfigure}
-    \caption{Visualization of Input images: Target Image is a texture of a Wall (legt), the source image is a scrible (center), and the corresponding mask (right) having a border of 1, everything else is zero.}
+    \caption{Visualization of Input images: Target Image is a texture of a Wall (left), the source image is a mathematical scribble (center), and the corresponding mask (right) having a border of value one (known pixels) and everywhere else it is equal to zero.}
     \label{fig:gradient_mixing_input}       
 \end{figure}
 
@@ -188,7 +203,7 @@
     \begin{subfigure}{1.0\textwidth}
         \includegraphics[width=\textwidth]{../../outputs/p4/gradient_mixing/gradients}
     \end{subfigure}
-    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel.}
+    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel encoded in RGB images.}
     \label{fig:gradient_mixing_gradients}       
 \end{figure}
 
@@ -203,6 +218,61 @@
 \end{figure}
 
 \subsection{Highlight Removal}
+
+In this experiment we want to adjust the local contrast of a given image by the method of highlight removal. For this purpose we mask the region in the target image that exhibits a way too bright specular spot. By solving the Poisson equation we are going to adjust the contrast within the masked region in the target image. \\
+
+During this experiment I used two different gradient fields in order to reduce the local contrast:
+
+\begin{itemize}
+\item Alpha Compression: $v = f^{* \alpha}$: In This experiment I used an $\alpha$ value equal to $1.5$. Please have a look at figure $\ref{fig:highlight_removal_out_alphacompression}$
+\item Gamma Compression: $v = \alpha^{\beta} |\nabla f^{*}|^{-beta} \nabla f^{*}$: In This experiment I used an $\alpha$ value equal to $0.005$ and $\beta$ equal to $0.4$. Please see figure $\ref{fig:highlight_removal_out_gammacompression}$
+
+\end{itemize}
+
+Note that I use a different terminology: In the exercise sheet, we refer to my so called gamma compression, when talking about the \emph{Alpha Compression}. However, during the lecture slides, we called this the gradient gamma compression. This is why I used this naming convention. \\
+
+The results from figure $\ref{fig:highlight_removal_out_gammacompression}$, i.e. results from the gamma compression, are way more convincing compared to those produced using the alpha compression shown in figure $\ref{fig:highlight_removal_out_alphacompression}$. Simply speaking, the alpha compression (in the sense of the terminus I am relying on) produces renderings that are blurring out the textures within the masked region. Both methods, however, are capable to reduce the local contrast. \\
+
+You can find the implementation of my Highlight Removal driver in the Matlab file \emph{highlightRemoval.m}.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{../../outputs/p4/highlight_removal/input}
+    \end{subfigure}
+    \caption{Visualization of Input images: Target Image is an image of an orange exhibiting a specular spot (left) and the corresponding mask (right) that encloses the highlight}
+    \label{fig:highlight_removal_input}       
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{../../outputs/p4/highlight_removal/gradients4colorchannels}
+    \end{subfigure}
+    \caption{Visualization of Gradient field along $dx$ and $dy$ resulting from the gradient mixing gradient field applied on each color channel separately.}
+    \label{fig:highlight_removal_gradients}       
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{../../outputs/p4/highlight_removal/output_alphacompression}
+    \end{subfigure}
+    \caption{Output resulting from the gradient mixing method applied on our given input images using the gradient field as shown above.}
+    \label{fig:highlight_removal_out_alphacompression}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{../../outputs/p4/highlight_removal/output_gammacompression}
+    \end{subfigure}
+    \caption{Output resulting from the gradient mixing method applied on our given input images using the gradient field as shown above.}
+    \label{fig:highlight_removal_out_gammacompression}       
+\end{figure}
 
 
 \section{Image Segmentation}
