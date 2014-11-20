@@ -9,3 +9,6 @@ Actually the size of the neighborhood in Gaussian-like kernels is infinite! But 
 
 ## Project 3
 The parseval point is to preserve the signal energy in the compression process, so when we remove the small coeficients, we do not change a lot. Therfore one would remove frquency values that are smaller than some threshold (not necessary high frequencies). This way the high frequencies that are significantly high will be preserved.
+
+## Project 4
+The gradient compression AND poisson solving happens in the log domain! 
