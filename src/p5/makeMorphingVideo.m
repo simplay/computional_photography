@@ -61,6 +61,6 @@ end
         writeVideo(vidObj,frame);
     end
     close(vidObj);
-
+    disp('a new moview has been created and is stored at /outputs/p5/');
 end
 
