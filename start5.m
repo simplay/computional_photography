@@ -29,8 +29,9 @@ source = imresize(source, [size(target,1),size(target,2)]);
 makeMorphingVideo(source, target, numberOfFrames, fileName)   
 
 %% Task 2: Rectification using Homography
-img2Rectify = imread('imgs/p5/building.png');
+img2Rectify = imread('imgs/p5/skewed_church.jpg');
 img2Rectify = im2double(img2Rectify);
+img2Rectify = imresize(img2Rectify, 0.25);
 
 [M,N,~] = size(img2Rectify);
 figure('name', 'Image to Rectify')
@@ -49,10 +50,25 @@ disp('2. The bottom left position');
 disp('3. The top right position');
 disp('4. The bottom right position');
 disp('Note: Positions are not allowed to overlap.');
+
+% let the user crop the image.
 [x,y] = ginput(2);
 croppedRect = imcrop(out,[min(x),min(y),max(x)-min(x),max(y)-min(y)]);
 figure('name', 'cropped rectificated image')
 imshow(croppedRect)
+
+% Display user selection
+figure('name', 'User selection (blue points) in distorted image,')
+imshow(img2Rectify)
+hold on
+plot([p_xs(1), p_xs(2)], [p_ys(1), p_ys(2)], 'r');
+plot([p_xs(3), p_xs(4)], [p_ys(3), p_ys(4)], 'r');
+plot([p_xs(1), p_xs(3)], [p_ys(1), p_ys(3)], 'r');
+plot([p_xs(2), p_xs(4)], [p_ys(2), p_ys(4)], 'r');
+plot(p_xs(1),p_ys(1),'.b');
+plot(p_xs(2),p_ys(2),'.b');
+plot(p_xs(3),p_ys(3),'.b');
+plot(p_xs(4),p_ys(4),'.b');
 
 %% Task 3: Panorama Stitching
 % We assume that the left and the right image have the same dimensionality.
