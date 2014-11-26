@@ -29,7 +29,7 @@ source = imresize(source, [size(target,1),size(target,2)]);
 makeMorphingVideo(source, target, numberOfFrames, fileName)   
 
 %% Task 2: Rectification using Homography
-img2Rectify = imread('imgs/p5/tower.jpg');
+img2Rectify = imread('imgs/p5/building.png');
 img2Rectify = im2double(img2Rectify);
 
 [M,N,~] = size(img2Rectify);
@@ -38,15 +38,21 @@ imshow(img2Rectify);
 [p_xs, p_ys] = ginput(4);
 selectedSourceHomogPoints = [p_xs, p_ys, ones(4,1)]';
 cornerHomogPoints = [arrays2pairs([1,N],[1,M])';ones(1,4)];
+
 % performs Rectification
 out = homographicRectification(img2Rectify, selectedSourceHomogPoints, cornerHomogPoints);
 figure('name', 'Rectificated image')
 imshow(out);
+disp('please select 4 points in the following order:');
+disp('1. The top left position');
+disp('2. The bottom left position');
+disp('3. The top right position');
+disp('4. The bottom right position');
+disp('Note: Positions are not allowed to overlap.');
 [x,y] = ginput(2);
 croppedRect = imcrop(out,[min(x),min(y),max(x)-min(x),max(y)-min(y)]);
 figure('name', 'cropped rectificated image')
 imshow(croppedRect)
-
 
 %% Task 3: Panorama Stitching
 % We assume that the left and the right image have the same dimensionality.

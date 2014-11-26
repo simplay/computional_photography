@@ -17,21 +17,21 @@ function out = homographicRectification(img, sourcePoints, targetPoints )
     
     % Build homogenous bounding box coordinates.
     [bb, left, right, top, bottom] = getBoundingBoxAround(targetPoints);
-    boundingBox = [bb; ones(1,M*N)];
-    
+    boundingBoxPos = [bb; ones(1,M*N)];
+   
     % Rectificated homogenous pixels.
-    pixels = H\boundingBox;
-    p_w = pixels(3,:);
-    pixels = pixels./repmat(p_w, 3, 1);
+    pixels = H\boundingBoxPos;
+    pixels_w = pixels(3,:);
+    pixels = pixels./repmat(pixels_w, 3, 1);
     
     % get interpolated pixel colors
     interpolatedColors = getBilinearInterpolatedColors(img, pixels);
-    
+   
     out = zeros(bottom-top+1, right-left+1, 3);
     for k=1:M*N
         % from double to int32
-        idxI = int32(pixels(2,k));
-        idxJ = int32(pixels(1,k));    
+        idxI = int32(boundingBoxPos(2,k));
+        idxJ = int32(boundingBoxPos(1,k));    
         out(idxI, idxJ, :) = interpolatedColors(:,k);
     end
 end
