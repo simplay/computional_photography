@@ -17,7 +17,7 @@ addpath('src/p5/');
 %% Task 1: Morphing
 
 % load target and source images used for morphing
-numberOfFrames = 3;
+numberOfFrames = 20;
 
 target = imread('imgs/p5/dude.jpg');
 target = im2double(target);

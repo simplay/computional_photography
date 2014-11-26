@@ -30,23 +30,23 @@ function out = morph(sourceImg, targetImg, sourceFeaturePositions, targetFeature
         
         boundingBox = getBoundingBoxAround(T_p);
         
-        % refactor this part
         mask = rasterize(T_p(1:2,:),boundingBox);
-        Pixels = boundingBox .* repmat(mask,2,1);
-        Pixels = reshape(Pixels(Pixels>0),2,sum(mask));
-        Pixels(3,:) = ones(1,size(Pixels,2));
-        %
+        pixels = boundingBox .* repmat(mask,2,1);
+        takenPixelsIdxs = pixels>0;
+        numberOfMaskedPixels = sum(mask);
+        pixels = reshape(pixels(takenPixelsIdxs),2, numberOfMaskedPixels);
+        pixels(3,:) = ones(1, size(pixels, 2));
         
-        pLeft = T_p_source * Pixels;
-        pRight = T_p_target * Pixels;
+        sourcePixels = T_p_source*pixels;
+        targetPixels = T_p_target*pixels;
         
-        interpolSourceColors = getBilinearInterpolatedColors(sourceImg, pLeft);
-        interpolTargetColors = getBilinearInterpolatedColors(targetImg, pRight);
+        interpolSourceColors = getBilinearInterpolatedColors(sourceImg, sourcePixels);
+        interpolTargetColors = getBilinearInterpolatedColors(targetImg, targetPixels);
         
         interpolatedColor = (1-timestep)*interpolSourceColors + timestep*interpolTargetColors;
         
-        for k=1:size(Pixels,2)
-            out(Pixels(2,k),Pixels(1,k),:) = interpolatedColor(:,k);
+        for k=1:length(pixels)
+            out(pixels(2,k), pixels(1,k),:) = interpolatedColor(:,k);
         end
     end           
 end
