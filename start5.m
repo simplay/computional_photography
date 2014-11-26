@@ -18,7 +18,7 @@ addpath('src/p5/');
 
 % load target and source images used for morphing
 numberOfFrames = 20;
-
+fileName = 'morph1';
 target = imread('imgs/p5/dude.jpg');
 target = im2double(target);
 
@@ -26,7 +26,7 @@ source = imread('imgs/p5/pig.jpg');
 source = im2double(source);
 source = imresize(source, [size(target,1),size(target,2)]);
     
-%makeMorphingVideo(source, target, numberOfFrames)   
+makeMorphingVideo(source, target, numberOfFrames, fileName)   
 
 %% Task 2
 
