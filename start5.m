@@ -26,17 +26,20 @@ source = imread('imgs/p5/pig.jpg');
 source = im2double(source);
 source = imresize(source, [size(target,1),size(target,2)]);
     
-makeMorphingVideo(source, target, numberOfFrames)   
+%makeMorphingVideo(source, target, numberOfFrames)   
 
 %% Task 2
 
 
 %% Task 3: Panorama Stitching
 % We assume that the left and the right image have the same dimensionality.
-left = imread('imgs/p5/panorama_image1.jpg');
+left = imread('imgs/p5/panorama_left_1.jpg');
 left = im2double(left);
-right = imread('imgs/p5/panorama_image2.jpg');
+left = imresize(left, 0.25);
+right = imread('imgs/p5/panorama_right_1.jpg');
+
 right = im2double(right);
+right = imresize(right, 0.25);
 panorama = panoramaStitching(left, right);
 figure('name', 'stitched img raw');
 imshow(panorama);

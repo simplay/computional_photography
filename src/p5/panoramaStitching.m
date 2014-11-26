@@ -20,7 +20,7 @@ function out = panoramaStitching( img1, img2 )
     % display sift frames
     frames = {frames_img1, frames_img2};
     images = {img1, img2};
-    %showSIFTFrames(images, frames);
+    showSIFTFrames(images, frames);
     
     % matches the two sets of SIFT descriptors descriptors_img1 and descriptors_img2.
     matches = vl_ubcmatch(descriptors_img1, descriptors_img2);
@@ -47,34 +47,43 @@ function out = panoramaStitching( img1, img2 )
     interpolatedColorsImg1 = getBilinearInterpolatedColors(img1, pixels);
     interpolatedColorMaskImg1 = getBilinearInterpolatedColors(bleedingMask, pixels);
     
-    paddedImg1 = reshape(shiftdim(interpolatedColorsImg1, 1),height, width, 3);
-    paddedMaskImg1 = reshape(shiftdim(interpolatedColorMaskImg1, 1),height, width, 3);
+    % padded image 1 and its mask are resulting from interpolated images.
+    paddedImg1 = reshape(shiftdim(interpolatedColorsImg1, 1), height, width, 3);
+    paddedMaskImg1 = reshape(shiftdim(interpolatedColorMaskImg1, 1), height, width, 3);
     
-    paddedImg2 = padarray(img2, [shiftedHeight, shiftedWidth],0,'pre');
-    paddedImg2 = padarray(paddedImg2,[height-size(paddedImg2,1), width-size(paddedImg2,2)],0,'post');
-    paddedImg2 = im2double(paddedImg2);
+    % padded image 2 and its mask (bleeding).
+    postPaddedDimsOf = @(baseImg) [height-size(baseImg, 1), ...
+                                   width-size(baseImg, 2)];
+    prePadDims = [shiftedHeight, shiftedWidth];
+    paddedImg2 = padImage(img2, prePadDims, postPaddedDimsOf);
+    paddedMaskImg2 = padImage(bleedingMask, prePadDims, postPaddedDimsOf);
     
+    % show generated padded images and their masks
+    images = {paddedImg1, paddedMaskImg1, ...
+              paddedImg2, paddedMaskImg2};
+    titles = {'padded image 1', 'padded mask image 1', ...
+              'padded image 2', 'padded mask image 2'};
+    showPaddedImgs(images, titles);
     
-    paddedMaskImg2 = padarray(bleedingMask, [shiftedHeight, shiftedWidth],0,'pre');
-    paddedMaskImg2 = padarray(paddedMaskImg2,[height-size(paddedMaskImg2,1), width-size(paddedMaskImg2,2)],0,'post');
-    paddedMaskImg2 = mat2Img(paddedMaskImg2,paddedMaskImg2,paddedMaskImg2);
-    paddedMaskImg2 = im2double(paddedMaskImg2);
-    figure('name', 'padded image 1')
-    imshow(paddedImg1);
-    figure('name', 'padded mask image 1')
-    imshow(paddedMaskImg1);
+    % alpha blend padded images
+    compositeMask = (paddedMaskImg1 + paddedMaskImg2);
     
-    figure('name', 'padded image 2')
-    imshow(paddedImg2);
-    figure('name', 'padded mask image 2')
-    imshow(paddedMaskImg2);
-    
-    alpha = paddedMaskImg1 ./ (paddedMaskImg1 + paddedMaskImg2);
-    disp('foo3')
-    
+    % avoid NaN issues: max(0,0/0) is 0.
+    alpha = max(0, paddedMaskImg1./compositeMask);   
     out = alpha.*paddedImg1 + (1-alpha).*paddedImg2;
+    
+    disp('panorama stitching process finished');
 end
 
+function showPaddedImgs(images, titles)
+    N = length(images);
+    for k=1:N,
+        title_k = char(titles(k));
+        image_k = cell2mat(images(k));
+        figure('name', title_k)
+        imshow(image_k);
+    end
+end
 
 function showSIFTFrames(images, frames)
     N = length(images);
