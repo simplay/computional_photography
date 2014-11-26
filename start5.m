@@ -39,6 +39,14 @@ imshow(img2Rectify);
 selectedSourceHomogPoints = [p_xs, p_ys, ones(4,1)]';
 cornerHomogPoints = [arrays2pairs([1,N],[1,M])';ones(1,4)];
 % performs Rectification
+out = homographicRectification(img2Rectify, selectedSourceHomogPoints, cornerHomogPoints);
+figure('name', 'Rectificated image')
+imshow(out);
+[x,y] = ginput(2);
+croppedRect = imcrop(out,[min(x),min(y),max(x)-min(x),max(y)-min(y)]);
+figure('name', 'cropped rectificated image')
+imshow(croppedRect)
+
 
 %% Task 3: Panorama Stitching
 % We assume that the left and the right image have the same dimensionality.

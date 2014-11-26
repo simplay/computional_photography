@@ -1,4 +1,4 @@
-function [ boundingBoxIndices ] = getBoundingBoxAround( fragment )
+function [ boundingBoxIndices, left, right, top, bottom ] = getBoundingBoxAround( fragment )
 %GETBOUNDINGBOXAROUND Summary of this function goes here
 %   @param fragment
     
