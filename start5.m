@@ -31,5 +31,18 @@ makeMorphingVideo(source, target, numberOfFrames)
 %% Task 2
 
 
-%% Task 3
+%% Task 3: Panorama Stitching
+% We assume that the left and the right image have the same dimensionality.
+left = imread('imgs/p5/panorama_image1.jpg');
+left = im2double(left);
+right = imread('imgs/p5/panorama_image2.jpg');
+right = im2double(right);
+panorama = panoramaStitching(left, right);
+figure('name', 'stitched img raw');
+imshow(panorama);
+[x,y] = ginput(2);
+panorama = imcrop(panorama,[min(x),min(y),max(x)-min(x),max(y)-min(y)]);
+figure('name', 'panorama')
+imshow(panorama)
+
 
