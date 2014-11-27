@@ -17,15 +17,22 @@ addpath('src/p5/');
 %% Task 1: Morphing
 
 % load target and source images used for morphing
-numberOfFrames = 20;
-fileName = 'morph1';
+numberOfFrames = 5;
+fileName = 'uglification';
 target = imread('imgs/p5/dude.jpg');
 target = im2double(target);
 
 source = imread('imgs/p5/pig.jpg');
 source = im2double(source);
 source = imresize(source, [size(target,1),size(target,2)]);
-    
+
+source = imread('imgs/p5/from.png');
+source = imresize(source, 0.5);
+source = im2double(source);
+target = imread('imgs/p5/to.png');
+target = imresize(target, 0.5);
+target = im2double(target);
+
 makeMorphingVideo(source, target, numberOfFrames, fileName)   
 
 %% Task 2: Rectification using Homography

@@ -14,9 +14,11 @@ function makeMorphingVideo( source, target, frameCount, fileName)
 % global properties to produce results.
 matFile = strcat('data/p5/',fileName,'.mat');
 videoFile = strcat('outputs/p5/',fileName,'.avi');
-videoDuration = 2;
+videoDuration = 3;
 selectNewPoints = false;
 timestepFn = @(t) t;
+%timestepFn = @(t) -0.5*cos(t*pi())+0.5;
+
 
 % Start Control Point Selection tool with images and control points 
 % stored in variables in the workspace.
@@ -40,6 +42,32 @@ else
     % save points
     save(matFile,'sourcePoints','targetPoints');
 end
+
+% show selected features
+figure('name', 'Selected Features in Source image.');
+imshow(source);
+hold on
+plot(sourcePoints(:,1), sourcePoints(:,2), 'xr');
+
+figure('name', 'Selected Features in Target image.');
+imshow(target);
+hold on
+plot(targetPoints(:,1), targetPoints(:,2), 'xr');
+
+% delaunay triangulation of selected source and target points
+sourceTriangulation = delaunay(sourcePoints(:,1), sourcePoints(:,2));
+targetTriangulation = delaunay(targetPoints(:,1), targetPoints(:,2));
+    
+% show images with Delaunay triangles
+figure('name', 'Delaunay triangulation of Source image');
+imshow(source);
+hold on
+triplot(sourceTriangulation, sourcePoints(:,1), sourcePoints(:,2));
+    
+figure('name', 'Delaunay triangulation of Target image');
+imshow(target);
+hold on
+triplot(targetTriangulation, targetPoints(:,1), targetPoints(:,2));
 
 % x values used in order to compute the timesteps t
 xs = linspace(0, 1, frameCount);
