@@ -133,8 +133,11 @@ The following figures show some static results produced by my morphing function.
 \section{Rectification using Homography}
 Figure $\ref{fig:rectify_input_building}$ is the example shown during the exercise session. Its result, when applying a rectification is shown in figure $\ref{fig:rectified_building}$. This example acts as a sanity check whether my implementation seems to work as expected. In addition I have produced rendering for another example, a distorted church shown in figure $    \ref{fig:rectify_input_skewed_church}$. Figure $\ref{fig:rectify_selection_skewed_church}$illustrated the user selection for the rectification process (used for computing the homography). Figure $ \ref{fig:rectified_skewed_church}$shows the result of the homographic image rectification applied to this church image. \\
 
-In order to make your own rectification, please make use of the function \emph{homographicRectification.m} and read its description (how to use).
+In order to make your own rectification, please make use of the function \emph{homographicRectification.m} and read its description (how to use). \\
 
+In order to compute rectification, a user has to specify four points in a provided image in the following order: First, the top left point, then the bottom left point, then the the top right point and last, the bottom right point. Any other order will result in a runtime error. Please keep that in mind when using my function. \\
+
+Note that a user is supposed to specify two points in the stitched raw image in order to perform a cropping. The user will have to make use of the ginput selector which will automatically pop up when the results are ready.
 
 \begin{figure}[H]
     \centering

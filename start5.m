@@ -19,12 +19,12 @@ addpath('src/p5/');
 % load target and source images used for morphing
 numberOfFrames = 5;
 fileName = 'uglification';
-target = imread('imgs/p5/dude.jpg');
-target = im2double(target);
+% target = imread('imgs/p5/dude.jpg');
+% target = im2double(target);
 
-source = imread('imgs/p5/pig.jpg');
-source = im2double(source);
-source = imresize(source, [size(target,1),size(target,2)]);
+% source = imread('imgs/p5/pig.jpg');
+% source = im2double(source);
+% source = imresize(source, [size(target,1),size(target,2)]);
 
 source = imread('imgs/p5/from.png');
 source = imresize(source, 0.5);
@@ -87,11 +87,10 @@ right = imread('imgs/p5/panorama_right_1.jpg');
 right = im2double(right);
 right = imresize(right, 0.25);
 panorama = panoramaStitching(left, right);
+disp('Please specify two points in order to crop the stiched image.');
 figure('name', 'stitched img raw');
 imshow(panorama);
 [x,y] = ginput(2);
 panorama = imcrop(panorama,[min(x),min(y),max(x)-min(x),max(y)-min(y)]);
 figure('name', 'panorama')
 imshow(panorama)
-
-
