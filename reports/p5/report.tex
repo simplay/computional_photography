@@ -132,6 +132,69 @@ The following figures show some static results produced by my morphing function.
 \end{figure}
 
 \section{Rectification using Homography}
+Figure $\ref{fig:rectify_input_building}$ is the example shown during the exercise session. Its result, when applying a rectification is shown in figure $\ref{fig:rectified_building}$. This example acts as a sanity check whether my implementation seems to work as expected. In addition I have produced rendering for another example, a distorted church shown in figure $    \ref{fig:rectify_input_skewed_church}$. Figure $\ref{fig:rectify_selection_skewed_church}$illustrated the user selection for the rectification process (used for computing the homography). Figure $ \ref{fig:rectified_skewed_church}$shows the result of the homographic image rectification applied to this church image. \\
+
+In order to make your own rectification, please make use of the function \emph{homographicRectification.m} and read its description (how to use).
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{rectify/input_building}
+    \end{subfigure}
+    
+    \caption{Input image of a building which exhibits a notable distortion.}
+    \label{fig:rectify_input_building}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{rectify/rectified_building}
+    \end{subfigure}
+    
+    \caption{Rectified input image using Homography. Most of the vertical edges of the building have become parallel. }
+    \label{fig:rectified_building}       
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{rectify/input_skewed_church}
+    \end{subfigure}
+    
+    \caption{Input image of a church which exhibits a notable distortion.}
+    \label{fig:rectify_input_skewed_church}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{rectify/selection_skewed_church}
+    \end{subfigure}
+    
+    \caption{Image Rectification selection (read lines) from specified user points (in blue).}
+    \label{fig:rectify_selection_skewed_church}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{rectify/rectified_skewed_church}
+    \end{subfigure}
+    
+    \caption{Rectified input image using Homography. Most of the vertical edges of the church have become parallel. }
+    \label{fig:rectified_skewed_church}       
+\end{figure}
+
+
+
+
+
+
+
+
 \section{Panorama Stitching}
 
 
