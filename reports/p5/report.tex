@@ -75,7 +75,6 @@
 
 \maketitle
 
-
 \section{Morphing}
 The following figures show some static results produced by my morphing function. I also have produced some .avi movies. You can find them either in \emph{outputs/p5/} or in the provided results zip on Ilias. I rendered the movies once using a linear time-stepping function and another time using a cosine-ramp. Furthermore, for my results, I used 42 frames. The duration of the movies is 3 seconds. In order to make your own morphing videos, please make use of the function \emph{makeMorphingVideo.m} and read its description (how to use).
 
@@ -189,15 +188,82 @@ In order to make your own rectification, please make use of the function \emph{h
 \end{figure}
 
 
-
-
-
-
-
-
 \section{Panorama Stitching}
+For this task I have taken two pictures from our balcony at my place. The pictures show the center of the village in which I live. The input images are shown in figure $\ref{fig:stitching_input}$. The resulting panorama image is shown in figure $\ref{fig:stitching_stitched_cropped}$. The other figures are showing intermediate results used for producing the final panorama. \\
+
+In order to make your own panorama stitching, please make use of the function \emph{panoramaStitching.m} and read its description (how to use).
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/left_input_1}
+    \end{subfigure}
+    ~
+        \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/right_input_1}
+    \end{subfigure}
+    
+    \caption{Source Image (left) and target image (right) used for Panorama Stitching. Both images were taken from our balcony at my place.}
+    \label{fig:stitching_input}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{stitching/sift_frames_input_1}
+    \end{subfigure}
+    
+    \caption{Illustration of SIFT frames in both given input images using the VLFeat library.}
+    \label{fig:stitching_sift}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/padded_mask_left_1}
+    \end{subfigure}
+    ~
+        \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/padded_mask_right_1}
+    \end{subfigure}
+    
+    \caption{Showing bleeding masks of both images: On the left the mask for the first image and on the right the mask for the second given image.}
+    \label{fig:stitching_masks}       
+\end{figure}
 
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/padded_left_img_1}
+    \end{subfigure}
+    ~
+        \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{stitching/padded_right_img_1}
+    \end{subfigure}
+    
+    \caption{Showing padded image version of both images (after having applied the homography): On the left the padded image for the first image and on the right the padded image for the second given image.}
+    \label{fig:stitching_padded}       
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{stitching/stitched_raw_1}
+    \end{subfigure}
+    
+    \caption{Illustration of stitched padded images (using alpha blending - based on the bleeding masks).}
+    \label{fig:stitching_stitched}       
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1.0\textwidth}
+        \includegraphics[width=\textwidth]{stitching/cropped_stitched_1}
+    \end{subfigure}
+    
+    \caption{Final result depicting the Panorama Stitched images. Note that this image is just a cropped version (from given two user specified points) of the stitched padded images from before. }
+    \label{fig:stitching_stitched_cropped}       
+\end{figure}
 
 \end{document}
