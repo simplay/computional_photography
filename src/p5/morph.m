@@ -24,19 +24,24 @@ function out = morph(sourceImg, targetImg, sourceFeaturePositions, targetFeature
         
         % interpolated triangle: p_k = (1-t)a_k + t*b_k 
         T_p = (1-timestep)*T_source + timestep*T_target;
-        
         T_p_source = T_source/T_p;
         T_p_target = T_target/T_p;
         
+        % bounding box enclosing the current fragment
         boundingBox = getBoundingBoxAround(T_p);
         
+        % masking pixel coordinates using the bounding box
         mask = rasterize(T_p(1:2,:),boundingBox);
+        
+        % select pixels in bounding box
         pixels = boundingBox .* repmat(mask,2,1);
         takenPixelsIdxs = pixels>0;
         numberOfMaskedPixels = sum(mask);
         pixels = reshape(pixels(takenPixelsIdxs),2, numberOfMaskedPixels);
         pixels(3,:) = ones(1, size(pixels, 2));
         
+        % get interpolated positions of pixels used for interpolation
+        % colors using alpha blending.
         sourcePixels = T_p_source*pixels;
         targetPixels = T_p_target*pixels;
         
@@ -45,6 +50,7 @@ function out = morph(sourceImg, targetImg, sourceFeaturePositions, targetFeature
         
         interpolatedColor = (1-timestep)*interpolSourceColors + timestep*interpolTargetColors;
         
+        % fill image
         for k=1:length(pixels)
             out(pixels(2,k), pixels(1,k),:) = interpolatedColor(:,k);
         end

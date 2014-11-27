@@ -1,4 +1,5 @@
 function inliersIndices = estimateBetInlierIndicesByRANSAC(matches, matchedPointsImg1, matchedPointsImg2)
+% find best (estimated inlier) by running 1000 times RANSAC. 
     highestInlierCount = 0;
     inliersIndices = [];
     for i=1:1000,

@@ -1,6 +1,9 @@
 function mask = computeBlendingMask( M, N )
-%COMPUTEBLENDINGMASK Summary of this function goes here
-%   Detailed explanation goes here
+%COMPUTEBLENDINGMASK as described in the slides
+%   @param M positive integer first dimension of image
+%   @param N positive integer 2nd dimension of image
+%   @return corresponding bleeding mask
+
     mask = zeros(M,N);
     
     % top boundary is one
