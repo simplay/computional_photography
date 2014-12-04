@@ -14,7 +14,7 @@ function makeMorphingVideo( source, target, frameCount, fileName)
 % global properties to produce results.
 matFile = strcat('data/p5/',fileName,'.mat');
 videoFile = strcat('outputs/p5/',fileName,'.avi');
-videoDuration = 3;
+videoDuration = 5;
 selectNewPoints = false;
 timestepFn = @(t) t;
 %timestepFn = @(t) -0.5*cos(t*pi())+0.5;

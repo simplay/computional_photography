@@ -17,8 +17,8 @@ addpath('src/p5/');
 %% Task 1: Morphing
 
 % load target and source images used for morphing
-numberOfFrames = 5;
-fileName = 'uglification';
+numberOfFrames = 60;
+fileName = 'uglification2';
 % target = imread('imgs/p5/dude.jpg');
 % target = im2double(target);
 
