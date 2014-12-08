@@ -21,4 +21,15 @@ randomRowselectCount = 4;
                                           randomRowselectCount, numFrames);
 showEPI(lightFieldData, epiImages, selectedLineNrs);    
 
+%% task 1.3 Linear Filter
+baseIdx = 20;
+idxPair = [baseIdx, baseIdx+1];
+interpolatedImg = linearFiltering(lightFieldData, idxPair);
+figure('name', 'Linear Interpolated Image');
+imshow(interpolatedImg);
+
+
+%% task 1.4 Shear Filter
+
+
                                       
